@@ -122,7 +122,7 @@ User.getByTime = function getByTime(query,callback){
                         return callback(err);
                     }
                     if(doc){
-                        var todo = "update";
+                        var todo = "upload";
                         return callback(null,todo);
                     }else{
                         var todo = "download";
@@ -137,7 +137,7 @@ User.getByTime = function getByTime(query,callback){
                         return callback(err);
                     }
                     if(doc){
-                        var todo = "update";
+                        var todo = "load";
                         return callback(null,todo);
                     }else{
                         var todo = "download";
@@ -150,5 +150,5 @@ User.getByTime = function getByTime(query,callback){
 };
 
 User.update = function update(query,callback){
-    
+
 };

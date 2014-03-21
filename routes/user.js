@@ -20,7 +20,6 @@ exports.getUser= function(req, res){
         }
         return res.json(200,user);
     });
-
   }
 };
 
@@ -41,8 +40,8 @@ exports.checkUserVersion = function(req, res){
         }
         if(todo == "noneed"){
             res.json(200,{'info':'no need to sync'});
-        }else if(todo == "update"){
-            res.json(201,{'info':'need to update device data'});
+        }else if(todo == "upload"){
+            res.json(201,{'info':'need to upload device data'});
         }else if(todo == "download"){
             res.json(202,{'info':'need to download the newest data'});
         }
