@@ -3,7 +3,9 @@ var mongodb = require('./db')
 function Item(item){
     this.name = item.name;
     this.price = item.price;
+    this.npc = item.npc;
     this.describe = item.describe;
+    this.type = item.type;
 };
 module.exports = Item;
 
@@ -12,6 +14,8 @@ Item.prototype.save = function save(callback){
         name: this.name,
         price: this.price,
         describe: this.describe,
+        npc: this.npc,
+        type: this.type,
     };
     mongodb.open(function(err,db){
         if (err){
