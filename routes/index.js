@@ -27,7 +27,8 @@ exports.doLogin = function(req,res) {
     console.log(req.body.user);
     console.log(typeof(req.body.user));
     console.log(req.body.user.arr[0]);
-    console.log(req.body.user.dic['A']);
+    console.log(req.body.user.dic['a']);
+    console.log(new Date(req.body.user.date));
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password).digest('base64');
     User.get(req.body.user, function(err,user){
