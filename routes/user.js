@@ -6,29 +6,45 @@ var User = require('../models/user.js');
 
 exports.getUser= function(req, res){
   //通过email||phone 和 status位，索引数据，有则返回。
-  if(req.body.email){
-    User.getByEmail(req.body.email,function(err,user){
+    User.get(req.session.user,function(err,user){
         if(err){
             return res.json(400,err);
         }
         return res.json(200,user);
     });
-  }else if(req.body.phone){
-    User.getByPhone(req.body.phone,function(err,user){
-        if(err){
-            return res.json(400,err);
-        }
-        return res.json(200,user);
-    });
-  }
 };
+var checkData = function(newDate,oldDate){
+    //status check
+    //value range check
+    return 1;
+}
 
 exports.putUser= function(req, res){
-    //获取数据（email||phone + status）
-    //检查更新时间
+    //获取数据（email||phone )
     //检查数据是否合法（数值跨度）-> update
-
-    
+    User.get(req.body,function(err,user){
+        if(err){
+            return res.json(400,err);
+        }
+        if(user){
+            var result = checkData(req.body, user);
+            if(result){
+                User.update(req.body, function(err){
+                    if(err){
+                        return res.json(400,err);
+                    }
+                    return res.json(200,{'info':'upload success'});
+                });
+            }else{
+                User.modifyUserState(req.body,function(err){
+                    if(err){
+                        return res.json(400,{'err':'You are a hack, but modifyUserState failed'});
+                    }
+                    res.json(333,{'err':'you are a hacker'});
+                });
+            }
+        }
+    });  
 };
 
 exports.checkUserVersion = function(req, res){
@@ -38,9 +54,7 @@ exports.checkUserVersion = function(req, res){
         if(err){
             return res.json(400,err);
         }
-        if(todo == "noneed"){
-            res.json(200,{'info':'no need to sync'});
-        }else if(todo == "upload"){
+        if(todo == "upload"){
             res.json(201,{'info':'need to upload device data'});
         }else if(todo == "download"){
             res.json(202,{'info':'need to download the newest data'});

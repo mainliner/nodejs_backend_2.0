@@ -21,38 +21,19 @@ exports.checkNotLogin = function(req, res, next) {
     }
     next();
 };
-
-
 exports.doLogin = function(req,res) {
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password).digest('base64');
-    if(req.body.phone){
-        User.getByPhone(req.body.phone, function(err,user){
-            if(!user){
-                return res.json(400,{'err':'user does not exist'});
-            }
-            if(user.password != password){
-                return res.json(400,{'err':'password does not match'});
-            }
-            req.session.user = user;
-            return res.json(200,user);
-        });
-    }
-    else if(req.body.email){
-        User.getByEmail(req.body.email, function(err,user){
-            if(!user){
-                return res.json(400,{'err':'user does not exist'});
-            }
-            if(user.password != password){
-                return res.json(400,{'err':'password does not match'});
-            }
-            req.session.user = user;
-            return res.json(200,user);
-        });
-    }
-    else{
-    return res.json(777,{'err':'Please request with phone or email'});
-    }
+    User.get(req.body, function(err,user){
+        if(!user){
+            return res.json(400,{'err':'user does not exist'});
+        }
+        if(user.password != password){
+            return res.json(400,{'err':'password does not match'});
+        }
+        req.session.user = user;
+        return res.json(200,user);
+    });
 };
 
 exports.logout = function(req,res) {
@@ -61,55 +42,28 @@ exports.logout = function(req,res) {
 };
 
 exports.doReg = function(req, res){
-  var md5 = crypto.createHash('md5');
-  var password = md5.update(req.body.password).digest('base64');
-  if(req.body.phone){
+    var md5 = crypto.createHash('md5');
+    var password = md5.update(req.body.password).digest('base64');
     var newUser = new User({
         phone: req.body.phone,
-        password: password,
-        UUID: req.body.UUID,
-    });
-    User.getByPhone(newUser.phone, function(err,user){
-        if(user){
-            err = 'phone number has exist';
-        }
-        if(err){
-            return res.json(400,{'error':err});
-        }
-        newUser.save(function(err,user){
-            if(err){
-                return res.json(300,{'error':err});
-            }
-            req.session.user = user;
-            return res.json(200,user[0]);
-        });
-    });
-  }
-  else if(req.body.email){
-    var newUser = new User({
         email: req.body.email,
         password: password,
         UUID: req.body.UUID,
     });
-    User.getByEmail(newUser.email, function(err,user){
+    User.get(newUser,function(err,user){
         if(user){
-            err = 'email address has exist';
+            err = 'User has exist';
         }
         if(err){
-            return res.json(400,{'error':err});
+            return res.json(400,err);
         }
         newUser.save(function(err,user){
             if(err){
-                return res.json(300,{'error':err});
+                return res.json(300,err);
             }
             req.session.user = user;
             return res.json(200,user[0]);
         });
     });
-  }else{
-   res.json(777,{'err':'wrong request data format'}); 
-  }
 };
-
-
 

@@ -60,6 +60,27 @@ User.prototype.save = function save(callback){
         });
     });
 };
+User.get = function get(query,callback){
+    mongodb.open(function (err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('users', function(err,collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.findOne({phone:query.phone,email:query.email},function(err, doc){
+                mongodb.close();
+                if(doc){
+                    callback(err,doc);
+                }else{
+                    callback(err,null);
+                }
+            });
+        });
+    });
+}
 User.getByEmail = function get(email,callback){
     mongodb.open(function(err, db){
         if(err){
@@ -73,8 +94,8 @@ User.getByEmail = function get(email,callback){
             collection.findOne({email:email},function(err, doc) {
                 mongodb.close();
                 if (doc){
-                    var user = new User(doc);
-                    callback(err,user);
+                    //var user = new User(doc);
+                    callback(err,doc);
                 }else{
                     callback(err,null);
                 }
@@ -95,8 +116,8 @@ User.getByPhone = function get(phone,callback){
             collection.findOne({phone:phone},function(err, doc) {
                 mongodb.close();
                 if (doc){
-                    var user = new User(doc);
-                    callback(err,user);
+                    //var user = new User(doc);
+                    callback(err,doc);
                 }else{
                     callback(err,null);
                 }
@@ -115,40 +136,67 @@ User.getByTime = function getByTime(query,callback){
                 mongodb.close();
                 return callback(err);
             }
-            if(query.email){
-                collection.find({email:query.email,lastUpDateTime:{"$lt": query.lastUpDateTime}},function(err,doc){
-                    if(err){
-                        mongodb.close();
-                        return callback(err);
-                    }
-                    if(doc){
-                        var todo = "upload";
-                        return callback(null,todo);
-                    }else{
-                        var todo = "download";
-                        return callback(null,todo);
-                    }
-                });
-            }
-            else if(query.phone){
-                collection.find({phone:query.phone,lastUpDateTime:{"$lt": query.lastUpDateTime}},function(err,doc){
-                    if(err){
-                        mongodb.close();
-                        return callback(err);
-                    }
-                    if(doc){
-                        var todo = "load";
-                        return callback(null,todo);
-                    }else{
-                        var todo = "download";
-                        return callback(null,todo);
-                    }
-                });
-            }
+            var date = new Date(query.lastUpDateTime);
+            collection.findOne({email:query.email,phone:query.phone,lastUpDateTime:{'$lt':date}},function(err,doc){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                if(doc){
+                    var todo = "upload";
+                    return callback(null,todo);
+                }else{
+                    var todo = "download";
+                    return callback(null,todo);
+                }
+            });
         });
     });
 };
 
 User.update = function update(query,callback){
+    if(query._id){
+        delete query._id;
+    }
+    mongodb.open(function(err,db){
+        if(err){
+            return  callback(err);
+        }
+        db.collection('users',function(err,collection){
+            if(err){
+                mongodb.close();
+                return  callback(err);
+            }
+            collection.update({phone:query.phone,email:query.email},{'$set':query},function(err){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
+
+User.modifyUserState = function modifyUserState(query,callback){
+        mongodb.open(function(err,db){
+            if(err){
+                return callback(err);
+            }
+            db.collection('users', function(err, collection){
+                if(err){
+                    mongodb.close();
+                    return callback(err);
+                }
+                    collection.update({phone:query.phone,email:query.email},{'$set':{'status':'hack'}},{w:1},function(err){
+                        mongodb.close();
+                        if(err){
+                            return callback(err);
+                        }
+                        callback(null);
+                    });
+            });
+        });
 
 };

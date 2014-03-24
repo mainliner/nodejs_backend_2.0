@@ -67,10 +67,10 @@ app.get('/logout', routes.logout);
 //get and updata user info
 app.post('/check_user_version',routes.checkLogin);
 app.post('/check_user_version', user.checkUserVersion);
-app.get('/users', routes.checkLogin);
-app.get('/users', user.getUser);
-app.post('/users', routes.checkLogin);
-app.post('/users', user.putUser);
+app.get('/getuser', routes.checkLogin);
+app.get('/getuser', user.getUser);
+app.post('/putuser', routes.checkLogin);
+app.post('/putuser', user.putUser);
 //get item info
 app.all('/items', routes.checkLogin);
 app.get('/items', item.getAllItems);
