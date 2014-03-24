@@ -1,0 +1,12 @@
+[Mon Mar 24 2014 10:22:26 GMT+0000 (UTC)]/login
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.doLogin (/home/ec2-user/wedate_backend/routes/index.js:27:24)
+    at callbacks (/home/ec2-user/wedate_backend/node_modules/express/lib/router/index.js:164:37)
+    at param (/home/ec2-user/wedate_backend/node_modules/express/lib/router/index.js:138:11)
+    at pass (/home/ec2-user/wedate_backend/node_modules/express/lib/router/index.js:145:5)
+    at nextRoute (/home/ec2-user/wedate_backend/node_modules/express/lib/router/index.js:100:7)
+    at callbacks (/home/ec2-user/wedate_backend/node_modules/express/lib/router/index.js:167:11)
+    at exports.checkNotLogin (/home/ec2-user/wedate_backend/routes/index.js:22:5)
+    at callbacks (/home/ec2-user/wedate_backend/node_modules/express/lib/router/index.js:164:37)
+    at param (/home/ec2-user/wedate_backend/node_modules/express/lib/router/index.js:138:11)
