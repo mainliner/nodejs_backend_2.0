@@ -1,11 +1,15 @@
 var mongodb = require('./db')
 
 function Item(item){
-    this.name = item.name;
+    this.ChineseName = item.ChineseName;
+    this.EnglishName = item.EnglishName;
+    this.title = item.title;
     this.price = item.price;
     this.npc = item.npc;
     this.describe = item.describe;
     this.type = item.type;
+    this.pictureBig = item.pictureBig;
+    this.pictureSmall = item.pictureSmall;
 };
 module.exports = Item;
 

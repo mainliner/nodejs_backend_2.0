@@ -11,8 +11,9 @@ exports.index = function(req, res){
 exports.checkLogin = function(req,res, next) {
     if(!req.session.user) {
       return res.json(302,{'err':'you have not login'});
-    }
+    }else{
     next();
+    }
 };
 
 exports.checkNotLogin = function(req, res, next) {
@@ -21,21 +22,18 @@ exports.checkNotLogin = function(req, res, next) {
     }
     next();
 };
+
 exports.doLogin = function(req,res) {
-    console.log(req.body);
-    console.log(typeof(req.body));
-    console.log(req.body.user);
-    console.log(typeof(req.body.user));
-    console.log(req.body.user.arr[0]);
-    console.log(req.body.user.dic['a']);
-    console.log(new Date(req.body.user.date));
+    if(!(req.body.phone || req.body.email)){
+        return res.json(400,{'err':'Please input your username and password'});
+    }
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password).digest('base64');
-    User.get(req.body.user, function(err,user){
+    User.getByLogin(req.body, function(err,user){
         if(!user){
             return res.json(400,{'err':'user does not exist'});
         }
-        if(user.password != password){
+        if(user.user.userInfo.password != password){
             return res.json(400,{'err':'password does not match'});
         }
         req.session.user = user;
@@ -68,9 +66,18 @@ exports.doReg = function(req, res){
             if(err){
                 return res.json(300,err);
             }
-            req.session.user = user;
+            req.session.user = user[0];
             return res.json(200,user[0]);
         });
     });
 };
+
+exports.test = function(req, res){
+    User.test(function(err,user){
+        if(err){
+            return res.json(400,err);
+        }
+        res.json(200,user);
+    });
+}
 

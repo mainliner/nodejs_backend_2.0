@@ -13,6 +13,7 @@ exports.getUser= function(req, res){
         return res.json(200,user);
     });
 };
+
 var checkData = function(newDate,oldDate){
     //status check
     //value range check

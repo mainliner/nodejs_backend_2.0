@@ -1,44 +1,55 @@
 var mongodb = require('./db');
+var ObjectID = require('mongodb').ObjectID;
 
-var userInitItem = ["apple","mirror"];
 
 function User(user){
-    this.email = user.email;
-    this.phone = user.phone;
-    this.password = user.password;
-    this.UUID = user.UUID;
-    this.lastUpDateTime = new Date();
-    //init with default
-    this.name = "None";
-    this.birthday = new Date();
-    this.receiveGiftTime = 0;
-    this.gender = "男";
-    this.money = 3000;
-    this.fmailyValue = [{'npc1':1},{'npc2':1},{'npc3':1}];
-    this.album = [];
-    this.star = [];
-    this.item = userInitItem;
-    this.status = "normal";
+    this.user = {
+        userInfo:{
+            UUID: user.UUID,
+            email: user.email,
+            phone: user.phone,
+            password: user.password,
+            name: "None",
+            gender: "None",
+            birthday: new Date(),
+            receiveGiftTime: 0,
+            money: 3000,
+            lovePoint: 200,
+            lastUpDateTime: new Date(),
+            photoFrame:"None",
+            status: "normal"
+        },
+        starInfo:[
+            {starId:"", name:"赵本山", startDate: new Date(), expireTime: new Date(), relationValue: 20, receiveItem:[]}
+        ],
+        npcInfo:[
+            {npc1:0},{npc2:0},{npc3:0},{npc4:0},{npc5:0}
+        ],
+        items:{
+            clothes:[
+                {id:"", num:1},
+                {id:"", num:1}
+            ],
+            furniture:[
+                {id:"", num:1},
+                {id:"", num:1}
+            ],
+            CD:[
+                {id:"", num:1},
+                {id:"", num:1}
+            ],
+            Props:[
+                {id:"", num:1},
+                {id:"", num:1}
+            ],
+        }
+    };
 };
 module.exports = User;
 
 User.prototype.save = function save(callback){
     var user = {
-        email:this.email,
-        phone:this.phone,
-        password:this.password,
-        UUID:this.UUID,
-        lastUpDateTime:this.lastUpDateTime,
-        name:this.name,
-        birthday:this.birthday,
-        receiveGiftTime:this.receiveGiftTime,
-        gender:this.gender,
-        money:this.money,
-        familyValue:this.fmailyValue,
-        album:this.album,
-        star:this.star,
-        item:this.item,
-        status:this.status,
+        user:this.user
     };
     mongodb.open(function(err,db) {
         if(err) {
@@ -49,10 +60,10 @@ User.prototype.save = function save(callback){
                 mongodb.close();
                 return callback(err);
             }
-            collection.ensureIndex('status',function(err, user){});
-            collection.ensureIndex('UUID',function(err, user) {});
-            collection.ensureIndex('phone',function(err, user) {});
-            collection.ensureIndex('email',function(err, user) {});
+            collection.ensureIndex('user.userInfo.status',function(err, user){});
+            collection.ensureIndex('user.userInfo.UUID',function(err, user) {});
+            collection.ensureIndex('user.userInfo.phone',function(err, user) {});
+            collection.ensureIndex('user.userInfo.email',function(err, user) {});
             collection.insert(user,{w:1}, function(err,user) {
                 mongodb.close();
                 callback(err, user);
@@ -70,7 +81,7 @@ User.get = function get(query,callback){
                 mongodb.close();
                 return callback(err);
             }
-            collection.findOne({phone:query.phone,email:query.email},function(err, doc){
+            collection.findOne({'user.userInfo.phone':query.user.userInfo.phone, 'user.userInfo.email':query.user.userInfo.email},function(err, doc){
                 mongodb.close();
                 if(doc){
                     callback(err,doc);
@@ -80,43 +91,20 @@ User.get = function get(query,callback){
             });
         });
     });
-}
-User.getByEmail = function get(email,callback){
-    mongodb.open(function(err, db){
-        if(err){
-            return callback(err);
-        }
-        db.collection('users', function(err,collection){
-            if (err){
-                mongodb.close();
-                return callback(err);
-            }
-            collection.findOne({email:email},function(err, doc) {
-                mongodb.close();
-                if (doc){
-                    //var user = new User(doc);
-                    callback(err,doc);
-                }else{
-                    callback(err,null);
-                }
-            });
-        });
-    });
 };
-User.getByPhone = function get(phone,callback){
-    mongodb.open(function(err, db){
+User.getByLogin = function get(query,callback){
+    mongodb.open(function (err,db){
         if(err){
             return callback(err);
         }
-        db.collection('users', function(err,collection){
-            if (err){
+        db.collection('users',function(err,collection){
+            if(err){
                 mongodb.close();
                 return callback(err);
             }
-            collection.findOne({phone:phone},function(err, doc) {
+            collection.findOne({'user.userInfo.phone':query.phone,'user.userInfo.email':query.email},function(err,doc){
                 mongodb.close();
-                if (doc){
-                    //var user = new User(doc);
+                if(doc){
                     callback(err,doc);
                 }else{
                     callback(err,null);
@@ -136,8 +124,8 @@ User.getByTime = function getByTime(query,callback){
                 mongodb.close();
                 return callback(err);
             }
-            var date = new Date(query.lastUpDateTime);
-            collection.findOne({email:query.email,phone:query.phone,lastUpDateTime:{'$lt':date}},function(err,doc){
+            var date = new Date(query.user.userInfo.lastUpDateTime);
+            collection.findOne({'user.userInfo.email':query.user.userInfo.email, 'user.userInfo.phone':query.user.userInfo.phone,'user.userInfo.lastUpDateTime':{'$lt':date}},function(err,doc){
                 mongodb.close();
                 if(err){
                     return callback(err);
@@ -156,6 +144,8 @@ User.getByTime = function getByTime(query,callback){
 
 User.update = function update(query,callback){
     if(query._id){
+        var id = query._id;
+        console.log(query._id);
         delete query._id;
     }
     mongodb.open(function(err,db){
@@ -167,7 +157,7 @@ User.update = function update(query,callback){
                 mongodb.close();
                 return  callback(err);
             }
-            collection.update({phone:query.phone,email:query.email},{'$set':query},function(err){
+            collection.update({'_id':id},{'$set':query},function(err){
                 mongodb.close();
                 if(err){
                     return callback(err);
@@ -189,7 +179,7 @@ User.modifyUserState = function modifyUserState(query,callback){
                     mongodb.close();
                     return callback(err);
                 }
-                    collection.update({phone:query.phone,email:query.email},{'$set':{'status':'hack'}},{w:1},function(err){
+                    collection.update({_id:new ObjectID(query._id)},{'$set':{'user.userInfo.status':'hack'}},{w:1},function(err){
                         mongodb.close();
                         if(err){
                             return callback(err);
@@ -199,4 +189,25 @@ User.modifyUserState = function modifyUserState(query,callback){
             });
         });
 
+};
+User.test = function (callback){
+    mongodb.open(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('users', function(err, collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.findOne({_id:new ObjectID("5333edfc0e5b06e51d958b81")},function(err,user){
+                mongodb.close()
+                if(err){
+                    return callback(err,null);
+                }
+                callback(err,user);
+            });
+        });
+
+    });
 };

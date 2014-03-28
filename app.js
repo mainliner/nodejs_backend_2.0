@@ -7,6 +7,7 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var item = require('./routes/item');
+var audio = require('./routes/audio');
 var http = require('http');
 var path = require('path');
 var settings = require('./settings');
@@ -14,6 +15,7 @@ var MongoStore = require('connect-mongo')(express);
 var fs = require('fs');
 var accessLogfile = fs.createWriteStream('access.log',{flags:'a'});
 var errorLogfile = fs.createWriteStream('error.log', {flags:'a'});
+
 
 var app = express();
 
@@ -28,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.bodyParser());
+//app.use(express.bodyParser({ keepExtensions: true, uploadDir: './' }));
 app.use(express.cookieParser());
 app.use(express.session({
     secret: settings.cookieSecret,
@@ -76,6 +78,11 @@ app.post('/putuser', user.putUser);
 app.all('/items', routes.checkLogin);
 app.get('/items', item.getAllItems);
 app.post('/items', item.putItem);
+//upload audio file to service
+app.post('/upload', routes.checkLogin);
+app.post('/upload', audio.upload);
+
+app.post('/test',routes.test);
 
 
 if(!module.parent) {
