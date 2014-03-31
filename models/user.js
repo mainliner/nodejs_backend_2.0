@@ -23,7 +23,7 @@ function User(user){
             {starId:"", name:"赵本山", startDate: new Date(), expireTime: new Date(), relationValue: 20, receiveItem:[]}
         ],
         npcInfo:[
-            {npc1:0},{npc2:0},{npc3:0},{npc4:0},{npc5:0}
+            {name:'npc1',relationValue:0},{name:'npc2',relationValue:0},{name:'npc3',relationValue:0},{name:'npc4',relationValue:0},{name:'npc5',relationValue:0}
         ],
         items:{
             clothes:[
@@ -148,6 +148,11 @@ User.update = function update(query,callback){
         console.log(query._id);
         delete query._id;
     }
+    else{
+        var err = {'err':'can not find the user'};
+        return callback(err);
+    }
+    console.log(query);
     mongodb.open(function(err,db){
         if(err){
             return  callback(err);
@@ -157,7 +162,7 @@ User.update = function update(query,callback){
                 mongodb.close();
                 return  callback(err);
             }
-            collection.update({'_id':id},{'$set':query},function(err){
+            collection.update({'_id':new ObjectID(id)},{'$set':query},function(err){
                 mongodb.close();
                 if(err){
                     return callback(err);

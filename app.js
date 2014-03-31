@@ -72,7 +72,7 @@ app.post('/check_user_version',routes.checkLogin);
 app.post('/check_user_version', user.checkUserVersion);
 app.get('/getuser', routes.checkLogin);
 app.get('/getuser', user.getUser);
-app.post('/putuser', routes.checkLogin);
+//app.post('/putuser', routes.checkLogin);
 app.post('/putuser', user.putUser);
 //get item info
 app.all('/items', routes.checkLogin);
