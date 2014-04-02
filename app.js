@@ -81,9 +81,9 @@ app.post('/items', item.putItem);
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
 app.get('/getallaudio', routes.checkLogin);
-app.get('/getallaudio' audio.getAllAudio);
-app.get('/getUnreadaudio' routes.checkLogin);
-app.get('/getUnreadaudio' audio.getUnreadAudio);
+app.get('/getallaudio', audio.getAllAudio);
+app.get('/getUnreadaudio', routes.checkLogin);
+app.get('/getUnreadaudio', audio.getUnreadAudio);
 
 app.post('/test',routes.test);
 

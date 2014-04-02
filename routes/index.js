@@ -60,7 +60,7 @@ exports.doReg = function(req, res){
             return res.json(400,err);
         }
         if(user){
-            return res.json(401,{'err':'user has exist')
+            return res.json(401,{'err':'user has exist'});
         }
         newUser.save(function(err,user){
             if(err){

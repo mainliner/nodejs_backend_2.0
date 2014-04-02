@@ -28,9 +28,9 @@ exports.upload = function (req,res) {
             console.log(files);
             console.log(fields); 
             var audio = new Audio({
-                fileId: ,
-                startId: ,
-                uploadDate: 
+                fileId: "",
+                startId: "",
+                uploadDate:"" 
             });
             audio.save(function(err,doc){
                 if(err){
