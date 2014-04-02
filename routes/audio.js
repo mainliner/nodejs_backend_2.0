@@ -8,6 +8,8 @@ var gridfsStream = require('gridform/node_modules/gridfs-stream');
 var mongo = require('mongodb');
 var mongodb = require('../models/db.js');
 
+var Audio = require('../models/audio.js');
+
 exports.upload = function (req,res) {
     mongodb.open(function(err,db){
         if(err){
@@ -19,11 +21,32 @@ exports.upload = function (req,res) {
         var form = gridform();
         assert(form instanceof formidable.IncomingForm);
         form.parse(req, function (err, fields, files) {
-            //var file = files.inpFile1;
-            console.log(files);
-            console.log(fields);
             mongodb.close();
-            res.json(200,{'info':'upload success'});
+            if(err){
+                return res.json(400,err);
+            }  
+            console.log(files);
+            console.log(fields); 
+            var audio = new Audio({
+                fileId: ,
+                startId: ,
+                uploadDate: 
+            });
+            audio.save(function(err,doc){
+                if(err){
+                    //need to delete the audio file which not associate with the right star in GridFS 
+                    return res.json(400,err);
+                }
+                return res.json(200,{'info':'upload success'});
+            });
         });
     });
+};
+
+exports.getAllAudio = function(req, res) {
+
+};
+
+exports.getUnreadAudio = function(req, res) {
+
 };

@@ -103,10 +103,20 @@ User.getByLogin = function get(query,callback){
                 return callback(err);
             }
             collection.findOne({'user.userInfo.phone':query.phone,'user.userInfo.email':query.email},function(err,doc){
-                mongodb.close();
                 if(doc){
+                    if(query.UUID != doc.user.userInfo.UUID){
+                        collection.update({'user.userInfo.phone':query.phone,'user.userInfo.email':query.email},{'$set':{'user.userInfo.UUID':query.UUID}},function(err){
+                            if(err){
+                                return callback(err);
+                            }
+                            doc.user.userInfo.UUID = query.UUID;
+                            return callback(err,doc);
+                        });
+                    }
+                    mongodb.close();
                     callback(err,doc);
                 }else{
+                    mongodb.close();
                     callback(err,null);
                 }
             });
@@ -195,6 +205,7 @@ User.modifyUserState = function modifyUserState(query,callback){
         });
 
 };
+//for test
 User.test = function (callback){
     mongodb.open(function(err,db){
         if(err){

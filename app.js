@@ -61,7 +61,6 @@ app.get('/', routes.index);
 
 app.post('/reg', routes.checkNotLogin)
 app.post('/reg', routes.doReg);
-
 app.post('/login', routes.checkNotLogin)
 app.post('/login', routes.doLogin);
 app.get('/logout', routes.checkLogin);
@@ -72,7 +71,7 @@ app.post('/check_user_version',routes.checkLogin);
 app.post('/check_user_version', user.checkUserVersion);
 app.get('/getuser', routes.checkLogin);
 app.get('/getuser', user.getUser);
-//app.post('/putuser', routes.checkLogin);
+app.post('/putuser', routes.checkLogin);
 app.post('/putuser', user.putUser);
 //get item info
 app.all('/items', routes.checkLogin);
@@ -81,6 +80,10 @@ app.post('/items', item.putItem);
 //upload audio file to service
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
+app.get('/getallaudio' routes.checkLogin);
+app.get('/getallaudio' audio.getAllAudio);
+app.get('/getUnreadaudio' routes.checkLogin);
+app.get('/getUnreadaudio' audio.getUnreadAudio);
 
 app.post('/test',routes.test);
 

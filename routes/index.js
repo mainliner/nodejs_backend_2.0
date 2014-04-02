@@ -31,10 +31,10 @@ exports.doLogin = function(req,res) {
     var password = md5.update(req.body.password).digest('base64');
     User.getByLogin(req.body, function(err,user){
         if(!user){
-            return res.json(400,{'err':'user does not exist'});
+            return res.json(401,{'err':'user does not exist'});
         }
         if(user.user.userInfo.password != password){
-            return res.json(400,{'err':'password does not match'});
+            return res.json(402,{'err':'password does not match'});
         }
         req.session.user = user;
         return res.json(200,user);
@@ -56,11 +56,11 @@ exports.doReg = function(req, res){
         UUID: req.body.UUID,
     });
     User.get(newUser,function(err,user){
-        if(user){
-            err = 'User has exist';
-        }
         if(err){
             return res.json(400,err);
+        }
+        if(user){
+            return res.json(401,{'err':'user has exist')
         }
         newUser.save(function(err,user){
             if(err){
