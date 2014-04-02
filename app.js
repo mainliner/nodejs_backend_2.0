@@ -80,7 +80,7 @@ app.post('/items', item.putItem);
 //upload audio file to service
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
-app.get('/getallaudio' routes.checkLogin);
+app.get('/getallaudio', routes.checkLogin);
 app.get('/getallaudio' audio.getAllAudio);
 app.get('/getUnreadaudio' routes.checkLogin);
 app.get('/getUnreadaudio' audio.getUnreadAudio);
