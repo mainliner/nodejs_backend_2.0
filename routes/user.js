@@ -23,7 +23,6 @@ var checkData = function(newDate,oldDate){
 exports.putUser= function(req, res){
     //获取数据（email||phone )
     //检查数据是否合法（数值跨度）-> update
-    console.log(req.body);
     User.get(req.body,function(err,user){
         if(err){
             return res.json(400,err);
@@ -46,7 +45,7 @@ exports.putUser= function(req, res){
                 });
             }
         }
-    });  
+    });
 };
 
 exports.checkUserVersion = function(req, res){

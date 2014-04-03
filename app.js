@@ -63,6 +63,9 @@ app.post('/reg', routes.checkNotLogin)
 app.post('/reg', routes.doReg);
 app.post('/login', routes.checkNotLogin)
 app.post('/login', routes.doLogin);
+app.all('/reset', routes.checkNotLogin);
+app.post('/reset', routes.reset);
+app.get('/reset', routes.doReset);
 app.get('/logout', routes.checkLogin);
 app.get('/logout', routes.logout);
 
@@ -85,7 +88,7 @@ app.get('/getallaudio', audio.getAllAudio);
 app.get('/getUnreadaudio', routes.checkLogin);
 app.get('/getUnreadaudio', audio.getUnreadAudio);
 
-app.post('/test',routes.test);
+//app.post('/test',routes.test);
 
 
 if(!module.parent) {

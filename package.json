@@ -13,6 +13,7 @@
     "aws-sdk": ">= 1.5.0",
     "node-uuid": ">= 1.4.1",
     "formidable": "*",
-    "gridform":"*"
+    "gridform":"*",
+    "nodemailer":"*"
   }
 }

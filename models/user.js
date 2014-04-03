@@ -155,14 +155,12 @@ User.getByTime = function getByTime(query,callback){
 User.update = function update(query,callback){
     if(query._id){
         var id = query._id;
-        console.log(query._id);
         delete query._id;
     }
     else{
         var err = {'err':'can not find the user'};
         return callback(err);
     }
-    console.log(query);
     mongodb.open(function(err,db){
         if(err){
             return  callback(err);
@@ -205,7 +203,28 @@ User.modifyUserState = function modifyUserState(query,callback){
         });
 
 };
+User.getByEmailAndName = function getByEmailAndName(query,callback){
+    mongodb.open(function (err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('users', function(err,collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.findOne({'user.userInfo.name':query.user.userInfo.name, 'user.userInfo.email':query.user.userInfo.email},function(err,user){
+                mongodb.close();
+                if(err){
+                    return callback(err,null);
+                }
+                callbck(null,user);
+            });
+        });
+    });
+};
 //for test
+/*
 User.test = function (callback){
     mongodb.open(function(err,db){
         if(err){
@@ -227,3 +246,4 @@ User.test = function (callback){
 
     });
 };
+*/
