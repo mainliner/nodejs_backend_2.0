@@ -59,13 +59,17 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 
-app.post('/reg', routes.checkNotLogin)
+app.post('/reg', routes.checkNotLogin);
 app.post('/reg', routes.doReg);
-app.post('/login', routes.checkNotLogin)
+app.post('/login', routes.checkNotLogin);
 app.post('/login', routes.doLogin);
+
+//app.post('/password', routes.checkLogin);
+app.post('/password', routes.password);
 app.all('/reset', routes.checkNotLogin);
 app.post('/reset', routes.reset);
 app.get('/reset', routes.doReset);
+
 app.get('/logout', routes.checkLogin);
 app.get('/logout', routes.logout);
 
@@ -83,10 +87,12 @@ app.post('/items', item.putItem);
 //upload audio file to service
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
-app.get('/getallaudio', routes.checkLogin);
-app.get('/getallaudio', audio.getAllAudio);
-app.get('/getUnreadaudio', routes.checkLogin);
-app.get('/getUnreadaudio', audio.getUnreadAudio);
+//app.post('/getallaudio', routes.checkLogin);
+app.post('/getallaudio', audio.getAllAudio);
+//app.post('/getunreadaudio', routes.checkLogin);
+app.post('/getunreadaudio', audio.getUnreadAudio);
+//app.post('/getlastaudio',routes.checkLogin);
+app.post('/getlastaudio',audio.getLastAudio);
 
 //app.post('/test',routes.test);
 

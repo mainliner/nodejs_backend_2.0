@@ -775,3 +775,243 @@ Error: db object already connecting, open cannot be called multiple times
     at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
     at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
     at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+[Fri Apr 04 2014 17:05:24 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'password' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:141)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:315:9)
+    at /Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:339:9
+    at /Users/nosongyang/nodejs/wedate/node_modules/connect-mongo/lib/connect-mongo.js:220:17
+[Fri Apr 04 2014 17:05:51 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'password' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:141)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:315:9)
+    at /Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:339:9
+    at /Users/nosongyang/nodejs/wedate/node_modules/connect-mongo/lib/connect-mongo.js:220:17
+[Fri Apr 04 2014 17:05:58 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'password' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:141)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:315:9)
+    at /Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:339:9
+    at /Users/nosongyang/nodejs/wedate/node_modules/connect-mongo/lib/connect-mongo.js:220:17
+[Fri Apr 04 2014 17:08:29 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'password' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:141)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at nextRoute (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:100:7)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:167:11)
+    at exports.checkLogin (/Users/nosongyang/nodejs/wedate/routes/index.js:19:9)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+[Fri Apr 04 2014 17:08:37 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'password' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:141)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at nextRoute (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:100:7)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:167:11)
+    at exports.checkLogin (/Users/nosongyang/nodejs/wedate/routes/index.js:19:9)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+[Fri Apr 04 2014 17:13:09 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:191:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:13:19 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:191:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:13:22 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:191:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:13:24 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:191:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:14:23 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:192:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:14:37 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:192:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:18:19 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'user' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:24)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.cookieParser [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/cookieParser.js:65:5)
+[Fri Apr 04 2014 17:18:22 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'user' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:24)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.cookieParser [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/cookieParser.js:65:5)
+[Fri Apr 04 2014 17:18:34 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'user' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:24)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.cookieParser [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/cookieParser.js:65:5)
+[Fri Apr 04 2014 17:19:45 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'user' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:24)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.cookieParser [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/cookieParser.js:65:5)
+[Fri Apr 04 2014 17:19:47 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'user' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:24)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.cookieParser [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/cookieParser.js:65:5)
+[Fri Apr 04 2014 17:19:53 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'user' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:24)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.cookieParser [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/cookieParser.js:65:5)
+[Fri Apr 04 2014 17:20:26 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:193:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:20:32 GMT+0800 (CST)]/password
+TypeError: Not a string or buffer
+    at Hash.update (crypto.js:209:17)
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:193:27)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at Object.session [as handle] (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:304:7)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+[Fri Apr 04 2014 17:25:11 GMT+0800 (CST)]/password
+TypeError: Cannot read property 'password' of undefined
+    at exports.password (/Users/nosongyang/nodejs/wedate/routes/index.js:187:141)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at Router._dispatch (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:173:5)
+    at Object.router (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:33:10)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/proto.js:193:15)
+    at next (/Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:315:9)
+    at /Users/nosongyang/nodejs/wedate/node_modules/express/node_modules/connect/lib/middleware/session.js:339:9
+    at /Users/nosongyang/nodejs/wedate/node_modules/connect-mongo/lib/connect-mongo.js:220:17

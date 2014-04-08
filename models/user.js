@@ -213,12 +213,33 @@ User.getByEmailAndName = function getByEmailAndName(query,callback){
                 mongodb.close();
                 return callback(err);
             }
-            collection.findOne({'user.userInfo.name':query.user.userInfo.name, 'user.userInfo.email':query.user.userInfo.email},function(err,user){
+            collection.findOne({'user.userInfo.name':query.name, 'user.userInfo.email':query.email},function(err,user){
                 mongodb.close();
                 if(err){
                     return callback(err,null);
                 }
-                callbck(null,user);
+                callback(null,user);
+            });
+        });
+    });
+};
+
+User.changePassword = function(newPassword,Num,email,callback){
+    mongodb.open(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('users',function(err,collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.update({'user.userInfo.email':email},{'$set':{'user.userInfo.password':newPassword}},function(err){
+                mongodb.close();
+                if(err){
+                    callback(err);
+                }
+                callback(null,Num);
             });
         });
     });

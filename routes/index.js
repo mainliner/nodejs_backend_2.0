@@ -4,6 +4,7 @@
  */
 var crypto = require('crypto');
 var User = require('../models/user.js');
+var resetServer = require('../models/passwordReset');
 var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
 var nodemailer = require("nodemailer");
@@ -27,7 +28,7 @@ exports.checkNotLogin = function(req, res, next) {
 };
 
 exports.doLogin = function(req,res) {
-    if(!(req.body.phone || req.body.email)){
+    if(req.body.phone === undefined || req.body.email === undefined){
         return res.json(400,{'err':'Please input your username and password'});
     }
     var md5 = crypto.createHash('md5');
@@ -50,6 +51,9 @@ exports.logout = function(req,res) {
 };
 
 exports.doReg = function(req, res){
+    if(req.body.phone === undefined || req.body.email === undefined || req.body.password === undefined || req.body.UUID === undefined){
+        return res.json(400,{'err':'wrong request format'})
+    }
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password).digest('base64');
     var newUser = new User({
@@ -83,7 +87,8 @@ var sendEmail = function(email, sid, callback){
             pass: "mainliner880320"
         }
     });
-    url= "http://127.0.0.1/reset?sid="+sid+"&email="+email;
+    url= "http://192.168.199.238:3000/reset?sid="+sid+"&email="+email;
+    console.log(url);
     var mailOptions = {
         from: "WeDate",
         to: email,
@@ -103,9 +108,10 @@ var sendEmail = function(email, sid, callback){
 
 
 exports.reset = function(req, res){
-    if(!(req.body.user.userInfo.email && req.body.user.userInfo.name)){
+    if(req.body.email === undefined || req.body.name === undefined){
         return res.json(400,{'err':'bad request format'});
     }
+    console.log(req.body);
     User.getByEmailAndName(req.body,function(err,user){
         if(err){
             return res.json(400,err);
@@ -119,12 +125,18 @@ exports.reset = function(req, res){
             var email = user.user.userInfo.email;
             var md5 = crypto.createHash('md5');
             var sid = md5.update(email+'$'+outTime+'@'+privateKey).digest('base64');
-            sendEmail(email,sid,function(err){
+            var RS = new resetServer({'email':email,'privateKey':privateKey,'outTime':outTime});
+            RS.save(function(err){
+                if(err){
+                    return res.json(400,err);
+                }
+                sendEmail(email,sid,function(err){
                     if(err){
                         return res.json(401,{'err':'send email failed'});
                     }
                     return res.json(200,{'info':'send email successful'});
-            });
+                });
+            });  
         }else{
             return res.json(402,{'err':'information not match'});
         }
@@ -133,6 +145,71 @@ exports.reset = function(req, res){
 
 exports.doReset = function(req,res){
     //veritify the url key and username
+    if(req.query.sid ===undefined || req.query.email === undefined){
+        return res.json(302,{'err':'not enough params'})
+    }
+    resetServer.getByEmail(req.query.email,function(err,doc){
+        if(err){
+            return res.json(400,err);
+        }
+        if(!doc){
+            return res.json(400,{err:'no this user for password reset'});
+        }
+        var now = new Date();
+        if(doc.outTime < now.getTime()){
+            console.log(now.getTime());
+            return res.json(400,{'err':"out time yeah"});
+        }
+        var md5 = crypto.createHash('md5');
+        var sid = md5.update(doc.email+'$'+doc.outTime+'@'+doc.privateKey).digest('base64');
+        if(req.query.sid != sid){
+            return res.json(400,{'err':'invalue sid '});
+        }
+        var Num = "";
+        for(var i=0;i<8;i++) { 
+            Num+=Math.floor(Math.random()*10); 
+        }
+        var _md5 = crypto.createHash('md5');
+        var newPassword = _md5.update(Num).digest('base64');
+        User.changePassword(newPassword, Num,doc.email, function(err,Num){
+            if(err){
+                return res.json(400,err);
+            }
+            return res.json(200,{'password':Num});
+        }) 
+
+    });
+};
+exports.password = function(req,res){
+    if(req.body.oldPassword === undefined || req.body.newPassword === undefined){
+        return res.json(400,{'err':'wrong request format'});
+    }
+    if(req.session.user.user.userInfo.email === undefined || req.session.user.user.userInfo.phone === undefined){
+        return res.json(400, {'err':'wrong request format'});
+    }
+    var md5 = crypto.createHash('md5');
+    var oldPassword = md5.update(req.body.oldPassword).digest('base64');
+    User.get(req.session.user, function(err,doc){
+        if(err){
+            return res.json(400,err);
+        }
+        if(doc){
+            if(oldPassword == doc.user.userInfo.password){
+                var _md5 = crypto.createHash('md5');
+                var newPassword = _md5.update(req.body.newPassword).digest('base64');
+                User.changePassword(newPassword, null, req.session.user.user.userInfo.email, function(err,password){
+                    if(err){
+                        return res.json(400,err);
+                    }
+                        return res.json(200,{'info':'change password success'});
+                });
+            }else{
+                return res.json(402,{'err':'password does not match'});
+            }
+        }else{
+            return res.json(400,{'err':'user not exist'});
+        }
+    });
 };
 
 /*

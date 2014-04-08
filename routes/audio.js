@@ -25,12 +25,12 @@ exports.upload = function (req,res) {
             if(err){
                 return res.json(400,err);
             }  
-            console.log(files);
+            console.log(files.starVoiceMessage.id);
             console.log(fields); 
             var audio = new Audio({
-                fileId: "",
-                startId: "",
-                uploadDate:"" 
+                audioFileId: files.starVoiceMessage.id,
+                starId: fields.star_id,
+                uploadDate: new Date()
             });
             audio.save(function(err,doc){
                 if(err){
@@ -43,8 +43,27 @@ exports.upload = function (req,res) {
     });
 };
 
+exports.getLastAudio = function(req, res) {
+    if(req.body.starId === undefined){
+        return res.json(400,{'err':'wrong request format'});
+    }
+    Audio.getLastAudioByStarId(req.body.starId,function(err,doc){
+        if(err){
+            return res.json(400,err);
+        }
+        return res.json(200,doc);
+    });
+};
 exports.getAllAudio = function(req, res) {
-
+    if(req.body.starId === undefined){
+        return res.json(400,{'err':'wrong request format'});
+    }
+    Audio.getAudioByStarId(req.body.starId, function(err,docs){
+        if(err){
+            return res.json(400, err);
+        }
+        return res.json(200,docs);
+    });
 };
 
 exports.getUnreadAudio = function(req, res) {
