@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <title>Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+            <a class="navbar-brand" href="/admin">Muse</a>
+            <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+            <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+            </div>
+        </nav>
+        <div class="col-sm-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li ><a href="/dashboard">管理员</a></li>
+                <li ><a href="/showadmin">管理员列表</a></li>
+                <li class="active"><a href="/showstar">明星列表</a></li>
+                <li><a href="/showitem">物品列表</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-offset-1 col-sm-7">
+            <div class="well">
+                <h5>明星</h5>
+                <hr/>
+                <p class="text-warning"><%= msg %></p>
+                <% if(list != []){ %>
+                <table class="table table-hover">
+                    <tr>
+                        <td>#ID</td>
+                        <td>#Username</td>
+                        <td>#Level</td>
+                        <td>#Operation</td>
+                    </tr>                
+                    <% list.forEach(function(e){%>
+                    <tr>
+                        <td><%=e._id%></td>
+                        <td><%=e.username%></td>
+                        <td><%=e.level%></td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    More<span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a data-toggle="modal" data-target="#add">显示详细信息</a></li>
+                                    <li><a href="#">删除</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <%});%>
+                </table>
+                <%}%>
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#add">添加明星账号</button>
+                
+            </div>
+        </div>
+        <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">添加明星</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="lead">信息录入</p>
+                        <form class="form-horizontal" role="form" method="POST" action="/addadmin">
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Username</label>
+                                <div class="col-sm-7">
+                                <input name="username" type="username" class="form-control" id="inputPassword3" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+                                <div class="col-sm-7">
+                                <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-10">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="level" id="optionsRadios1" value="2" checked>
+                                        明星账户（level 2）
+                                    </label>
+                                </div>
+                                </div>
+                             </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-4 col-sm-10">
+                                <button type="submit" class="btn btn-default">添加明星账户</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    </body>
+</html>

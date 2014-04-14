@@ -8,6 +8,8 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var item = require('./routes/item');
 var audio = require('./routes/audio');
+var admin = require('./routes/admin');
+
 var http = require('http');
 var path = require('path');
 var settings = require('./settings');
@@ -87,14 +89,40 @@ app.post('/items', item.putItem);
 //upload audio file to service
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
-//app.post('/getallaudio', routes.checkLogin);
+app.post('/getallaudio', routes.checkLogin);
 app.post('/getallaudio', audio.getAllAudio);
-//app.post('/getunreadaudio', routes.checkLogin);
+app.post('/getunreadaudio', routes.checkLogin);
 app.post('/getunreadaudio', audio.getUnreadAudio);
-//app.post('/getlastaudio',routes.checkLogin);
+app.post('/getlastaudio',routes.checkLogin);
 app.post('/getlastaudio',audio.getLastAudio);
 
+//only for admin 
+app.all('/admin', admin.checkAdminNotLogin);
+app.get('/admin', admin.login);
+app.post('/admin', admin.doLogin);
+app.get('/dashboard', admin.checkAdminLogin, admin.dashboard);
+app.get('/adminlogout', admin.checkAdminLogin, admin.logout);
+
+
+app.get('/showadmin', admin.checkAdminLogin, admin.showAdmin);
+app.post('/addadmin', admin.checkAdminLogin, admin.addAdmin);
+app.get('/deladmin', admin.checkAdminLogin, admin.delAdmin);
+app.post('/adminchangepwd', admin.checkAdminLogin, admin.changePassword);
+
+app.get('/showstar', admin.checkAdminLogin, admin.showStar);
+app.post('/changestarinfo', admin.checkAdminLogin, admin.changeStarInfo);
+app.post('/addstar', admin.checkAdminLogin, admin.addStar);
+app.get('/showitem', admin.showItem);
+app.get('/itemdetail', admin.showItemDetail);
+app.post('/additem', admin.addItem);
+
 //app.post('/test',routes.test);
+
+app.get('*', function(req, res){
+    res.render('error', {
+        'msg': 'No Found'
+    });
+});
 
 
 if(!module.parent) {

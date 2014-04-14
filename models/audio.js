@@ -66,7 +66,7 @@ Audio.getAudioByStarId = function (starId, callback){
                 mongodb.close();
                 return callback(err);
             }
-            collection.find({'starId':starId}).sort({uploadDate:-1}).toArray(function(err,docs){
+            collection.find({'starId':starId},{audioFileId:1}).sort({uploadDate:-1}).toArray(function(err,docs){
                 mongodb.close();
                 if(err){
                     return  callback(err);
