@@ -97,9 +97,9 @@ exports.dashboard = function (req, res){
     res.render('dashboard',admin);
 };
 exports.addAdmin = function(req, res){
-    //if(req.session.admin.level != 0){
-    //    return res.render('error',{'msg':"you don't have power to do this!"});
-    //}
+    if(req.session.admin.level != 0){
+        return res.render('error',{'msg':"you don't have power to do this!"});
+    }
     if(req.param('password')==="" || req.param('username')===""){
         return res.render('error',{'msg':"please input the right value"});
     }

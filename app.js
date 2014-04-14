@@ -105,7 +105,7 @@ app.get('/adminlogout', admin.checkAdminLogin, admin.logout);
 
 
 app.get('/showadmin', admin.checkAdminLogin, admin.showAdmin);
-app.post('/addadmin',  admin.addAdmin);
+app.post('/addadmin', admin.checkAdminLogin, admin.addAdmin);
 app.get('/deladmin', admin.checkAdminLogin, admin.delAdmin);
 app.post('/adminchangepwd', admin.checkAdminLogin, admin.changePassword);
 
