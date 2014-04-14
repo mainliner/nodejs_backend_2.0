@@ -6,6 +6,7 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
+var star = require('./routes/star');
 var item = require('./routes/item');
 var audio = require('./routes/audio');
 var admin = require('./routes/admin');
@@ -86,6 +87,8 @@ app.post('/putuser', user.putUser);
 app.all('/items', routes.checkLogin);
 app.get('/items', item.getAllItems);
 app.post('/items', item.putItem);
+//get star info
+app.get('/star', star.getAllStar);
 //upload audio file to service
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
