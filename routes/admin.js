@@ -175,7 +175,6 @@ exports.addStar = function(req, res){
     var md5 =  crypto.createHash('md5');
     var password = md5.update(req.param("password")).digest('base64');
     var starBirthday = new Date(parseInt(req.param("year")), parseInt(req.param("mouth"))-1, parseInt(req.param("day")) );
-    console.log(starBirthday);
     var newStar = new Star({
         username:req.param("username"),
         password:password,
@@ -193,7 +192,6 @@ exports.addStar = function(req, res){
         portraitBig:req.param("portraitbig"),
         portraitSmall:req.param("portraitsmall")
     });
-    console.log(newStar);
     newStar.save(function(err,star){
         if(err){
             return res.render('error',{'msg':'create star failed'});
