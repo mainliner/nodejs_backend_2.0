@@ -13,10 +13,10 @@ exports.getAllItems = function(req, res){
         if(err){
             return res.json(400,err);
         }
-        res.json(200,{'wedate':{'version':1.0,'items':items}});
+        res.json(200,items);
     });
 };
-
+/*
 exports.putItem = function(req, res){
     user = req.session.user;
     if(user.admin){
@@ -35,4 +35,4 @@ exports.putItem = function(req, res){
     else{
         res.json(400,{'info':'you do not have the premision'})
     }
-};
+};*/

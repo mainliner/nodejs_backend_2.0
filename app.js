@@ -84,11 +84,9 @@ app.get('/getuser', user.getUser);
 app.post('/putuser', routes.checkLogin);
 app.post('/putuser', user.putUser);
 //get item info
-app.all('/items', routes.checkLogin);
 app.get('/items', item.getAllItems);
-app.post('/items', item.putItem);
 //get star info
-app.get('/star', routes.checkLogin, star.getAllStar);
+app.get('/star',  star.getAllStar);
 //upload audio file to service
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
