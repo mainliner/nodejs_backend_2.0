@@ -6363,3 +6363,455 @@ admin is not defined
     at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
     at /Users/nosongyang/nodejs/wedate/routes/admin.js:160:24
     at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 10:49:25 GMT+0800 (CST)]/
+Error: Error setting TTL index on collection : sessions
+    at /Users/nosongyang/nodejs/wedate/node_modules/connect-mongo/lib/connect-mongo.js:161:23
+    at /Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/db.js:1404:28
+    at /Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/db.js:1542:30
+    at /Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/cursor.js:159:22
+    at commandHandler (/Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/cursor.js:678:48)
+    at /Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/db.js:1806:9
+    at __executeQueryCommand (/Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/db.js:1636:44)
+    at Db._executeQueryCommand (/Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/db.js:1805:7)
+    at Cursor.nextObject (/Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/cursor.js:729:13)
+    at Cursor.toArray (/Users/nosongyang/nodejs/wedate/node_modules/mongodb/lib/mongodb/cursor.js:158:10)
+[Wed Apr 16 2014 11:18:32 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 11:41:54 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 11:41:57 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:13245)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:55:17
+[Wed Apr 16 2014 11:43:27 GMT+0800 (CST)]/showadmin
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/adminlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:5859)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
+    at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 13:19:56 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:13146)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:55:17
+[Wed Apr 16 2014 13:30:59 GMT+0800 (CST)]/showadmin
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/adminlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:5859)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
+    at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 13:36:05 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 13:36:08 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 13:36:10 GMT+0800 (CST)]/showadmin
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/adminlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:5859)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
+    at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 13:36:12 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:14088)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:55:17
+[Wed Apr 16 2014 13:36:20 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 13:51:08 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:14088)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:55:17
+[Wed Apr 16 2014 14:04:10 GMT+0800 (CST)]/showadmin
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/adminlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:5859)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
+    at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 14:04:13 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 14:04:15 GMT+0800 (CST)]/showadmin
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/adminlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:5859)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
+    at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 14:04:17 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:14274)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:56:17
+[Wed Apr 16 2014 14:05:17 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:14322)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:56:17
+[Wed Apr 16 2014 14:05:19 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:14322)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:56:17
+[Wed Apr 16 2014 14:05:21 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 14:08:51 GMT+0800 (CST)]/showitem
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/itemlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:14407)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:235:20
+    at /Users/nosongyang/nodejs/wedate/models/item.js:56:17
+[Wed Apr 16 2014 14:11:41 GMT+0800 (CST)]/showstar
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/starlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:18772)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:168:20
+    at /Users/nosongyang/nodejs/wedate/models/star.js:64:24
+[Wed Apr 16 2014 15:08:44 GMT+0800 (CST)]/showadmin
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/adminlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:5859)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
+    at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24

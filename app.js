@@ -88,7 +88,7 @@ app.all('/items', routes.checkLogin);
 app.get('/items', item.getAllItems);
 app.post('/items', item.putItem);
 //get star info
-app.get('/star', star.getAllStar);
+app.get('/star', routes.checkLogin, star.getAllStar);
 //upload audio file to service
 app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
@@ -115,9 +115,10 @@ app.post('/adminchangepwd', admin.checkAdminLogin, admin.changePassword);
 app.get('/showstar', admin.checkAdminLogin, admin.showStar);
 app.post('/changestarinfo', admin.checkAdminLogin, admin.changeStarInfo);
 app.post('/addstar', admin.checkAdminLogin, admin.addStar);
-app.get('/showitem', admin.showItem);
-app.get('/itemdetail', admin.showItemDetail);
-app.post('/additem', admin.addItem);
+app.get('/showitem', admin.checkAdminLogin, admin.showItem);
+app.post('/changeiteminfo', admin.checkAdminLogin, admin.changeItemInfo);
+app.post('/additem', admin.checkAdminLogin, admin.addItem);
+app.get('/delitem', admin.checkAdminLogin, admin.deleteItem);
 
 //app.post('/test',routes.test);
 

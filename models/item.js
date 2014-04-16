@@ -1,25 +1,24 @@
-var mongodb = require('./db')
+var mongodb = require('./db');
+var ObjectID = require('mongodb').ObjectID;
 
 function Item(item){
-    this.ChineseName = item.ChineseName;
-    this.EnglishName = item.EnglishName;
-    this.title = item.title;
-    this.price = item.price;
-    this.npc = item.npc;
-    this.describe = item.describe;
-    this.type = item.type;
-    this.pictureBig = item.pictureBig;
-    this.pictureSmall = item.pictureSmall;
+    this.item = {
+        chineseName : item.chineseName,
+        englishName : item.englishName,
+        title : item.title,
+        price : item.price,
+        npc : item.npc,
+        description : item.description,
+        type : item.type,
+        pictureBig : item.pictureBig,
+        pictureSmall : item.pictureSmall
+    }
 };
 module.exports = Item;
 
 Item.prototype.save = function save(callback){
     var item = {
-        name: this.name,
-        price: this.price,
-        describe: this.describe,
-        npc: this.npc,
-        type: this.type,
+        item:this.item
     };
     mongodb.open(function(err,db){
         if (err){
@@ -30,7 +29,7 @@ Item.prototype.save = function save(callback){
                 mongodb.close();
                 return callback(err);
             }
-            collection.ensureIndex('name');
+            collection.ensureIndex('item.englishName',function(){});
             collection.insert(item, {safe:true}, function(err,item){
                 mongodb.close();
                 callback(err,item);
@@ -54,16 +53,52 @@ Item.getAll = function getAll(callback) {
                 if (err) {
                     callback(err, null);
                 }
-                var items = [];
-                docs.forEach(function(doc,index){
-                    var item = new Item(doc);
-                    items.push(item);
-                });
-                callback(null,items);
+                callback(null,docs);
             });
         });
     });
-}
+};
+Item.changeItemInfo = function (id, newinfo, callback){
+    mongodb.open(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('item', function(err, collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.update({'_id':new ObjectID(id)},{'$set':newinfo},function(err){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                return callback(null);
+            });
+        });
+    });
+};
+Item.deleteItem = function (id, callback){
+    mongodb.open(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('item', function(err, collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            collection.remove({'_id':new ObjectID(id)},function(err){
+                mongodb.close();
+                if(err){
+                    return callback(err);
+                }
+                return callback(null);
+            });
+        });
+    });
+};
+/*
 Item.get = function get(itemName, callback) {
     mongodb.open(function(err,db){
         if(err){
@@ -88,4 +123,4 @@ Item.get = function get(itemName, callback) {
                 });
             });
         });
-    };
+    };*/

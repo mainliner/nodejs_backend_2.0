@@ -67,7 +67,7 @@ Star.getAll = function(callback){
     });
 };
 
-Star.getByName = function(query,callback){
+Star.getByName = function(username,callback){
     //unuse function
     mongodb.open(function(err,db){
         if(err){
@@ -78,7 +78,7 @@ Star.getByName = function(query,callback){
                 mongodb.close();
                 return callback(err);
             }
-            collection.find({'star.englishName':query.EnglishName,'star.ChineseName':query.ChineseName},function(err,doc){
+            collection.find({'star.username':username},function(err,doc){
                 mongodb.close();
                 if(err){
                     return callback(err);

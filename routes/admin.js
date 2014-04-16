@@ -192,11 +192,19 @@ exports.addStar = function(req, res){
         portraitBig:req.param("portraitbig"),
         portraitSmall:req.param("portraitsmall")
     });
-    newStar.save(function(err,star){
+    Star.getByName(req.param("username"),function(err,doc){
         if(err){
             return res.render('error',{'msg':'create star failed'});
         }
-        return res.redirect('/showstar');
+        if(doc){
+            return res.render('error',{'msg':'star user has already existed'});
+        }
+        newStar.save(function(err,star){
+            if(err){
+                return res.render('error',{'msg':'create star failed'});
+            }
+            return res.redirect('/showstar');
+        });
     });
 };
 exports.changeStarInfo = function(req, res){
@@ -228,11 +236,69 @@ exports.changeStarInfo = function(req, res){
 };
 
 exports.showItem = function(req, res){
-
+    Item.getAll(function(err,docs){
+        if(err){
+            return res.render('itemlist',{'msg':'load item info failed','list':''});
+        }
+        return res.render('itemlist',{'msg':'','list':docs});
+    });
 };
 exports.addItem = function(req, res){
-
+    if(req.param('chinesename') ==="" || req.param('englishname') === ""){
+        return res.render('error',{'msg':'wrong request format'});
+    }
+    var newItem = new Item({
+        chineseName:req.param('chinesename'),
+        englishName : req.param('englishname'),
+        title : req.param('title'),
+        price : req.param('price'),
+        npc : req.param('npc'),
+        description : req.param('description'),
+        type : req.param('type'),
+        pictureBig : req.param('picturebig'),
+        pictureSmall : req.param('picturesmall')
+    });
+    newItem.save(function(err,item){
+        if(err){
+            return res.render('error',{'msg':'create item failed!'});
+        }
+        return res.redirect('/showitem');
+    });
 };
-exports.showItemDetail = function(req, res){
-
+exports.changeItemInfo = function(req, res){
+    if(req.param("englishname") ==="" || req.param("chinesename") ==="" || req.param('id') ===""){
+        return res.render('error',{'msg':'wrong requst format'});
+    }
+    var newInfo = {
+        'item.chineseName':req.param('chinesename'),
+        'item.englishName': req.param('englishname'),
+        'item.title': req.param('title'),
+        'item.price': req.param('price'),
+        'item.npc': req.param('npc'),
+        'item.description': req.param('description'),
+        'item.type': req.param('type'),
+        'item.pictureBig': req.param('picturebig'),
+        'item.pictureSmall': req.param('picturesmall')
+    }
+    Item.changeItemInfo(req.param('id'),newInfo,function(err){
+        if(err){
+            return res.render('error','Edit the item info failed');
+        }
+        return res.redirect('/showitem');
+    });
 };
+exports.deleteItem = function(req, res){
+    if(req.query.id === ""){
+        return res.render('error','wrong request format');
+    }
+    if(req.session.admin.level != 0){
+        return res.render('error',"You don't have the power to do this!");
+    }
+    Item.deleteItem(req.query.id, function(err){
+        if(err){
+            return res.render('error',"delete item failed!");
+        }
+        return res.redirect('/showitem');
+    });
+
+}

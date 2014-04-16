@@ -17,92 +17,203 @@
             <ul class="nav nav-pills nav-stacked">
                 <li ><a href="/dashboard">管理员</a></li>
                 <li ><a href="/showadmin">管理员列表</a></li>
-                <li class="active"><a href="/showstar">明星列表</a></li>
-                <li><a href="/showitem">物品列表</a></li>
+                <li ><a href="/showstar">明星列表</a></li>
+                <li class="active"><a href="/showitem">物品列表</a></li>
             </ul>
         </div>
         <div class="col-sm-offset-1 col-sm-7">
             <div class="well">
-                <h5>明星</h5>
+                <h5>物品</h5>
                 <hr/>
                 <p class="text-warning"><%= msg %></p>
                 <% if(list != []){ %>
                 <table class="table table-hover">
                     <tr>
-                        <td>#ID</td>
-                        <td>#Username</td>
-                        <td>#Level</td>
-                        <td>#Operation</td>
+                        <td>ID</td>
+                        <td>ChineseName</td>
+                        <td>Price</td>
+                        <td>Operation</td>
                     </tr>                
                     <% list.forEach(function(e){%>
                     <tr>
                         <td><%=e._id%></td>
-                        <td><%=e.username%></td>
-                        <td><%=e.level%></td>
+                        <td><%=e.item.chineseName%></td>
+                        <td><%=e.item.price%></td>
                         <td>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                    More<span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a data-toggle="modal" data-target="#add">显示详细信息</a></li>
-                                    <li><a href="#">删除</a></li>
-                                </ul>
-                            </div>
+                            <button class="btn btn-default" data-toggle="modal" data-target="#<%=e._id%>">显示详细信息</button>
                         </td>
                     </tr>
                     <%});%>
                 </table>
                 <%}%>
-                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#add">添加明星账号</button>
-                
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#add">添加物品信息</button>
             </div>
         </div>
+
+
+        <%if(list){%>
+            <%list.forEach(function(e){%>
+                <div class="modal fade" id="<%=e._id%>" tabindex="-1" role="dialog" aria-labelledby="starModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">明星信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" method="POST" action="/changeiteminfo">
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">ID</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e._id%>" name="id" type="username" class="form-control" id="inputPassword3" placeholder="ID" readonly>
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">中文名</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.chineseName%>" name="chinesename" type="username" class="form-control" id="inputPassword3" placeholder="Chinese Name">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">英文名</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.englishName%>" name="englishname" type="username" class="form-control" id="inputPassword3" placeholder="English Name">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Title</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.title%>" name="title" type="username" class="form-control" id="inputPassword3" placeholder="Title">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">价格</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.price%>" name="price" type="username" class="form-control" id="inputPassword3" placeholder="Price">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">NPC</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.npc%>" name="npc" type="username" class="form-control" id="inputPassword3" placeholder="所属NPC">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">类型</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.type%>" name="type" type="username" class="form-control" id="inputPassword3" placeholder="Type">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">描述</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.description%>" name="description" type="username" class="form-control" id="inputPassword3" placeholder="Description">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">pictureBig</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.pictureBig%>" name="picturebig" type="username" class="form-control" id="inputPassword3" placeholder="pictureBig">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">pictureSmall</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.pictureSmall%>" name="picturesmall" type="username" class="form-control" id="inputPassword3" placeholder="pictureSmall">
+                                </div>
+                             </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-4 col-sm-3">
+                                    <button type="submit" class="btn btn-default">修改明星信息</button>
+                                    
+                                    </div>
+                                    <div class="col-sm-offset-1 col-sm-3">
+                                        <a href="/delitem?id=<%=e._id%>" role="button" class="btn btn-danger" style="float:right; ">删除</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <%});%>
+        <%}%><!--end of change star info modal-->
+
+
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">添加明星</h4>
+                        <h4 class="modal-title" id="myModalLabel">添加物品</h4>
                     </div>
                     <div class="modal-body">
                         <p class="lead">信息录入</p>
-                        <form class="form-horizontal" role="form" method="POST" action="/addadmin">
+                        <form class="form-horizontal" role="form" method="POST" action="/additem">
                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Username</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">中文名</label>
                                 <div class="col-sm-7">
-                                <input name="username" type="username" class="form-control" id="inputPassword3" placeholder="Username">
+                                <input name="chinesename" type="username" class="form-control" id="inputPassword3" placeholder="Chinese Name">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">英文名</label>
                                 <div class="col-sm-7">
-                                <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                <input name="englishname" type="username" class="form-control" id="inputPassword3" placeholder="English Name">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-4 col-sm-10">
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="level" id="optionsRadios1" value="2" checked>
-                                        明星账户（level 2）
-                                    </label>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">Title</label>
+                                <div class="col-sm-7">
+                                <input name="title" type="username" class="form-control" id="inputPassword3" placeholder="Title">
                                 </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">价格</label>
+                                <div class="col-sm-7">
+                                <input  name="price" type="username" class="form-control" id="inputPassword3" placeholder="Price">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">NPC</label>
+                                <div class="col-sm-7">
+                                <input name="npc" type="username" class="form-control" id="inputPassword3" placeholder="所属NPC">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">类型</label>
+                                <div class="col-sm-7">
+                                <input name="type" type="username" class="form-control" id="inputPassword3" placeholder="Type">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">描述</label>
+                                <div class="col-sm-7">
+                                <input name="description" type="username" class="form-control" id="inputPassword3" placeholder="Description">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">pictureBig</label>
+                                <div class="col-sm-7">
+                                <input name="picturebig" type="username" class="form-control" id="inputPassword3" placeholder="pictureBig">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">pictureSmall</label>
+                                <div class="col-sm-7">
+                                <input name="picturesmall" type="username" class="form-control" id="inputPassword3" placeholder="pictureSmall">
                                 </div>
                              </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-10">
-                                <button type="submit" class="btn btn-default">添加明星账户</button>
+                                <button type="submit" class="btn btn-default">添加</button>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    </div>
                 </div>
             </div>
-        </div>
+        </div><!--end of the #add modal-->
 
         <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
         <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
