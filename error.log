@@ -6859,3 +6859,63 @@ TypeError: Object #<Object> has no method 'open'
     at exports.checkAdminNotLogin (/Users/nosongyang/nodejs/wedate/routes/admin.js:17:9)
     at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
     at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+[Thu Apr 17 2014 10:46:07 GMT+0800 (CST)]/dashboard
+TypeError: /Users/nosongyang/nodejs/wedate/views/dashboard.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=user.admin.username%> (<%=user.admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+Cannot read property 'username' of undefined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:587)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:3152)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at exports.dashboard (/Users/nosongyang/nodejs/wedate/routes/admin.js:97:9)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+[Thu Apr 17 2014 10:48:01 GMT+0800 (CST)]/dashboard
+TypeError: /Users/nosongyang/nodejs/wedate/views/dashboard.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=user.admin%> (<%=user.admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+Cannot read property 'level' of undefined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:634)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:3143)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at exports.dashboard (/Users/nosongyang/nodejs/wedate/routes/admin.js:97:9)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+[Thu Apr 17 2014 10:54:23 GMT+0800 (CST)]/dashboard
+TypeError: /Users/nosongyang/nodejs/wedate/views/dashboard.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=user%> (<%=user.admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+Cannot read property 'level' of undefined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:628)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:3128)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at exports.dashboard (/Users/nosongyang/nodejs/wedate/routes/admin.js:97:9)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)

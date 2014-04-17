@@ -94,7 +94,7 @@ exports.changePassword = function(req, res){
 };
 exports.dashboard = function (req, res){
     admin = req.session.admin;
-    res.render('dashboard',admin);
+    res.render('dashboard',{'user':admin});
 };
 exports.addAdmin = function(req, res){
     if(req.session.admin.level != 0){
@@ -146,26 +146,22 @@ exports.delAdmin = function(req, res){
 };
 exports.showAdmin = function(req, res){
     if(req.session.admin.level != 0){
-        return res.render('adminlist',{'msg':"You don't have the power to search these message",'list':''});
+        return res.render('adminlist',{'msg':"You don't have the power to search these message",'list':'','user':req.session.admin});
     }
     Admin.getAdmin(function(err,docs){
         if(err){
-            return res.render('adminlist',{'msg':'Get admin list failed.','list':''});
+            return res.render('adminlist',{'msg':'Get admin list failed.','list':'','user':req.session.admin});
         }
-        if(docs){
-            return res.render('adminlist', {'msg':'','list':docs});
-        }else{
-            return res.render('adminlist', {'msg':'No admin in db','list':''});
-        }
+        return res.render('adminlist', {'msg':'','list':docs,'user':req.session.admin});
     });
 };
 
 exports.showStar = function(req, res){
     Star.getAll(function(err,docs){
         if(err){
-            return res.render('starlist',{'msg':'load star info failed','list':''});
+            return res.render('starlist',{'msg':'load star info failed','list':'','user':req.session.admin});
         }
-        return res.render('starlist',{'msg':'','list':docs});
+        return res.render('starlist',{'msg':'','list':docs,'user':req.session.admin});
     });
 };
 exports.addStar = function(req, res){
@@ -238,9 +234,9 @@ exports.changeStarInfo = function(req, res){
 exports.showItem = function(req, res){
     Item.getAll(function(err,docs){
         if(err){
-            return res.render('itemlist',{'msg':'load item info failed','list':''});
+            return res.render('itemlist',{'msg':'load item info failed','list':'','user':req.session.admin});
         }
-        return res.render('itemlist',{'msg':'','list':docs});
+        return res.render('itemlist',{'msg':'','list':docs,'user':req.session.admin});
     });
 };
 exports.addItem = function(req, res){
