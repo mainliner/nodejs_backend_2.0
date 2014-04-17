@@ -8,6 +8,7 @@ var resetServer = require('../models/passwordReset');
 var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
 var nodemailer = require("nodemailer");
+var settings = require('../settings');
 
 exports.index = function(req, res){
   res.render('index', { title: 'Let\'s date' });
@@ -40,6 +41,7 @@ exports.doLogin = function(req,res) {
         if(user.user.userInfo.password != password){
             return res.json(402,{'err':'password does not match'});
         }
+        req.session.cookie.originalMaxAge = settings.maxAge;
         req.session.user = user;
         return res.json(200,user);
     });
@@ -73,6 +75,7 @@ exports.doReg = function(req, res){
             if(err){
                 return res.json(300,err);
             }
+            req.session.cookie.originalMaxAge = settings.maxAge;
             req.session.user = user[0];
             return res.json(200,user[0]);
         });
@@ -111,7 +114,6 @@ exports.reset = function(req, res){
     if(req.body.email === undefined || req.body.name === undefined){
         return res.json(400,{'err':'bad request format'});
     }
-    console.log(req.body);
     User.getByEmailAndName(req.body,function(err,user){
         if(err){
             return res.json(400,err);

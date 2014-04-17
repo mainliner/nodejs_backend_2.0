@@ -1,6 +1,7 @@
 var Admin = require('../models/admin.js');
 var Star = require('../models/star.js');
 var Item = require('../models/item.js');
+var settings = require('../settings');
 var crypto = require('crypto');
 
 exports.checkAdminLogin = function (req, res, next){
@@ -51,7 +52,9 @@ exports.doLogin = function (req, res){
         }
         if(admin){
             if(password === admin.password){
+                req.session.cookie.originalMaxAge = settings.maxAge;
                 req.session.admin = admin;
+                console.log(JSON.stringify(req.session));
                 return res.redirect('/dashboard');
             }else{
                 return res.render('error', {'msg': "password not match"});
@@ -170,7 +173,7 @@ exports.addStar = function(req, res){
     }
     var md5 =  crypto.createHash('md5');
     var password = md5.update(req.param("password")).digest('base64');
-    var starBirthday = new Date(parseInt(req.param("year")), parseInt(req.param("mouth"))-1, parseInt(req.param("day")) );
+    var starBirthday = new Date(parseInt(req.param("year")), parseInt(req.param("month"))-1, parseInt(req.param("day")) );
     var newStar = new Star({
         username:req.param("username"),
         password:password,

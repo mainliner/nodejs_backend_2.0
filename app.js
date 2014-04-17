@@ -39,7 +39,8 @@ app.use(express.session({
     secret: settings.cookieSecret,
     store: new MongoStore({
         db: settings.db
-    })
+    }),
+    cookie: {},
 }));
 app.use(app.router);
 
@@ -84,7 +85,7 @@ app.get('/getuser', user.getUser);
 app.post('/putuser', routes.checkLogin);
 app.post('/putuser', user.putUser);
 //get item info
-app.get('/items', item.getAllItems);
+app.get('/items',item.getAllItems);
 //get star info
 app.get('/stars',  star.getAllStar);
 //upload audio file to service
