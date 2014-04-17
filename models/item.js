@@ -1,4 +1,4 @@
-var mongodb = require('./db');
+var mongodbPool = require('./db');
 var ObjectID = require('mongodb').ObjectID;
 
 function Item(item){
@@ -20,18 +20,18 @@ Item.prototype.save = function save(callback){
     var item = {
         item:this.item
     };
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if (err){
             return callback(err);
         }
         db.collection('item', function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.ensureIndex('item.englishName',function(){});
             collection.insert(item, {safe:true}, function(err,item){
-                mongodb.close();
+                mongodbPool.release(db);
                 callback(err,item);
             });
         });
@@ -39,17 +39,17 @@ Item.prototype.save = function save(callback){
 };
 
 Item.getAll = function getAll(callback) {
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('item', function(err, collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.find().sort({price:-1}).toArray(function(err,docs){
-                mongodb.close();
+                mongodbPool.release(db);
                 if (err) {
                     callback(err, null);
                 }
@@ -59,17 +59,17 @@ Item.getAll = function getAll(callback) {
     });
 };
 Item.changeItemInfo = function (id, newinfo, callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('item', function(err, collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.update({'_id':new ObjectID(id)},{'$set':newinfo},function(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
@@ -79,17 +79,17 @@ Item.changeItemInfo = function (id, newinfo, callback){
     });
 };
 Item.deleteItem = function (id, callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('item', function(err, collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.remove({'_id':new ObjectID(id)},function(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
@@ -100,17 +100,17 @@ Item.deleteItem = function (id, callback){
 };
 /*
 Item.get = function get(itemName, callback) {
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('item',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.findOne({name:itemName}, function(err,doc){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }

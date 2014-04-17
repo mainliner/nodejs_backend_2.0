@@ -1,4 +1,4 @@
-var mongodb = require('./db');
+var mongodbPool = require('./db');
 
 function resetServer(resetInfo){
     this.email = resetInfo.email;
@@ -13,18 +13,18 @@ resetServer.prototype.save = function save(callback){
             privateKey:this.privateKey,
             outTime:this.outTime
     };
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('resetServer',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.ensureIndex('email',function(err,doc){});
             collection.update({email:resetInfo.email}, resetInfo, {upsert:true, w: 1},function(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 callback(err);
             });
         });
@@ -32,17 +32,17 @@ resetServer.prototype.save = function save(callback){
 };
 
 resetServer.getByEmail = function(email,callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             callback(err);
         }
         db.collection('resetServer',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.findOne({'email':email},function(err,doc){ //need find and modify it to make one key only can be userd once
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     callback(err);
                 }

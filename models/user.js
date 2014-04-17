@@ -1,4 +1,4 @@
-var mongodb = require('./db');
+var mongodbPool = require('./db');
 var ObjectID = require('mongodb').ObjectID;
 
 
@@ -51,13 +51,13 @@ User.prototype.save = function save(callback){
     var user = {
         user:this.user
     };
-    mongodb.open(function(err,db) {
+    mongodbPool.acquire(function(err,db) {
         if(err) {
             return callback(err);
         }
         db.collection('users',function(err,collection) {
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return callback(err);
             }
             collection.ensureIndex('user.userInfo.status',function(err, user){});
@@ -65,24 +65,24 @@ User.prototype.save = function save(callback){
             collection.ensureIndex('user.userInfo.phone',function(err, user) {});
             collection.ensureIndex('user.userInfo.email',function(err, user) {});
             collection.insert(user,{w:1}, function(err,user) {
-                mongodb.close();
+                mongodbPool.release();
                 callback(err, user);
             });
         });
     });
 };
 User.get = function get(query,callback){
-    mongodb.open(function (err,db){
+    mongodbPool.acquire(function (err,db){
         if(err){
             return callback(err);
         }
         db.collection('users', function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return callback(err);
             }
             collection.findOne({'user.userInfo.phone':query.user.userInfo.phone, 'user.userInfo.email':query.user.userInfo.email},function(err, doc){
-                mongodb.close();
+                mongodbPool.release();
                 if(doc){
                     callback(err,doc);
                 }else{
@@ -93,13 +93,13 @@ User.get = function get(query,callback){
     });
 };
 User.getByLogin = function get(query,callback){
-    mongodb.open(function (err,db){
+    mongodbPool.acquire(function (err,db){
         if(err){
             return callback(err);
         }
         db.collection('users',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return callback(err);
             }
             collection.findOne({'user.userInfo.phone':query.phone,'user.userInfo.email':query.email},function(err,doc){
@@ -113,10 +113,10 @@ User.getByLogin = function get(query,callback){
                             return callback(err,doc);
                         });
                     }
-                    mongodb.close();
+                    mongodbPool.release();
                     callback(err,doc);
                 }else{
-                    mongodb.close();
+                    mongodbPool.release();
                     callback(err,null);
                 }
             });
@@ -125,18 +125,18 @@ User.getByLogin = function get(query,callback){
 };
 
 User.getByTime = function getByTime(query,callback){
-    mongodb.open(function(err, db){
+    mongodbPool.acquire(function(err, db){
         if(err){
             return callback(err);
         }
         db.collection('users', function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return callback(err);
             }
             var date = new Date(query.user.userInfo.lastUpDateTime);
             collection.findOne({'user.userInfo.email':query.user.userInfo.email, 'user.userInfo.phone':query.user.userInfo.phone,'user.userInfo.lastUpDateTime':{'$lt':date}},function(err,doc){
-                mongodb.close();
+                mongodbPool.release();
                 if(err){
                     return callback(err);
                 }
@@ -161,17 +161,17 @@ User.update = function update(query,callback){
         var err = {'err':'can not find the user'};
         return callback(err);
     }
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return  callback(err);
         }
         db.collection('users',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return  callback(err);
             }
             collection.update({'_id':new ObjectID(id)},{'$set':query},function(err){
-                mongodb.close();
+                mongodbPool.release();
                 if(err){
                     return callback(err);
                 }
@@ -183,17 +183,17 @@ User.update = function update(query,callback){
 
 
 User.modifyUserState = function modifyUserState(query,callback){
-        mongodb.open(function(err,db){
+        mongodbPool.acquire(function(err,db){
             if(err){
                 return callback(err);
             }
             db.collection('users', function(err, collection){
                 if(err){
-                    mongodb.close();
+                    mongodbPool.release();
                     return callback(err);
                 }
                     collection.update({_id:new ObjectID(query._id)},{'$set':{'user.userInfo.status':'hack'}},{w:1},function(err){
-                        mongodb.close();
+                        mongodbPool.release();
                         if(err){
                             return callback(err);
                         }
@@ -204,17 +204,17 @@ User.modifyUserState = function modifyUserState(query,callback){
 
 };
 User.getByEmailAndName = function getByEmailAndName(query,callback){
-    mongodb.open(function (err,db){
+    mongodbPool.acquire(function (err,db){
         if(err){
             return callback(err);
         }
         db.collection('users', function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return callback(err);
             }
             collection.findOne({'user.userInfo.name':query.name, 'user.userInfo.email':query.email},function(err,user){
-                mongodb.close();
+                mongodbPool.release();
                 if(err){
                     return callback(err,null);
                 }
@@ -225,17 +225,17 @@ User.getByEmailAndName = function getByEmailAndName(query,callback){
 };
 
 User.changePassword = function(newPassword,Num,email,callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('users',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return callback(err);
             }
             collection.update({'user.userInfo.email':email},{'$set':{'user.userInfo.password':newPassword}},function(err){
-                mongodb.close();
+                mongodbPool.release();
                 if(err){
                     callback(err);
                 }
@@ -247,17 +247,17 @@ User.changePassword = function(newPassword,Num,email,callback){
 //for test
 /*
 User.test = function (callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('users', function(err, collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release();
                 return callback(err);
             }
             collection.findOne({_id:new ObjectID("5333edfc0e5b06e51d958b81")},function(err,user){
-                mongodb.close()
+                mongodbPool.release()
                 if(err){
                     return callback(err,null);
                 }

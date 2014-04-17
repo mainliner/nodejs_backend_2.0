@@ -6815,3 +6815,47 @@ admin is not defined
     at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
     at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
     at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 16:31:33 GMT+0800 (CST)]/showadmin
+ReferenceError: /Users/nosongyang/nodejs/wedate/views/adminlist.ejs:12
+    10|             <div class="container">
+    11|             <a class="navbar-brand" href="/admin">Muse</a>
+ >> 12|             <p class="navbar-text"><%=admin.username%> (<%=admin.level%>)</p>
+    13|             <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+    14|             </div>
+    15|         </nav>
+
+admin is not defined
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:577)
+    at eval (eval at <anonymous> (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:242:14), <anonymous>:29:5859)
+    at /Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:255:15
+    at Object.exports.render (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:293:13)
+    at View.exports.renderFile [as engine] (/Users/nosongyang/nodejs/wedate/node_modules/ejs/lib/ejs.js:323:20)
+    at View.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/view.js:76:8)
+    at Function.app.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/application.js:504:10)
+    at ServerResponse.res.render (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/response.js:798:7)
+    at /Users/nosongyang/nodejs/wedate/routes/admin.js:156:24
+    at /Users/nosongyang/nodejs/wedate/models/admin.js:54:24
+[Wed Apr 16 2014 18:23:24 GMT+0800 (CST)]/admin
+TypeError: Object #<Object> has no method 'open'
+    at Function.Admin.get (/Users/nosongyang/nodejs/wedate/models/admin.js:62:13)
+    at exports.doLogin (/Users/nosongyang/nodejs/wedate/routes/admin.js:48:11)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at nextRoute (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:100:7)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:167:11)
+    at exports.checkAdminNotLogin (/Users/nosongyang/nodejs/wedate/routes/admin.js:17:9)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+[Wed Apr 16 2014 18:23:33 GMT+0800 (CST)]/admin
+TypeError: Object #<Object> has no method 'open'
+    at Function.Admin.get (/Users/nosongyang/nodejs/wedate/models/admin.js:62:13)
+    at exports.doLogin (/Users/nosongyang/nodejs/wedate/routes/admin.js:48:11)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)
+    at pass (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:145:5)
+    at nextRoute (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:100:7)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:167:11)
+    at exports.checkAdminNotLogin (/Users/nosongyang/nodejs/wedate/routes/admin.js:17:9)
+    at callbacks (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:164:37)
+    at param (/Users/nosongyang/nodejs/wedate/node_modules/express/lib/router/index.js:138:11)

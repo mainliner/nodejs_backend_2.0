@@ -6,14 +6,14 @@ var assert = require('assert');
 var formidable = require('gridform/node_modules/formidable');
 var gridfsStream = require('gridform/node_modules/gridfs-stream');
 var mongo = require('mongodb');
-var mongodb = require('../models/db.js');
+var mongodbPool = require('../models/db.js');
 
 var Audio = require('../models/audio.js');
 
 exports.upload = function (req,res) {
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
-            return res.josn(400,{'err':'open db failed'});
+            return res.josn(400,{'err':'acquire db failed'});
         }
         var gridform = require('gridform');
         gridform.db = db;
@@ -21,7 +21,7 @@ exports.upload = function (req,res) {
         var form = gridform();
         assert(form instanceof formidable.IncomingForm);
         form.parse(req, function (err, fields, files) {
-            mongodb.close();
+            mongodbPool.release();
             if(err){
                 return res.json(400,err);
             }  

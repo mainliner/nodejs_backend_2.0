@@ -1,4 +1,4 @@
-var mongodb = require('./db');
+var mongodbPool = require('./db');
 var ObjectID = require('mongodb').ObjectID;
 
 function Audio(audio){
@@ -15,18 +15,18 @@ Audio.prototype.save = function(callback){
         starId:this.starId,
         uploadDate:this.uploadDate
     }
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('audio',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.ensureIndex('starId',function(err,audio){});
             collection.insert(audio,{w:1},function(err,audio){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
@@ -36,17 +36,17 @@ Audio.prototype.save = function(callback){
     });
 };
 Audio.getLastAudioByStarId = function (starId, callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('audio',function(err, collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.find({'starId':starId},{audioFileId:1}).sort({uploadDate:-1}).toArray(function(err,docs){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
@@ -57,17 +57,17 @@ Audio.getLastAudioByStarId = function (starId, callback){
 };
 
 Audio.getAudioByStarId = function (starId, callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('audio',function(err, collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.find({'starId':starId},{audioFileId:1}).sort({uploadDate:-1}).toArray(function(err,docs){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return  callback(err);
                 }

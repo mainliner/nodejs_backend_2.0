@@ -1,4 +1,4 @@
-var mongodb = require('./db');
+var mongodbPool = require('./db');
 var ObjectID = require('mongodb').ObjectID;
 
 function Star(star){
@@ -27,19 +27,19 @@ Star.prototype.save = function (callback){
     var star = {
         star:this.star,
     }
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('star',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.ensureIndex('star.englishName',function(err,star){});
             collection.ensureIndex('star.username',function(err,star){});
             collection.insert(star,{w:1},function(err,star){
-                mongodb.close();
+                mongodbPool.release(db);
                 callback(err,star);
             });
         });
@@ -47,17 +47,17 @@ Star.prototype.save = function (callback){
 };
 
 Star.getAll = function(callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('star',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.find().toArray(function(err,docs){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     callback(err);
                 }
@@ -69,17 +69,17 @@ Star.getAll = function(callback){
 
 Star.getByName = function(username,callback){
     //unuse function
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('star',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.find({'star.username':username},function(err,doc){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
@@ -89,17 +89,17 @@ Star.getByName = function(username,callback){
     });
 };
 Star.changeStarInfo = function(starEnName, newInfo, callback){
-    mongodb.open(function(err,db){
+    mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('star',function(err,collection){
             if(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 return  callback(err);
             }
             collection.update({'star.englishName':starEnName},{'$set':newInfo},function(err){
-                mongodb.close();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
