@@ -55,9 +55,10 @@ User.prototype.save = function save(callback){
         if(err) {
             return callback(err);
         }
+        console.log(db);
         db.collection('users',function(err,collection) {
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.ensureIndex('user.userInfo.status',function(err, user){});
@@ -65,7 +66,7 @@ User.prototype.save = function save(callback){
             collection.ensureIndex('user.userInfo.phone',function(err, user) {});
             collection.ensureIndex('user.userInfo.email',function(err, user) {});
             collection.insert(user,{w:1}, function(err,user) {
-                mongodbPool.release();
+                mongodbPool.release(db);
                 callback(err, user);
             });
         });
@@ -78,11 +79,11 @@ User.get = function get(query,callback){
         }
         db.collection('users', function(err,collection){
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.findOne({'user.userInfo.phone':query.user.userInfo.phone, 'user.userInfo.email':query.user.userInfo.email},function(err, doc){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 if(doc){
                     callback(err,doc);
                 }else{
@@ -99,7 +100,7 @@ User.getByLogin = function get(query,callback){
         }
         db.collection('users',function(err,collection){
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.findOne({'user.userInfo.phone':query.phone,'user.userInfo.email':query.email},function(err,doc){
@@ -113,10 +114,10 @@ User.getByLogin = function get(query,callback){
                             return callback(err,doc);
                         });
                     }
-                    mongodbPool.release();
+                    mongodbPool.release(db);
                     callback(err,doc);
                 }else{
-                    mongodbPool.release();
+                    mongodbPool.release(db);
                     callback(err,null);
                 }
             });
@@ -131,12 +132,12 @@ User.getByTime = function getByTime(query,callback){
         }
         db.collection('users', function(err,collection){
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return callback(err);
             }
             var date = new Date(query.user.userInfo.lastUpDateTime);
             collection.findOne({'user.userInfo.email':query.user.userInfo.email, 'user.userInfo.phone':query.user.userInfo.phone,'user.userInfo.lastUpDateTime':{'$lt':date}},function(err,doc){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
@@ -167,11 +168,11 @@ User.update = function update(query,callback){
         }
         db.collection('users',function(err,collection){
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return  callback(err);
             }
             collection.update({'_id':new ObjectID(id)},{'$set':query},function(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err);
                 }
@@ -189,11 +190,11 @@ User.modifyUserState = function modifyUserState(query,callback){
             }
             db.collection('users', function(err, collection){
                 if(err){
-                    mongodbPool.release();
+                    mongodbPool.release(db);
                     return callback(err);
                 }
                     collection.update({_id:new ObjectID(query._id)},{'$set':{'user.userInfo.status':'hack'}},{w:1},function(err){
-                        mongodbPool.release();
+                        mongodbPool.release(db);
                         if(err){
                             return callback(err);
                         }
@@ -210,11 +211,11 @@ User.getByEmailAndName = function getByEmailAndName(query,callback){
         }
         db.collection('users', function(err,collection){
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.findOne({'user.userInfo.name':query.name, 'user.userInfo.email':query.email},function(err,user){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 if(err){
                     return callback(err,null);
                 }
@@ -231,11 +232,11 @@ User.changePassword = function(newPassword,Num,email,callback){
         }
         db.collection('users',function(err,collection){
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.update({'user.userInfo.email':email},{'$set':{'user.userInfo.password':newPassword}},function(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 if(err){
                     callback(err);
                 }
@@ -253,11 +254,11 @@ User.test = function (callback){
         }
         db.collection('users', function(err, collection){
             if(err){
-                mongodbPool.release();
+                mongodbPool.release(db);
                 return callback(err);
             }
             collection.findOne({_id:new ObjectID("5333edfc0e5b06e51d958b81")},function(err,user){
-                mongodbPool.release()
+                mongodbPool.release(db)
                 if(err){
                     return callback(err,null);
                 }

@@ -38,7 +38,7 @@ Item.prototype.save = function save(callback){
     });
 };
 
-Item.getAll = function getAll(callback) {
+Item.getAll = function (callback) {
     mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);

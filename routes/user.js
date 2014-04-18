@@ -50,7 +50,7 @@ exports.putUser= function(req, res){
 
 exports.checkUserVersion = function(req, res){
     //比较更新时间
-    query = req.body;
+    query = req.session.user;
     User.getByTime(query,function(err,todo){
         if(err){
             return res.json(400,err);
