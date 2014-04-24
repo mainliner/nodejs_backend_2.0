@@ -44,13 +44,18 @@ exports.putUser= function(req, res){
                     res.json(333,{'err':'you are a hacker'});
                 });
             }
+        }else{
+            return res.json(400,{'err':'user not exist'});
         }
     });
 };
 
 exports.checkUserVersion = function(req, res){
     //比较更新时间
-    query = req.session.user;
+    var query = req.body;
+    if(query.user.userInfo.email === undefined || query.user.userInfo.phone === undefined || query.user.userInfo.lastUpDateTime === undefined){
+        return res.json(400,{'err':'wrong request format'});
+    }
     User.getByTime(query,function(err,todo){
         if(err){
             return res.json(400,err);

@@ -35,7 +35,7 @@ Audio.prototype.save = function(callback){
         });
     });
 };
-Audio.getLastAudioByStarId = function (starId, callback){
+Audio.getLastAudioByStarId = function (starArray, audioLoadTime, callback){
     mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
@@ -45,12 +45,13 @@ Audio.getLastAudioByStarId = function (starId, callback){
                 mongodbPool.release(db);
                 return callback(err);
             }
-            collection.find({'starId':starId},{audioFileId:1}).sort({uploadDate:-1}).toArray(function(err,docs){
-                mongodbPool.release(db);
+            var date = new Date(audioLoadTime);
+            collection.find({'starId':{'$in':starArray},'uploadDate':{'$lt':date}}).sort({uploadDate:-1}).toArray(function(err,docs){
+                mongodbPool.release(db);           //need change to $gt
                 if(err){
                     return callback(err);
                 }
-                return callback(err,docs[0]);
+                return callback(err,docs);
             });
         });
     });
@@ -66,7 +67,7 @@ Audio.getAudioByStarId = function (starId, callback){
                 mongodbPool.release(db);
                 return callback(err);
             }
-            collection.find({'starId':starId},{audioFileId:1}).sort({uploadDate:-1}).toArray(function(err,docs){
+            collection.find({'starId':starId}).sort({uploadDate:-1}).toArray(function(err,docs){
                 mongodbPool.release(db);
                 if(err){
                     return  callback(err);

@@ -93,8 +93,6 @@ app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
 app.post('/getallaudio', routes.checkLogin);
 app.post('/getallaudio', audio.getAllAudio);
-app.post('/getunreadaudio', routes.checkLogin);
-app.post('/getunreadaudio', audio.getUnreadAudio);
 app.post('/getlastaudio',routes.checkLogin);
 app.post('/getlastaudio',audio.getLastAudio);
 

@@ -17,10 +17,12 @@ function User(user){
             lovePoint: 200,
             lastUpDateTime: new Date(),
             photoFrame:"None",
-            status: "normal"
+            status: "normal",
+            audioLoadTime: new Date(),
+            messageLoadTime: new Date()
         },
         starInfo:[
-            {starId:"", name:"赵本山", startDate: new Date(), expireTime: new Date(), relationValue: 20, receiveItem:[]}
+            {starId:"534bac37c264b3c481607434", name:"赵本山", startDate: new Date(), expireTime: new Date(), relationValue: 20, receiveItem:[]}
         ],
         npcInfo:[
             {name:'npc1',relationValue:0},{name:'npc2',relationValue:0},{name:'npc3',relationValue:0},{name:'npc4',relationValue:0},{name:'npc5',relationValue:0}
@@ -55,7 +57,6 @@ User.prototype.save = function save(callback){
         if(err) {
             return callback(err);
         }
-        console.log(db);
         db.collection('users',function(err,collection) {
             if(err){
                 mongodbPool.release(db);

@@ -44,14 +44,14 @@ exports.upload = function (req,res) {
 };
 
 exports.getLastAudio = function(req, res) {
-    if(req.body.starId === undefined){
+    if(req.body.starArray === undefined || req.body.audioLoadTime === undefined){
         return res.json(400,{'err':'wrong request format'});
     }
-    Audio.getLastAudioByStarId(req.body.starId,function(err,doc){
+    Audio.getLastAudioByStarId(req.body.starArray,req.body.audioLoadTime,function(err,docs){
         if(err){
             return res.json(400,err);
         }
-        return res.json(200,doc);
+        return res.json(200,docs);
     });
 };
 exports.getAllAudio = function(req, res) {
@@ -66,6 +66,3 @@ exports.getAllAudio = function(req, res) {
     });
 };
 
-exports.getUnreadAudio = function(req, res) {
-    
-};
