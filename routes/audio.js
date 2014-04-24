@@ -21,7 +21,7 @@ exports.upload = function (req,res) {
         var form = gridform();
         assert(form instanceof formidable.IncomingForm);
         form.parse(req, function (err, fields, files) {
-            mongodbPool.release();
+            mongodbPool.release(db);
             if(err){
                 return res.json(400,err);
             }  
