@@ -46,7 +46,7 @@ Audio.getLastAudioByStarId = function (starArray, audioLoadTime, callback){
                 return callback(err);
             }
             var date = new Date(audioLoadTime);
-            collection.find({'starId':{'$in':starArray},'uploadDate':{'$lt':date}}).sort({uploadDate:-1}).toArray(function(err,docs){
+            collection.find({'starId':{'$in':starArray},'uploadDate':{'$gt':date}}).sort({uploadDate:-1}).toArray(function(err,docs){
                 mongodbPool.release(db);           //need change to $gt
                 if(err){
                     return callback(err);

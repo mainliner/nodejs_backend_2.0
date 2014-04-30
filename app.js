@@ -88,13 +88,17 @@ app.post('/putuser', user.putUser);
 app.get('/items',item.getAllItems);
 //get star info
 app.get('/stars',  star.getAllStar);
-//upload audio file to service
-app.post('/upload', routes.checkLogin);
+
+//some service about the star
+//app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
 app.post('/getallaudio', routes.checkLogin);
 app.post('/getallaudio', audio.getAllAudio);
 app.post('/getlastaudio',routes.checkLogin);
 app.post('/getlastaudio',audio.getLastAudio);
+
+app.post('/putmessage', star.starUploadMessage);
+
 
 //only for admin 
 app.all('/admin', admin.checkAdminNotLogin);

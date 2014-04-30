@@ -1,7 +1,13 @@
 /*
  * deal users info.
  */
+var assert = require('assert');
 var Star = require('../models/star.js');
+var Message = require('../models/message.js');
+var formidable = require('gridform/node_modules/formidable');
+var gridfsStream = require('gridform/node_modules/gridfs-stream');
+var mongo = require('mongodb');
+var mongodbPool = require('../models/db.js');
 
 exports.getAllStar = function(req, res){
     Star.getAll(function(err,stars){
@@ -24,5 +30,38 @@ exports.starChangePassword = function(req, res){
 };
 
 exports.starUploadMessage = function(req, res){
+        mongodbPool.acquire(function(err,db){
+        if(err){
+            return res.josn(400,{'err':'acquire db failed'});
+        }
+        var gridform = require('gridform');
+        gridform.db = db;
+        gridform.mongo = mongo;
+        var form = gridform();
+        //assert(form instanceof formidable.IncomingForm);
+        form.parse(req, function (err, fields, files) {
+            mongodbPool.release(db);
+            if(err){
+                return res.json(400,err);
+            }  
+            if(files.message_photo === undefined || fields.star_id === undefined || fields.messagebody === undefined){
+                //need to delete the message file which save in the Gridfs 
 
+                return res.json(400,{'err':'wrong formate'});
+            } 
+            var message = new Message({
+                messagePhotoId: files.message_photo.id,
+                starId: fields.star_id,
+                messageBody: fields.messagebody,
+                uploadDate: new Date()
+            });
+            message.save(function(err,doc){
+                if(err){
+                    //need to delete the message file which not associate with the right star in GridFS
+                    return res.json(400,err);
+                }
+                return res.json(200,{'info':'upload success'});
+            });
+        });
+    });
 };

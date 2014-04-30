@@ -19,14 +19,16 @@ exports.upload = function (req,res) {
         gridform.db = db;
         gridform.mongo = mongo;
         var form = gridform();
-        assert(form instanceof formidable.IncomingForm);
+        //assert(form instanceof formidable.IncomingForm);
         form.parse(req, function (err, fields, files) {
             mongodbPool.release(db);
             if(err){
                 return res.json(400,err);
             }  
-            console.log(files.starVoiceMessage.id);
-            console.log(fields); 
+            if(files.starVoiceMessage === undefined || fields.star_id === undefined){
+                //need to delete the file which has already save in the gridfs
+                return res.json(400,{'err':'wrong fromat'});
+            } 
             var audio = new Audio({
                 audioFileId: files.starVoiceMessage.id,
                 starId: fields.star_id,
