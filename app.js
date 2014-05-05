@@ -76,7 +76,6 @@ app.get('/reset', routes.doReset);
 
 app.get('/logout', routes.checkLogin);
 app.get('/logout', routes.logout);
-
 //get and updata user info
 app.post('/check_user_version',routes.checkLogin);
 app.post('/check_user_version', user.checkUserVersion);
@@ -89,24 +88,27 @@ app.get('/items',item.getAllItems);
 //get star info
 app.get('/stars',  star.getAllStar);
 
+
 //some service about the star
+//---------------------------------------
 //app.post('/upload', routes.checkLogin);
 app.post('/upload', audio.upload);
-app.post('/getallaudio', routes.checkLogin);
-app.post('/getallaudio', audio.getAllAudio);
+app.post('/putmessage', star.starUploadMessage);
+//app.post('/getallaudio', routes.checkLogin);
+//app.post('/getallaudio', audio.getAllAudio);
 app.post('/getlastaudio',routes.checkLogin);
 app.post('/getlastaudio',audio.getLastAudio);
+app.post('/getlastmessage',routes.checkLogin);
+app.post('/getlastmessage', star.getLastMessage);
 
-app.post('/putmessage', star.starUploadMessage);
 
-
-//only for admin 
+//only for admin
+//----------------------------------------- 
 app.all('/admin', admin.checkAdminNotLogin);
 app.get('/admin', admin.login);
 app.post('/admin', admin.doLogin);
 app.get('/dashboard', admin.checkAdminLogin, admin.dashboard);
 app.get('/adminlogout', admin.checkAdminLogin, admin.logout);
-
 
 app.get('/showadmin', admin.checkAdminLogin, admin.showAdmin);
 app.post('/addadmin', admin.checkAdminLogin, admin.addAdmin);

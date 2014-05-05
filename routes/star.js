@@ -65,3 +65,15 @@ exports.starUploadMessage = function(req, res){
         });
     });
 };
+exports.getLastMessage = function(req, res){
+    console.log(req.body);
+    if(req.body.starArray === undefined || req.body.messageLoadTime === undefined){
+        return res.json(400,{'err':'wrong request format'});
+    }
+    Message.getLastMessageByStarId(req.body.starArray,req.body.messageLoadTime,function(err,docs){
+        if(err){
+            return res.json(400,err);
+        }
+        return res.json(200,docs);
+    });
+}
