@@ -65,7 +65,7 @@ app.get('/', routes.index);
 
 app.post('/reg', routes.checkNotLogin);
 app.post('/reg', routes.doReg);
-app.post('/login', routes.checkNotLogin);
+//app.post('/login', routes.checkNotLogin);//Maybe this should not be used when server for a iOS client
 app.post('/login', routes.doLogin);
 
 //app.post('/password', routes.checkLogin);

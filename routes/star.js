@@ -66,7 +66,6 @@ exports.starUploadMessage = function(req, res){
     });
 };
 exports.getLastMessage = function(req, res){
-    console.log(req.body);
     if(req.body.starArray === undefined || req.body.messageLoadTime === undefined){
         return res.json(400,{'err':'wrong request format'});
     }
