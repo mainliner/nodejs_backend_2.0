@@ -33,7 +33,6 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use(express.bodyParser({ keepExtensions: true, uploadDir: './' }));
 app.use(express.cookieParser());
 app.use(express.session({
     secret: settings.cookieSecret,

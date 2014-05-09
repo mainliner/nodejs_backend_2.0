@@ -3,6 +3,7 @@
  * deal users info.
  */
 var User = require('../models/user.js');
+var Subscriber = require('../models/subscriber.js');
 
 exports.getUser= function(req, res){
   //通过email||phone 和 status位，索引数据，有则返回。
@@ -65,5 +66,46 @@ exports.checkUserVersion = function(req, res){
         }else if(todo == "download"){
             res.json(202,{'info':'need to download the newest data'});
         }
+    });
+};
+
+var validateDeviceToken = function(token) {
+    if (token.length < 64) {
+        return false;
+    }
+    return true;
+};
+
+exports.subscribeToStar = function(req, res){
+    var query = req.body;
+    if(query.starName === undefined || query.starId === undefined ||  query.deviceToken === undefined || query.userId === undefined){
+        return res.json(400,{'err':'wrong request format'});
+    }
+    var newSubscriber = new Subscriber({
+        'starId':query.starId,
+        'starName':query.starName,
+        'deviceToken':query.deviceToken,
+        'userId':query.userId,
+        'valid':true,
+        'updateAt': new Date(),
+    });
+    newSubscriber.save(function(err){
+        if(err){
+            return res.json(400,err);
+        }
+        return res.json(200,{'info':'subscriber success'});
+    });
+};
+
+exports.unsubscribeToStar = function(req, res){
+    var query = req.body;
+    if(query.starId === undefined || query.userId){
+        return res.json(400,{'err':'wrong request format'});
+    }
+    Subscriber.removeSubscriber(query.starId, query.userId, function(err){
+        if(err){
+            return(400,err);
+        }
+        return res.json(200,{'info':'unscriber success'});
     });
 };

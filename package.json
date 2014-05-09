@@ -10,11 +10,11 @@
     "ejs": "*",
     "mongodb": ">= 0.9.9",
     "connect-mongo": ">= 0.1.7",
-    "aws-sdk": ">= 1.5.0",
     "node-uuid": ">= 1.4.1",
     "formidable": "*",
     "gridform":"*",
     "nodemailer":"*",
-    "generic-pool":"*"
+    "generic-pool":"*",
+    "amqp":"*"
   }
 }

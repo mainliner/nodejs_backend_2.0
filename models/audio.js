@@ -14,7 +14,7 @@ Audio.prototype.save = function(callback){
         audioFileId:this.audioFileId,
         starId:this.starId,
         uploadDate:this.uploadDate
-    }
+    };
     mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
