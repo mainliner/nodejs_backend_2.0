@@ -216,11 +216,9 @@ exports.password = function(req,res){
 
 /*
 exports.test = function(req, res){
-    User.test(function(err,user){
-        if(err){
-            return res.json(400,err);
-        }
-        res.json(200,user);
+    app.exchange = app.rabbitMQConnection.exchange('APNSRouter',{confirm:true,type:'Direct'},function(exchange){
+        console.log(exchange.name);
     });
-}
+    res.json(200,{'info':'sdfsd'});
+};
 */

@@ -16,6 +16,7 @@ var path = require('path');
 var settings = require('./settings');
 var MongoStore = require('connect-mongo')(express);
 var fs = require('fs');
+var amqp = require('amqp');
 var accessLogfile = fs.createWriteStream('access.log',{flags:'a'});
 var errorLogfile = fs.createWriteStream('error.log', {flags:'a'});
 
@@ -42,7 +43,16 @@ app.use(express.session({
     cookie: {},
 }));
 app.use(app.router);
-
+/*
+connect to rabbitMQ, create a exchange( routKey: A--APNS  E--Email) to push message to APNS queue or Emai queue 
+*/
+app.rabbitMQConnection = amqp.createConnection({host:"localhost", port:5672});;
+app.rabbitMQConnection.on('ready',function(){
+        console.log('connect to the rabbitMQ successful');
+        app.rabbitMQConnection.exchange('router',{type: 'direct',autoDelete: false,confirm: true},function(exchange){
+            app.e = exchange;
+        });
+});
 
 //production only
 if ('production' == app.get('env')) {
@@ -60,19 +70,18 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+//for normal game player
+//--------
 app.get('/', routes.index);
-
 app.post('/reg', routes.checkNotLogin);
 app.post('/reg', routes.doReg);
 //app.post('/login', routes.checkNotLogin);//Maybe this should not be used when server for a iOS client
 app.post('/login', routes.doLogin);
-
 //app.post('/password', routes.checkLogin);
 app.post('/password', routes.password);
 app.all('/reset', routes.checkNotLogin);
 app.post('/reset', routes.reset);
 app.get('/reset', routes.doReset);
-
 app.get('/logout', routes.checkLogin);
 app.get('/logout', routes.logout);
 //get and updata user info
@@ -85,14 +94,15 @@ app.post('/putuser', user.putUser);
 //get item info
 app.get('/items',item.getAllItems);
 //get star info
-app.get('/stars',  star.getAllStar);
+app.get('/stars', star.getAllStar);
+app.post('/subscribetostar' ,routes.checkLogin ,user.subscribeToStar);
+app.post('/unsubscribetostar' ,routes.checkLogin ,user.unsubscribeToStar);
 
 
 //some service about the star
 //---------------------------------------
-//app.post('/upload', routes.checkLogin);
-app.post('/upload', audio.upload);
-app.post('/putmessage', star.starUploadMessage);
+app.post('/upload', audio.upload);//need star login check
+app.post('/putmessage', star.starUploadMessage);//need star login check
 //app.post('/getallaudio', routes.checkLogin);
 //app.post('/getallaudio', audio.getAllAudio);
 app.post('/getlastaudio',routes.checkLogin);
@@ -108,12 +118,10 @@ app.get('/admin', admin.login);
 app.post('/admin', admin.doLogin);
 app.get('/dashboard', admin.checkAdminLogin, admin.dashboard);
 app.get('/adminlogout', admin.checkAdminLogin, admin.logout);
-
 app.get('/showadmin', admin.checkAdminLogin, admin.showAdmin);
 app.post('/addadmin', admin.checkAdminLogin, admin.addAdmin);
 app.get('/deladmin', admin.checkAdminLogin, admin.delAdmin);
 app.post('/adminchangepwd', admin.checkAdminLogin, admin.changePassword);
-
 app.get('/showstar', admin.checkAdminLogin, admin.showStar);
 app.post('/changestarinfo', admin.checkAdminLogin, admin.changeStarInfo);
 app.post('/addstar', admin.checkAdminLogin, admin.addStar);
@@ -122,7 +130,17 @@ app.post('/changeiteminfo', admin.checkAdminLogin, admin.changeItemInfo);
 app.post('/additem', admin.checkAdminLogin, admin.addItem);
 app.get('/delitem', admin.checkAdminLogin, admin.deleteItem);
 
-//app.post('/test',routes.test);
+app.get('/test',function(req,res){
+    var encoded_payload = JSON.stringify({'starId':'534ba1488ccd99bf7a63ad75','message':'一条未接来电','badge':1});
+                app.e.publish('A',encoded_payload,{},function(err,message){
+                    if(err){
+                        //need to save the unpush message for later use
+                        return res.json(200,{'info':'upload success'});
+                    }
+                    return res.json(200,{'info':'upload success'});
+                });
+});
+
 
 app.get('*', function(req, res){
     res.render('error', {

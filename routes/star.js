@@ -60,7 +60,14 @@ exports.starUploadMessage = function(req, res){
                     //need to delete the message file which not associate with the right star in GridFS
                     return res.json(400,err);
                 }
-                return res.json(200,{'info':'upload success'});
+                var encoded_payload = JSON.stringify({'starId':fields.star_id,'message':'一条未读短信','badge':1});
+                app.e.publish('A',encoded_payload,{},function(err,message){
+                    if(err){
+                        //need to save the unpush message for later use
+                        return res.json(200,{'info':'upload success'});
+                    }
+                    return res.json(200,{'info':'upload success'});
+                });
             });
         });
     });
