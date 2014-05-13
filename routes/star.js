@@ -38,7 +38,6 @@ exports.starUploadMessage = function(req, res){
         gridform.db = db;
         gridform.mongo = mongo;
         var form = gridform();
-        //assert(form instanceof formidable.IncomingForm);
         form.parse(req, function (err, fields, files) {
             mongodbPool.release(db);
             if(err){

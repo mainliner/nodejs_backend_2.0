@@ -89,11 +89,19 @@ exports.subscribeToStar = function(req, res){
         'valid':true,
         'updateAt': new Date(),
     });
-    newSubscriber.save(function(err){
+    Subscriber.getSubscriber(newSubscriber,function(err,doc){
         if(err){
             return res.json(400,err);
+        }else if(doc){
+            return res.json(200,{'info':'subscriber existed'});
+        }else{
+            newSubscriber.save(function(err){
+                if(err){
+                    return res.json(400,err);
+                }
+                return res.json(200,{'info':'subscriber success'});
+            });
         }
-        return res.json(200,{'info':'subscriber success'});
     });
 };
 

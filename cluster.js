@@ -2,12 +2,13 @@ var cluster = require('cluster');
 var os = require('os');
 var http = require('http');
 
+var PORT = 3000;
 var numCPUs = os.cpus().length;
 
 var workers = {};
 
 if (cluster.isMaster) {
-    cluster.on('death', function (worker) {
+    cluster.on('disconnect', function (worker) {
         delete workers[worker.pid];
         worker = cluster.fork();
         workers[worker.pid] = worker;
@@ -18,10 +19,9 @@ if (cluster.isMaster) {
     }
 
 }else{
-    var app = require('./app');
-    http.createServer(app).listen(app.get('port'), function(){
-        console.log('Express server listening on port ' + app.get('port') + app.get('env'));
-    });
+    var server = require('./app');
+    server.listen(PORT);
+    console.log('[worker:%s] start listen on %s', process.pid, PORT);
 }
 
 process.on('SIGTERM', function () {

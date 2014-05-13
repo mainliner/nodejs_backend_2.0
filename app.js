@@ -16,13 +16,19 @@ var path = require('path');
 var settings = require('./settings');
 var MongoStore = require('connect-mongo')(express);
 var fs = require('fs');
-var amqp = require('amqp');
 var accessLogfile = fs.createWriteStream('access.log',{flags:'a'});
 var errorLogfile = fs.createWriteStream('error.log', {flags:'a'});
 
+var amqp = require('amqp');
+var domainMiddleware = require('./lib/domain.js');
 
+var server = http.createServer();
 var app = express();
 
+app.use(domainMiddleware({
+    server:server,
+    killTimeout: 30000
+}));
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -134,11 +140,17 @@ app.get('/test',function(req,res){
     var encoded_payload = JSON.stringify({'starId':'534ba1488ccd99bf7a63ad75','message':'一条未接来电','badge':1});
                 app.e.publish('A',encoded_payload,{},function(err,message){
                     if(err){
-                        //need to save the unpush message for later use
-                        return res.json(200,{'info':'upload success'});
+                        //need to save the unpush message for resend
+                        return res.json(200,{'info':' success'});
                     }
-                    return res.json(200,{'info':'upload success'});
+                    return res.json(200,{'info':' success'});
                 });
+});
+app.get('/domain',function(req,res){
+    setTimeout(function() {
+        // Whoops!
+        flerb.bark();
+      });
 });
 
 
@@ -149,9 +161,10 @@ app.get('*', function(req, res){
 });
 
 
+server.on('request', app);
 if(!module.parent) {
-    http.createServer(app).listen(app.get('port'), function(){
+    server.listen(app.get('port'), function(){
         console.log('Express server listening on port ' + app.get('port'));
     });
 }
-module.exports = app;
+module.exports = server;

@@ -63,3 +63,25 @@ Subscriber.removeSubscriber = function(starId, userId, callback){
         });
     });
 };
+
+Subscriber.getSubscriber = function(sub,callback){
+        mongodbPool.acquire(function (err,db){
+            if(err){
+                return callback(err);
+            }
+            db.collection('subscriber',function(err,collection){
+                if(err){
+                    mongodbPool.release(db);
+                    return callback(err);
+                }
+                collection.find({'starId':sub.starId,'userId':sub.userId,'deviceToken':sub.deviceToken},function(err,doc){
+                    mongodbPool.release(db);
+                    if(err){
+                        return callback(err);
+                    }else{
+                        return callback(null,doc);
+                    }
+                });
+            });
+        });
+};
