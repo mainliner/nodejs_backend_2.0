@@ -8,6 +8,7 @@ var formidable = require('gridform/node_modules/formidable');
 var gridfsStream = require('gridform/node_modules/gridfs-stream');
 var mongo = require('mongodb');
 var mongodbPool = require('../models/db.js');
+var wedate = require('../app.js');
 
 exports.getAllStar = function(req, res){
     Star.getAll(function(err,stars){
@@ -59,8 +60,8 @@ exports.starUploadMessage = function(req, res){
                     //need to delete the message file which not associate with the right star in GridFS
                     return res.json(400,err);
                 }
-                var encoded_payload = JSON.stringify({'starId':fields.star_id,'message':'一条未读短信','badge':1});
-                app.e.publish('A',encoded_payload,{},function(err,message){
+                var encoded_payload = JSON.stringify({'starId':fields.star_id,'message':'一条未读短信','noticeType':'text','badge':1});
+                wedate.app.e.publish('A',encoded_payload,{},function(err,message){
                     if(err){
                         //need to save the unpush message for later use
                         return res.json(200,{'info':'upload success'});

@@ -19,8 +19,8 @@ if (cluster.isMaster) {
     }
 
 }else{
-    var server = require('./app');
-    server.listen(PORT);
+    var wedate = require('./app');
+    wedate.server.listen(PORT);
     console.log('[worker:%s] start listen on %s', process.pid, PORT);
 }
 

@@ -55,6 +55,7 @@ Subscriber.removeSubscriber = function(starId, userId, callback){
             }
             collection.remove({'starId':starId,'userId':userId},{w:1},function(err,numberofremove){
                 mongodbPool.release(db);
+                console.log(numberofremove);
                 if(err){
                     return callback(err);
                 }
@@ -74,12 +75,12 @@ Subscriber.getSubscriber = function(sub,callback){
                     mongodbPool.release(db);
                     return callback(err);
                 }
-                collection.find({'starId':sub.starId,'userId':sub.userId,'deviceToken':sub.deviceToken},function(err,doc){
+                collection.findOne({'starId':sub.starId,'userId':sub.userId,'deviceToken':sub.deviceToken},function(err,doc){
                     mongodbPool.release(db);
-                    if(err){
-                        return callback(err);
+                    if(doc){
+                        return callback(err,doc);
                     }else{
-                        return callback(null,doc);
+                        return callback(err,null);
                     }
                 });
             });

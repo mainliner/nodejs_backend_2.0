@@ -15,6 +15,6 @@
     "gridform":"*",
     "nodemailer":"*",
     "generic-pool":"*",
-    "amqp":"*",
+    "amqp":"*"
   }
 }

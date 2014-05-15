@@ -54,7 +54,6 @@ exports.doLogin = function (req, res){
             if(password === admin.password){
                 req.session.cookie.originalMaxAge = settings.maxAge;
                 req.session.admin = admin;
-                console.log(JSON.stringify(req.session));
                 return res.redirect('/dashboard');
             }else{
                 return res.render('error', {'msg': "password not match"});

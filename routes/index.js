@@ -35,15 +35,20 @@ exports.doLogin = function(req,res) {
     var md5 = crypto.createHash('md5');
     var password = md5.update(req.body.password).digest('base64');
     User.getByLogin(req.body, function(err,user){
-        if(!user){
+        if(err){
+            return res.json(400,err);
+        }
+        if(user){
+            if(user.user.userInfo.password == password){
+                req.session.cookie.originalMaxAge = settings.maxAge;
+                req.session.user = user;
+                return res.json(200,user);
+            }else{
+                return res.json(402,{'err':'password does not match'});
+            }
+        }else{
             return res.json(401,{'err':'user does not exist'});
         }
-        if(user.user.userInfo.password != password){
-            return res.json(402,{'err':'password does not match'});
-        }
-        req.session.cookie.originalMaxAge = settings.maxAge;
-        req.session.user = user;
-        return res.json(200,user);
     });
 };
 
@@ -97,7 +102,7 @@ var sendEmail = function(email, sid, callback){
         to: email,
         subject: "Password Get Back Service",
         text: "",
-        html: "Please click the link below to renew you password in 10 mins, "+url
+        html: "Please click the link below to renew you password in 10 mins, <a>"+url+"</a>"
     };
     smtpTransport.sendMail(mailOptions,function(err,res){
         smtpTransport.close();

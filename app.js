@@ -137,7 +137,7 @@ app.post('/additem', admin.checkAdminLogin, admin.addItem);
 app.get('/delitem', admin.checkAdminLogin, admin.deleteItem);
 
 app.get('/test',function(req,res){
-    var encoded_payload = JSON.stringify({'starId':'534ba1488ccd99bf7a63ad75','message':'一条未接来电','badge':1});
+    var encoded_payload = JSON.stringify({'starId':'534ba1488ccd99bf7a63ad75','message':'一条未接来电','noticeType':'audio','badge':1});
                 app.e.publish('A',encoded_payload,{},function(err,message){
                     if(err){
                         //need to save the unpush message for resend
@@ -167,4 +167,6 @@ if(!module.parent) {
         console.log('Express server listening on port ' + app.get('port'));
     });
 }
-module.exports = server;
+
+exports.server= server;
+exports.app = app;

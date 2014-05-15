@@ -22,7 +22,7 @@ function User(user){
             messageLoadTime: new Date()
         },
         starInfo:[
-            {starId:"534bac37c264b3c481607434", name:"赵本山", startDate: new Date(), expireTime: new Date(), relationValue: 20, receiveItem:[]}
+            
         ],
         npcInfo:[
             {name:'npc1',relationValue:0},{name:'npc2',relationValue:0},{name:'npc3',relationValue:0},{name:'npc4',relationValue:0},{name:'npc5',relationValue:0}

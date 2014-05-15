@@ -9,6 +9,7 @@ var mongo = require('mongodb');
 var mongodbPool = require('../models/db.js');
 
 var Audio = require('../models/audio.js');
+var wedate = require('../app.js');
 
 exports.upload = function (req,res) {
     mongodbPool.acquire(function(err,db){
@@ -38,8 +39,8 @@ exports.upload = function (req,res) {
                     //need to delete the audio file which not associate with the right star in GridFS 
                     return res.json(400,err);
                 }
-                var encoded_payload = JSON.stringify({'starId':fields.star_id,'message':'一条未接来电','badge':1});
-                app.e.publish('A',encoded_payload,{},function(err,message){
+                var encoded_payload = JSON.stringify({'starId':fields.star_id,'message':'一条未接来电','noticeType':'audio','badge':1});
+                wedate.app.e.publish('A',encoded_payload,{},function(err,message){
                     if(err){
                         //need to save the unpush message for later use
                         return res.json(200,{'info':'upload success'});

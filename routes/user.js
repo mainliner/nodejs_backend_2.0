@@ -107,7 +107,7 @@ exports.subscribeToStar = function(req, res){
 
 exports.unsubscribeToStar = function(req, res){
     var query = req.body;
-    if(query.starId === undefined || query.userId){
+    if(query.starId === undefined || query.userId ===undefined){
         return res.json(400,{'err':'wrong request format'});
     }
     Subscriber.removeSubscriber(query.starId, query.userId, function(err){
