@@ -10,6 +10,9 @@ var mongo = require('mongodb');
 var mongodbPool = require('../models/db.js');
 var wedate = require('../app.js');
 
+var Grid = require('mongodb').Grid;
+var uploadErrorLogfile = require('./audio.js').uploadErrorLogfile;
+
 exports.getAllStar = function(req, res){
     Star.getAll(function(err,stars){
         if(err){
@@ -40,13 +43,23 @@ exports.starUploadMessage = function(req, res){
         gridform.mongo = mongo;
         var form = gridform();
         form.parse(req, function (err, fields, files) {
-            mongodbPool.release(db);
+            //mongodbPool.release(db);
             if(err){
+                mongodbPool.release(db);
                 return res.json(400,err);
             }  
             if(files.message_photo === undefined || fields.star_id === undefined || fields.messagebody === undefined){
                 //need to delete the message file which save in the Gridfs 
-
+                var grid = new Grid(db, 'fs');
+                for(var key in files){
+                    grid.delete(files[key].id, function(err, result){
+                        if(err){
+                            //the useless file data can not be delete, its id need to record in error log
+                            uploadErrorLogfile.write('file need to delete: '+files[key].id);
+                        }
+                    });
+                }
+                mongodbPool.release(db);
                 return res.json(400,{'err':'wrong formate'});
             } 
             var message = new Message({
@@ -57,13 +70,23 @@ exports.starUploadMessage = function(req, res){
             });
             message.save(function(err,doc){
                 if(err){
-                    //need to delete the message file which not associate with the right star in GridFS
+                    var grid = new Grid(db, 'fs');
+                    for(var key in files){
+                        grid.delete(files[key].id, function(err,result){
+                            if(err){
+                                //the useless file data can not be delete, its id need to record in error log
+                                uploadErrorLogfile.write('file need to delete: '+files.starVoiceMessage.id);
+                            }
+                        });
+                    } 
+                    mongodbPool.release(db);
                     return res.json(400,err);
                 }
+                mongodbPool.release(db);
                 var encoded_payload = JSON.stringify({'starId':fields.star_id,'message':'一条未读短信','noticeType':'text','badge':1});
                 wedate.app.e.publish('A',encoded_payload,{},function(err,message){
                     if(err){
-                        //need to save the unpush message for later use
+                        //need to save the unpush message for later use here
                         return res.json(200,{'info':'upload success'});
                     }
                     return res.json(200,{'info':'upload success'});

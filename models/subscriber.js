@@ -55,7 +55,6 @@ Subscriber.removeSubscriber = function(starId, userId, callback){
             }
             collection.remove({'starId':starId,'userId':userId},{w:1},function(err,numberofremove){
                 mongodbPool.release(db);
-                console.log(numberofremove);
                 if(err){
                     return callback(err);
                 }

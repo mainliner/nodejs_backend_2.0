@@ -7,9 +7,14 @@ var formidable = require('gridform/node_modules/formidable');
 var gridfsStream = require('gridform/node_modules/gridfs-stream');
 var mongo = require('mongodb');
 var mongodbPool = require('../models/db.js');
+var Grid = require('mongodb').Grid;
 
 var Audio = require('../models/audio.js');
 var wedate = require('../app.js');
+var fs = require('fs');
+var uploadErrorLogfile = fs.createWriteStream('uploadError.log',{flags:'a'});
+
+exports.uploadErrorLogfile = uploadErrorLogfile;
 
 exports.upload = function (req,res) {
     mongodbPool.acquire(function(err,db){
@@ -21,13 +26,22 @@ exports.upload = function (req,res) {
         gridform.mongo = mongo;
         var form = gridform();
         form.parse(req, function (err, fields, files) {
-            mongodbPool.release(db);
             if(err){
+                mongodbPool.release(db);
                 return res.json(400,err);
             }  
             if(files.starVoiceMessage === undefined || fields.star_id === undefined){
-                //need to delete the file which has already save in the gridfs
-                return res.json(400,{'err':'wrong fromat'});
+                var grid = new Grid(db, 'fs');
+                for(var key in files){
+                    grid.delete(files[key].id, function(err, result){
+                        if(err){
+                            //the useless file data can not be delete, its id need to record in error log
+                            uploadErrorLogfile.write('file need to delete: '+files[key].id);
+                        }
+                    });
+                }
+                mongodbPool.release(db);
+                return res.json(400,{'err':'wrong format'});
             } 
             var audio = new Audio({
                 audioFileId: files.starVoiceMessage.id,
@@ -36,13 +50,23 @@ exports.upload = function (req,res) {
             });
             audio.save(function(err,doc){
                 if(err){
-                    //need to delete the audio file which not associate with the right star in GridFS 
+                    var grid = new Grid(db, 'fs');
+                    for(var key in files){
+                        grid.delete(files[key].id, function(err,result){
+                            if(err){
+                                //the useless file data can not be delete, its id need to record in error log
+                                uploadErrorLogfile.write('file need to delete: '+files.starVoiceMessage.id);
+                            }
+                        });
+                    } 
+                    mongodbPool.release(db);
                     return res.json(400,err);
                 }
+                mongodbPool.release(db);
                 var encoded_payload = JSON.stringify({'starId':fields.star_id,'message':'一条未接来电','noticeType':'audio','badge':1});
                 wedate.app.e.publish('A',encoded_payload,{},function(err,message){
                     if(err){
-                        //need to save the unpush message for later use
+                        //need to save the unpush message for later use here
                         return res.json(200,{'info':'upload success'});
                     }
                     return res.json(200,{'info':'upload success'});
