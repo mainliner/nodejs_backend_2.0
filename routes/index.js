@@ -7,8 +7,8 @@ var User = require('../models/user.js');
 var resetServer = require('../models/passwordReset');
 var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
-var nodemailer = require("nodemailer");
 var settings = require('../settings');
+var wedate = require('../app.js');
 
 exports.index = function(req, res){
   res.render('index', { title: 'Let\'s date' });
@@ -32,13 +32,14 @@ exports.doLogin = function(req,res) {
     if(req.body.phone === undefined || req.body.email === undefined){
         return res.json(400,{'err':'Please input your username and password'});
     }
-    var md5 = crypto.createHash('md5');
-    var password = md5.update(req.body.password).digest('base64');
     User.getByLogin(req.body, function(err,user){
         if(err){
             return res.json(400,err);
         }
         if(user){
+            var md5 = crypto.createHash('sha256');
+            var salt = user.user.userInfo.salt;
+            var password = md5.update(salt+req.body.password).digest('base64');
             if(user.user.userInfo.password == password){
                 req.session.cookie.originalMaxAge = settings.maxAge;
                 req.session.user = user;
@@ -61,9 +62,11 @@ exports.doReg = function(req, res){
     if(req.body.phone === undefined || req.body.email === undefined || req.body.password === undefined || req.body.UUID === undefined){
         return res.json(400,{'err':'wrong request format'})
     }
-    var md5 = crypto.createHash('md5');
-    var password = md5.update(req.body.password).digest('base64');
+    var md5 = crypto.createHash('sha256');
+    var saltOfUser = uuid.v1();
+    var password = md5.update(saltOfUser+req.body.password).digest('base64');
     var newUser = new User({
+        salt: saltOfUser,
         phone: req.body.phone,
         email: req.body.email,
         password: password,
@@ -87,33 +90,6 @@ exports.doReg = function(req, res){
     });
 };
 
-var sendEmail = function(email, sid, callback){
-    var smtpTransport = nodemailer.createTransport("SMTP",{
-        service: "Gmail",
-        auth:{
-            user: "nosongyang@gmail.com",
-            pass: "mainliner880320"
-        }
-    });
-    url= "http://192.168.199.238:3000/reset?sid="+sid+"&email="+email;
-    console.log(url);
-    var mailOptions = {
-        from: "WeDate",
-        to: email,
-        subject: "Password Get Back Service",
-        text: "",
-        html: "Please click the link below to renew you password in 10 mins, <a>"+url+"</a>"
-    };
-    smtpTransport.sendMail(mailOptions,function(err,res){
-        smtpTransport.close();
-        if(err){
-            return callback(err);
-        }else{
-            return callback(null);
-        }
-    });
-};
-
 
 exports.reset = function(req, res){
     if(req.body.email === undefined || req.body.name === undefined){
@@ -128,20 +104,22 @@ exports.reset = function(req, res){
             //构建url地址，发送邮件
             var privateKey = uuid.v1();
             var date = new Date();
-            var outTime = date.getTime()+600000; //10 mins out date time
+            var outTime = date.getTime()+600000.0; //10 mins out date time
             var email = user.user.userInfo.email;
-            var md5 = crypto.createHash('md5');
+            var md5 = crypto.createHash('sha256');
             var sid = md5.update(email+'$'+outTime+'@'+privateKey).digest('base64');
             var RS = new resetServer({'email':email,'privateKey':privateKey,'outTime':outTime});
             RS.save(function(err){
                 if(err){
                     return res.json(400,err);
                 }
-                sendEmail(email,sid,function(err){
+                var encoded_payload = JSON.stringify({'email':email,'sid':sid});
+                wedate.app.e.publish('E',encoded_payload,{},function(err,message){
                     if(err){
-                        return res.json(401,{'err':'send email failed'});
+                        //need to save the unpush message for later use here
+                        return res.json(200,{'info':'send email success'});
                     }
-                    return res.json(200,{'info':'send email successful'});
+                    return res.json(200,{'info':'send email success'});
                 });
             });  
         }else{
@@ -164,11 +142,12 @@ exports.doReset = function(req,res){
         }
         var now = new Date();
         if(doc.outTime < now.getTime()){
-            console.log(now.getTime());
+            //console.log(now.getTime());
             return res.json(400,{'err':"out time yeah"});
         }
-        var md5 = crypto.createHash('md5');
+        var md5 = crypto.createHash('sha256');
         var sid = md5.update(doc.email+'$'+doc.outTime+'@'+doc.privateKey).digest('base64');
+        console.log(sid);
         if(req.query.sid != sid){
             return res.json(400,{'err':'invalue sid '});
         }
@@ -176,9 +155,10 @@ exports.doReset = function(req,res){
         for(var i=0;i<8;i++) { 
             Num+=Math.floor(Math.random()*10); 
         }
-        var _md5 = crypto.createHash('md5');
-        var newPassword = _md5.update(Num).digest('base64');
-        User.changePassword(newPassword, Num,doc.email, function(err,Num){
+        var _md5 = crypto.createHash('sha256');
+        var newSalt = uuid.v1();
+        var newPassword = _md5.update(newSalt+Num).digest('base64');
+        User.changePassword(newPassword, newSalt,doc.email, function(err){
             if(err){
                 return res.json(400,err);
             }
@@ -194,17 +174,18 @@ exports.password = function(req,res){
     if(req.session.user.user.userInfo.email === undefined || req.session.user.user.userInfo.phone === undefined){
         return res.json(400, {'err':'wrong request format'});
     }
-    var md5 = crypto.createHash('md5');
-    var oldPassword = md5.update(req.body.oldPassword).digest('base64');
     User.get(req.session.user, function(err,doc){
         if(err){
             return res.json(400,err);
         }
         if(doc){
+            var md5 = crypto.createHash('sha256');
+            var oldPassword = md5.update(doc.user.userInfo.salt+req.body.oldPassword).digest('base64');
             if(oldPassword == doc.user.userInfo.password){
-                var _md5 = crypto.createHash('md5');
-                var newPassword = _md5.update(req.body.newPassword).digest('base64');
-                User.changePassword(newPassword, null, req.session.user.user.userInfo.email, function(err,password){
+                var _md5 = crypto.createHash('sha256');
+                var newSalt = uuid.v1();
+                var newPassword = _md5.update(newSalt+req.body.newPassword).digest('base64');
+                User.changePassword(newPassword, newSalt, req.session.user.user.userInfo.email, function(err,password){
                     if(err){
                         return res.json(400,err);
                     }

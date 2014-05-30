@@ -1,6 +1,7 @@
 var Admin = require('../models/admin.js');
 var Star = require('../models/star.js');
 var Item = require('../models/item.js');
+var NPC = require('../models/npc.js');
 var settings = require('../settings');
 var crypto = require('crypto');
 
@@ -250,11 +251,11 @@ exports.addItem = function(req, res){
         englishName : req.param('englishname'),
         title : req.param('title'),
         price : req.param('price'),
-        npc : req.param('npc'),
         description : req.param('description'),
         type : req.param('type'),
         pictureBig : req.param('picturebig'),
-        pictureSmall : req.param('picturesmall')
+        pictureSmall : req.param('picturesmall'),
+        level:parseInt(req.param('level'))
     });
     newItem.save(function(err,item){
         if(err){
@@ -272,12 +273,12 @@ exports.changeItemInfo = function(req, res){
         'item.englishName': req.param('englishname'),
         'item.title': req.param('title'),
         'item.price': req.param('price'),
-        'item.npc': req.param('npc'),
         'item.description': req.param('description'),
         'item.type': req.param('type'),
         'item.pictureBig': req.param('picturebig'),
-        'item.pictureSmall': req.param('picturesmall')
-    }
+        'item.pictureSmall': req.param('picturesmall'),
+        'item.level': parseInt(req.param('level'))
+    };
     Item.changeItemInfo(req.param('id'),newInfo,function(err){
         if(err){
             return res.render('error','Edit the item info failed');
@@ -299,4 +300,158 @@ exports.deleteItem = function(req, res){
         return res.redirect('/showitem');
     });
 
-}
+};
+exports.showNPC = function(req, res){
+     NPC.getAll(function(err,docs){
+        if(err){
+            return res.render('npclist',{'msg':'load item info failed','list':'','user':req.session.admin});
+        }
+        return res.render('npclist',{'msg':'','list':docs,'user':req.session.admin});
+    });
+};
+exports.addNPC = function(req, res){
+    var NPCBirthday = new Date(parseInt(req.param("year")), parseInt(req.param("month"))-1, parseInt(req.param("day")) );
+    var newNPC = new NPC({
+        npcChineseName: req.param('npcchinesename'),
+        npcEnglishName: req.param('npcenglishname'),
+        birthday: NPCBirthday,
+        blood: req.param('blood'),
+        constellation: req.param('constellation'),
+        description: req.param('description'),
+        petPhrase: req.param('petphrase'),
+        l2dModel: req.param('l2dmodel'),
+        shopModel: {
+            englishTitle:req.param('englishtitle'),
+            chineseTitle:req.param('chinesetitle'),
+            titleImageStr:req.param('titleimagestr'),
+            backImageStr:req.param('backimagestr'),
+        },
+    });
+    newNPC.save(function(err,npc){
+        if(err){
+            return res.render('error',{'msg':'create npc failed!'});
+        }
+        return res.redirect('/shownpc');
+    });
+};
+exports.changeNPCInfo = function(req, res){
+    if(req.param("npcchinesename") ==="" || req.param("npcenglishname") ==="" || req.param('id') ===""){
+        return res.render('error',{'msg':'wrong requst format'});
+    }
+    var newBirthday = new Date(req.param('birthday'));
+    var newInfo = {
+        'npc.npcChineseName': req.param('npcchinesename'),
+        'npc.npcEnglishName': req.param('npcenglishname'), 
+        'npc.birthday': newBirthday,
+        'npc.blood':req.param('blood'),
+        'npc.constellation':req.param('constellation'),
+        'npc.description': req.param('description'),
+        'npc.petPhrase': req.param('petphrase'),
+        'npc.l2dModel': req.param('l2dmodel'),
+        'npc.shopModel.englishTitle': req.param('englishtitle'),
+        'npc.shopModel.chineseTitle': req.param('chinesetitle'),
+        'npc.shopModel.titleImageStr': req.param('titleimagestr'),
+        'npc.shopModel.backImageStr': req.param('backimagestr'),
+    };
+    NPC.changeNPCInfo(req.param('id'),newInfo,function(err){
+        if(err){
+            return res.render('error',{'msg':'change NPC info failed!'});
+        }
+        return res.redirect('/shownpc');
+    })
+};
+exports.deleteNPC = function(req, res){
+    if(req.query.id === ""){
+        return res.render('error',{'msg': 'wrong request format'});
+    }
+    if(req.session.admin.level != 0){
+        return res.render('error',{'msg':"You don't have the power to do this!"});
+    }
+    NPC.deleteNPC(req.query.id, function(err){
+        if(err){
+            return res.render('error',{'msg':'delete NPC failed!'});
+        }
+        return res.redirect('/shownpc');
+    });
+};
+exports.languageNPC = function(req, res){
+    NPC.get(req.query.id,function(err,npc){
+        if(err){
+            return res.render('language',{'msg':'load item info failed','data':{'npc':''},'user':req.session.admin});
+        }
+        return res.render('language',{'msg':'','data':npc,'user':req.session.admin});
+    });
+};
+exports.addLanguageNPC = function(req, res){
+    if(req.param('language') ===""){
+        return res.render('error',{'msg':'wrong request format'});
+    }
+    NPC.pushLanguage(req.param('id'),req.param('language'),function(err){
+        if(err){
+            return res.render('error', {'msg':'add failed!'});
+        }
+        return res.redirect('/language?id='+req.param('id'));
+    });
+};
+exports.deleteLanguageNPC = function(req, res){
+    if(req.session.admin.level != 0){
+        return res.render('error',{'msg':"You don't have the power to do this!"});
+    }
+    NPC.deleteLanguage(req.query.id, req.query.data, function(err){
+        if(err){
+            return res.render('error', {'msg':'delete failed!'});
+        }
+        return res.redirect('/language?id='+req.query.id);
+    });
+};
+exports.shopNPC = function(req, res){
+    NPC.get(req.query.id,function(err,npc){
+        if(err){
+            return res.render('shop',{'msg':'load shop info failed','data':'','list':'','user':req.session.admin});
+        }
+        Item.getAll(function(err,docs){
+            if(err){
+                return res.render('shop',{'msg':'load shop info failed','data':'','list':'','user':req.session.admin});
+            }
+            return res.render('shop',{'msg':'','data':npc,'list':docs,'user':req.session.admin});
+        });
+    });
+};
+exports.addShopType = function(req, res){
+    if(req.param('shoptype') === ""){
+        return res.render('error',{'msg':'wrong request formate'});
+    }
+    NPC.addShopType(req.param('id'), req.param('shoptype'),function(err){
+        if(err){
+            return res.render('error', {'msg':'add failed!'});
+        }
+        return res.redirect('/shop?id='+req.param('id'));
+    });
+};
+exports.deleteShopType = function(req, res){
+    NPC.deleteShopType(req.query.id, req.query.index, function(err){
+        if(err){
+            return res.render('error', {'msg':'delete failed'})
+        }
+        return res.redirect('/shop?id='+req.query.id);
+    });
+};
+exports.addShopItem = function(req, res){
+    if(req.param('item') == "none"){
+        return res.render('error', {'msg': 'Please select one item for this shop type'});
+    }
+    NPC.addShopItem(req.param('id'),req.param('index'),req.param('item'),function(err){
+        if(err){
+            return res.render('error', {'msg':'add failed!'});
+        }
+        return res.redirect('/shop?id='+req.param('id'));
+    });
+};
+exports.deleteShopItem = function(req, res){
+    NPC.deleteShopItem(req.query.id, req.query.index, req.query.item, function(err){
+        if(err){
+            return res.render('error', {'msg': 'delete failed!'});
+        }
+        return res.redirect('/shop?id='+req.query.id);
+    });
+};

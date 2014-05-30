@@ -19,6 +19,7 @@
                 <li ><a href="/showadmin">管理员列表</a></li>
                 <li ><a href="/showstar">明星列表</a></li>
                 <li class="active"><a href="/showitem">物品列表</a></li>
+                <li><a href="/shownpc">NPC列表</a></li>
             </ul>
         </div>
         <div class="col-sm-offset-1 col-sm-7">
@@ -58,7 +59,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">明星信息</h4>
+                        <h4 class="modal-title" id="myModalLabel">物品信息</h4>
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form" method="POST" action="/changeiteminfo">
@@ -93,9 +94,9 @@
                                 </div>
                              </div>
                              <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">NPC</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">level</label>
                                 <div class="col-sm-7">
-                                <input value="<%=e.item.npc%>" name="npc" type="username" class="form-control" id="inputPassword3" placeholder="所属NPC">
+                                <input value="<%=e.item.level%>" name="level" type="username" class="form-control" id="inputPassword3" placeholder="level">
                                 </div>
                              </div>
                              <div class="form-group">
@@ -122,9 +123,10 @@
                                 <input value="<%=e.item.pictureSmall%>" name="picturesmall" type="username" class="form-control" id="inputPassword3" placeholder="pictureSmall">
                                 </div>
                              </div>
+
                                 <div class="form-group">
                                     <div class="col-sm-offset-4 col-sm-3">
-                                    <button type="submit" class="btn btn-default">修改明星信息</button>
+                                    <button type="submit" class="btn btn-default">修改物品信息</button>
                                     
                                     </div>
                                     <div class="col-sm-offset-1 col-sm-3">
@@ -137,7 +139,7 @@
                     </div>
                 </div>
             <%});%>
-        <%}%><!--end of change star info modal-->
+        <%}%><!--end of change item info modal-->
 
 
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -175,9 +177,9 @@
                                 </div>
                              </div>
                              <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">NPC</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">level</label>
                                 <div class="col-sm-7">
-                                <input name="npc" type="username" class="form-control" id="inputPassword3" placeholder="所属NPC">
+                                <input name="level" type="username" class="form-control" id="inputPassword3" placeholder="level">
                                 </div>
                              </div>
                              <div class="form-group">

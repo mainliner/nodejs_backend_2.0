@@ -7,11 +7,11 @@ function Item(item){
         englishName : item.englishName,
         title : item.title,
         price : item.price,
-        npc : item.npc,
         description : item.description,
         type : item.type,
         pictureBig : item.pictureBig,
-        pictureSmall : item.pictureSmall
+        pictureSmall : item.pictureSmall,
+        level : item.level
     }
 };
 module.exports = Item;

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <title>Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+            <a class="navbar-brand" href="/admin">Muse</a>
+            <p class="navbar-text"><%=user.username%> (<%=user.level%>)</p>
+            <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+            </div>
+        </nav>
+        <div class="col-sm-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="/shownpc">返回NPC列表</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-offset-1 col-sm-7">
+            <div class="well">
+                <h5>店铺主人: <%=data.npc.npcChineseName%></h5>
+                <form class="form-inline" role="form" method="POST" action="/addshoptype">
+                    <div class="form-group">
+                        <input type="hidden" name="id" value="<%=data._id%>" readonly>
+                        <input type="text" name="shoptype" class="form-control" placeholder="添加一个商品类别">
+                    </div>
+                        <button  type="submit" class="btn btn-danger">添加</button>
+                </form>
+                <hr/>
+                <p class="text-warning"><%= msg %></p>
+                <% if(data.npc.shopModel.typeArray != []){ %>               
+                    <%for(var i = 0, l = data.npc.shopModel.typeArray.length; i < l; i++) {%>
+                    <table class="table table-hover">
+                        <tr>
+                            <td><strong><%=data.npc.shopModel.typeArray[i].shopType%></strong>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/delshoptype?id=<%=data._id%>&index=<%=i%>">删除该类别</a></td>
+                            <td>
+                                <form class="form-inline" role="form" method="POST" action="/addshopitem">
+                                    <div class="form-group">
+                                        <input type="hidden" name="id" value="<%=data._id%>" readonly>
+                                        <input type="hidden" name="index" value="<%=i%>" readonly>
+                                    </div>
+                                    <select class="form-control" name="item">
+                                        <option value="none">请选择一个已有商品</option>
+                                        <%if(list){%>
+                                            <%list.forEach(function(e){%>
+                                                <option value="<%=e._id%>"><%=e.item.chineseName%></option>
+                                            <%});%>
+                                        <%}%>
+                                    </select>
+                                    <button  type="submit" class="btn btn-info btn-sm">向该类添加商品</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <%for(var x=0, y=data.npc.shopModel.typeArray[i].item.length; x < y; x++){%>  
+                        <tr>
+                            <%for(var n=0, m=list.length; n<m; n++){%>
+                                <%if(list[n]._id == data.npc.shopModel.typeArray[i].item[x]){%>
+                                    <td><%=list[n].item.chineseName%></td>
+                                    <td>
+                                    <a href="/delshopitem?id=<%=data._id%>&index=<%=i%>&item=<%=list[n]._id%>">删除</a>
+                                    </td>
+                                    <%break;%>
+                                <%}%>
+                            <%}%>
+                        </tr>
+                        <%}%>
+                    </table>
+                    <hr/>
+                    <%}%>
+                <%}%>
+            </div>
+        </div>
+
+
+
+        <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    </body>
+</html>

@@ -17,41 +17,51 @@
             <ul class="nav nav-pills nav-stacked">
                 <li ><a href="/dashboard">管理员</a></li>
                 <li ><a href="/showadmin">管理员列表</a></li>
-                <li class="active"><a href="/showstar">明星列表</a></li>
+                <li ><a href="/showstar">明星列表</a></li>
                 <li><a href="/showitem">物品列表</a></li>
-                <li><a href="/shownpc">NPC列表</a></li>
+                <li class="active"><a href="/shownpc">NPC列表</a></li>
             </ul>
         </div>
         <div class="col-sm-offset-1 col-sm-7">
             <div class="well">
-                <h5>明星</h5>
+                <h5>NPC</h5>
                 <hr/>
                 <p class="text-warning"><%= msg %></p>
                 <% if(list != []){ %>
                 <table class="table table-hover">
                     <tr>
                         <td>ID</td>
-                        <td>Username</td>
-                        <td>ChineseName</td>
+                        <td>NPC name</td>
+                        <td>live2D</td>
                         <td>Operation</td>
                     </tr>                
                     <% list.forEach(function(e){%>
                     <tr>
                         <td><%=e._id%></td>
-                        <td><%=e.star.username%></td>
-                        <td><%=e.star.chineseName%></td>
+                        <td><%=e.npc.npcChineseName%></td>
+                        <td><%=e.npc.l2dModel%></td>
                         <td>
-                            <button class="btn btn-default" data-toggle="modal" data-target="#<%=e._id%>">显示详细信息</button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                Action <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a data-toggle="modal" data-target="#<%=e._id%>">详细信息</a></li>
+                                    <li><a href="/language?id=<%=e._id%>">习惯用语</a></li>
+                                    <li><a href="/shop?id=<%=e._id%>">NPC店铺</a></li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                     <%});%>
                 </table>
                 <%}%>
-                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#add">添加明星账号</button>
+                <button type="button" class="btn btn-default " data-toggle="modal" data-target="#add">添加NPC</button>
                 
             </div>
         </div>
 
+        
 
         <%if(list){%>
             <%list.forEach(function(e){%>
@@ -60,91 +70,95 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">明星信息</h4>
+                        <h4 class="modal-title" id="myModalLabel">NPC信息</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" role="form" method="POST" action="/changestarinfo">
+                            <form class="form-horizontal" role="form" method="POST" action="/changenpcinfo">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-4 control-label">ID</label>
+                                    <div class="col-sm-7">
+                                    <input value="<%=e._id%>" name="id" type="username" class="form-control" id="inputPassword3" placeholder="ID" readonly>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">中文名</label>
                                     <div class="col-sm-7">
-                                    <input readonly value="<%=e.star.chineseName%>" name="chinesename" type="username" class="form-control" id="inputPassword3" placeholder="Chinese Name">
+                                    <input  value="<%=e.npc.npcChineseName%>" name="npcchinesename" type="username" class="form-control" id="inputPassword3" placeholder="Chinese Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">英文名</label>
                                     <div class="col-sm-7">
-                                    <input readonly value="<%=e.star.englishName%>"name="englishname" type="username" class="form-control" id="inputPassword3" placeholder="English Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-4 control-label">别名</label>
-                                    <div class="col-sm-7">
-                                    <input value="<%=e.star.nickName%>" name="nickname" type="username" class="form-control" id="inputPassword3" placeholder="Nick Name">
+                                    <input  value="<%=e.npc.npcEnglishName%>"name="npcenglishname" type="username" class="form-control" id="inputPassword3" placeholder="English Name">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">出生日期</label>
                                     <div class="col-sm-7">
-                                    <input value="<%=e.star.birthday%>" name="birthday" type="username" class="form-control" id="inputPassword3" placeholder="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-4 control-label">出生地</label>
-                                    <div class="col-sm-7">
-                                    <input value="<%=e.star.birthplace%>" name="birthplace" type="username" class="form-control" id="inputPassword3" placeholder="Birthplace">
+                                    <input value="<%=e.npc.birthday%>" name="birthday" type="username" class="form-control" id="inputPassword3" placeholder="">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">血型</label>
                                     <div class="col-sm-7">
-                                    <input value="<%=e.star.blood%>" name="blood" type="username" class="form-control" id="inputPassword3" placeholder="Blood">
+                                    <input value="<%=e.npc.blood%>" name="blood" type="username" class="form-control" id="inputPassword3" placeholder="Blood">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">星座</label>
                                     <div class="col-sm-7">
-                                    <input value="<%=e.star.constellation%>" name="constellation" type="username" class="form-control" id="inputPassword3" placeholder="Constellation">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-4 control-label">身高</label>
-                                    <div class="col-sm-7">
-                                    <input value="<%=e.star.stature%>" name="stature" type="username" class="form-control" id="inputPassword3" placeholder="Stature">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-4 control-label">声音</label>
-                                    <div class="col-sm-7">
-                                    <input value="<%=e.star.voice%>" name="voice" type="username" class="form-control" id="inputPassword3" placeholder="Voice">
+                                    <input value="<%=e.npc.constellation%>" name="constellation" type="username" class="form-control" id="inputPassword3" placeholder="Constellation">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">描述</label>
                                     <div class="col-sm-7">
-                                    <input value="<%=e.star.description%>" name="description" type="username" class="form-control" id="inputPassword3" placeholder="Description">
+                                    <input value="<%=e.npc.description%>" name="description" type="username" class="form-control" id="inputPassword3" placeholder="Description">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-4 control-label">headPortrait</label>
+                                    <label for="inputEmail3" class="col-sm-4 control-label">口头禅</label>
                                     <div class="col-sm-7">
-                                    <input value="<%=e.star.headPortrait%>" name="headportrait" type="username" class="form-control" id="inputPassword3" placeholder="HeadPortrait">
+                                    <input value="<%=e.npc.petPhrase%>" name="petphrase" type="username" class="form-control" id="inputPassword3" placeholder="Description">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-4 control-label">portraitBig</label>
+                                    <label for="inputEmail3" class="col-sm-4 control-label">Live2D</label>
                                     <div class="col-sm-7">
-                                    <input value="<%=e.star.portraitBig%>" name="portraitbig" type="username" class="form-control" id="inputPassword3" placeholder="PortraitBig">
+                                    <input value="<%=e.npc.l2dModel%>" name="l2dmodel" type="username" class="form-control" id="inputPassword3" placeholder="Description">
                                     </div>
                                 </div>
+                                <hr/>
                                 <div class="form-group">
-                                    <label for="inputEmail3" class="col-sm-4 control-label">portraitSmall</label>
+                                    <label for="inputEmail3" class="col-sm-4 control-label">店铺英文title</label>
                                     <div class="col-sm-7">
-                                    <input value="<%=e.star.portraitSmall%>" name="portraitsmall" type="username" class="form-control" id="inputPassword3" placeholder="PortraitSmall">
+                                    <input value="<%=e.npc.shopModel.englishTitle%>" name="englishtitle" type="username" class="form-control" id="inputPassword3" placeholder="HeadPortrait">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-offset-4 col-sm-10">
-                                    <button type="submit" class="btn btn-default">修改明星信息</button>
+                                    <label for="inputEmail3" class="col-sm-4 control-label">店铺中文title</label>
+                                    <div class="col-sm-7">
+                                    <input value="<%=e.npc.shopModel.chineseTitle%>" name="chinesetitle" type="username" class="form-control" id="inputPassword3" placeholder="PortraitBig">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-4 control-label">titleimagestr</label>
+                                    <div class="col-sm-7">
+                                    <input value="<%=e.npc.shopModel.titleImageStr%>" name="titleimagestr" type="username" class="form-control" id="inputPassword3" placeholder="PortraitSmall">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-4 control-label">backImageStr</label>
+                                    <div class="col-sm-7">
+                                    <input value="<%=e.npc.shopModel.backImageStr%>" name="backimagestr" type="username" class="form-control" id="inputPassword3" placeholder="PortraitSmall">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-4 col-sm-3">
+                                    <button type="submit" class="btn btn-default">修改NPC信息</button>
+                                    </div>
+                                    <div class="col-sm-offset-1 col-sm-3">
+                                        <a href="/delnpc?id=<%=e._id%>" role="button" class="btn btn-danger" style="float:right; ">删除</a>
                                     </div>
                                 </div>
                             </form>
@@ -161,52 +175,27 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">添加明星</h4>
+                        <h4 class="modal-title" id="myModalLabel">添加NPC</h4>
                     </div>
                     <div class="modal-body">
                         <p class="lead">信息录入</p>
-                        <form class="form-horizontal" role="form" method="POST" action="/addstar">
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">Username</label>
-                                <div class="col-sm-7">
-                                <input name="username" type="username" class="form-control" id="inputPassword3" placeholder="Username">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
-                                <div class="col-sm-7">
-                                <input name="password" type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                                </div>
-                            </div>
-                            <hr/>
+                        <form class="form-horizontal" role="form" method="POST" action="/addnpc">
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">中文名</label>
                                 <div class="col-sm-7">
-                                <input name="chinesename" type="username" class="form-control" id="inputPassword3" placeholder="Chinese Name">
+                                <input name="npcchinesename" type="username" class="form-control" id="inputPassword3" placeholder="Chinese Name">
                                 </div>
-                             </div>
+                            </div>
                              <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">英文名</label>
                                 <div class="col-sm-7">
-                                <input name="englishname" type="username" class="form-control" id="inputPassword3" placeholder="English Name">
-                                </div>
-                             </div>
-                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">别名</label>
-                                <div class="col-sm-7">
-                                <input name="nickname" type="username" class="form-control" id="inputPassword3" placeholder="Nick Name">
+                                <input name="npcenglishname" type="username" class="form-control" id="inputPassword3" placeholder="English Name">
                                 </div>
                              </div>
                              <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">出生日期</label>
                                 <div class="col-sm-7">
                                 <input name="year" type="username" class="form-control" id="inputPassword3" placeholder="年"><input name="month" type="username" class="form-control" id="inputPassword3" placeholder="月"><input name="day" type="username" class="form-control" id="inputPassword3" placeholder="日">
-                                </div>
-                             </div>
-                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">出生地</label>
-                                <div class="col-sm-7">
-                                <input  name="birthplace" type="username" class="form-control" id="inputPassword3" placeholder="Birthplace">
                                 </div>
                              </div>
                              <div class="form-group">
@@ -222,44 +211,51 @@
                                 </div>
                              </div>
                              <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">身高</label>
-                                <div class="col-sm-7">
-                                <input name="stature" type="username" class="form-control" id="inputPassword3" placeholder="Stature">
-                                </div>
-                             </div>
-                             <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">声音</label>
-                                <div class="col-sm-7">
-                                <input name="voice" type="username" class="form-control" id="inputPassword3" placeholder="Voice">
-                                </div>
-                             </div>
-                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">描述</label>
                                 <div class="col-sm-7">
                                 <input name="description" type="username" class="form-control" id="inputPassword3" placeholder="Description">
                                 </div>
                              </div>
                              <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">headPortrait</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">口头禅</label>
                                 <div class="col-sm-7">
-                                <input name="headportrait" type="username" class="form-control" id="inputPassword3" placeholder="HeadPortrait">
+                                <input name="petphrase" type="username" class="form-control" id="inputPassword3" placeholder="petphrase">
                                 </div>
                              </div>
                              <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">portraitBig</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">Live2D</label>
                                 <div class="col-sm-7">
-                                <input name="portraitbig" type="username" class="form-control" id="inputPassword3" placeholder="PortraitBig">
+                                <input name="l2dmodel" type="username" class="form-control" id="inputPassword3" placeholder="Live2DModel">
+                                </div>
+                             </div>
+                             <hr/>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">店铺英文title</label>
+                                <div class="col-sm-7">
+                                <input name="englishtitle" type="username" class="form-control" id="inputPassword3" placeholder="englishtitle">
                                 </div>
                              </div>
                              <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-4 control-label">portraitSmall</label>
+                                <label for="inputEmail3" class="col-sm-4 control-label">店铺中文title</label>
                                 <div class="col-sm-7">
-                                <input name="portraitsmall" type="username" class="form-control" id="inputPassword3" placeholder="PortraitSmall">
+                                <input name="chinesetitle" type="username" class="form-control" id="inputPassword3" placeholder="chinesetitle">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">titleimagestr</label>
+                                <div class="col-sm-7">
+                                <input name="titleimagestr" type="username" class="form-control" id="inputPassword3" placeholder="titleimagestr">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">backimagestr</label>
+                                <div class="col-sm-7">
+                                <input name="backimagestr" type="username" class="form-control" id="inputPassword3" placeholder="backimagestr">
                                 </div>
                              </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-10">
-                                <button type="submit" class="btn btn-default">添加明星账户</button>
+                                <button type="submit" class="btn btn-default">添加NPC信息</button>
                                 </div>
                             </div>
                         </form>

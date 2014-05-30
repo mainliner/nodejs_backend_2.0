@@ -135,6 +135,19 @@ app.get('/showitem', admin.checkAdminLogin, admin.showItem);
 app.post('/changeiteminfo', admin.checkAdminLogin, admin.changeItemInfo);
 app.post('/additem', admin.checkAdminLogin, admin.addItem);
 app.get('/delitem', admin.checkAdminLogin, admin.deleteItem);
+app.get('/shownpc', admin.checkAdminLogin, admin.showNPC);
+app.post('/addnpc', admin.checkAdminLogin, admin.addNPC);
+app.post('/changenpcinfo', admin.checkAdminLogin, admin.changeNPCInfo);
+app.get('/delnpc', admin.checkAdminLogin, admin.deleteNPC);
+app.get('/language', admin.checkAdminLogin, admin.languageNPC);
+app.post('/addlanguage', admin.checkAdminLogin, admin.addLanguageNPC);
+app.get('/dellanguage', admin.checkAdminLogin, admin.deleteLanguageNPC);
+app.get('/shop', admin.checkAdminLogin, admin.shopNPC);
+app.post('/addshoptype', admin.checkAdminLogin, admin.addShopType);
+app.get('/delshoptype', admin.checkAdminLogin, admin.deleteShopType);
+app.post('/addshopitem', admin.checkAdminLogin, admin.addShopItem);
+app.get('/delshopitem', admin.checkAdminLogin, admin.deleteShopItem);
+
 
 app.get('/test',function(req,res){
     var encoded_payload = JSON.stringify({'starId':'534ba1488ccd99bf7a63ad75','message':'一条未接来电','noticeType':'audio','badge':1});

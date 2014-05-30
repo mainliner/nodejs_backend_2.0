@@ -5,6 +5,7 @@ var ObjectID = require('mongodb').ObjectID;
 function User(user){
     this.user = {
         userInfo:{
+            salt:user.salt,
             UUID: user.UUID,
             email: user.email,
             phone: user.phone,
@@ -226,7 +227,7 @@ User.getByEmailAndName = function getByEmailAndName(query,callback){
     });
 };
 
-User.changePassword = function(newPassword,Num,email,callback){
+User.changePassword = function(newPassword,salt,email,callback){
     mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
@@ -236,12 +237,12 @@ User.changePassword = function(newPassword,Num,email,callback){
                 mongodbPool.release(db);
                 return callback(err);
             }
-            collection.update({'user.userInfo.email':email},{'$set':{'user.userInfo.password':newPassword}},function(err){
+            collection.update({'user.userInfo.email':email},{'$set':{'user.userInfo.password':newPassword,'user.userInfo.salt':salt}},function(err){
                 mongodbPool.release(db);
                 if(err){
                     callback(err);
                 }
-                callback(null,Num);
+                callback(null);
             });
         });
     });

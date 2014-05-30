@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <title>Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+            <a class="navbar-brand" href="/admin">Muse</a>
+            <p class="navbar-text"><%=user.username%> (<%=user.level%>)</p>
+            <a type="button" class="btn btn-default navbar-btn navbar-right" href="/adminlogout">登出</a>
+            </div>
+        </nav>
+        <div class="col-sm-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="/shownpc">返回NPC列表</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-offset-1 col-sm-7">
+            <div class="well">
+                <h5>NPC: <%=data.npc.npcChineseName%></h5>
+                <hr/>
+                <p class="text-warning"><%= msg %></p>
+                <% if(data.npc.language != []){ %>
+                <table class="table table-hover">
+                    <tr>
+                        <td><strong>NPC常用语</strong></td>
+                        <td><strong>Operation</strong></td>
+                    </tr>                
+                    <%for(var i = 0, l = data.npc.language.length; i < l; i++) {%>
+                    <tr>
+                        <td><%=data.npc.language[i]%></td>
+                        <td>
+                            <a href="/dellanguage?id=<%=data._id%>&data=<%=data.npc.language[i]%>">删除</a>
+                        </td>
+                    </tr>
+                    <%}%>
+                </table>
+                <%}%>
+                <form class="form-horizontal" role="form" method="POST" action="/addlanguage">
+                    <div class="form-group">
+                        <input type="hidden" name="id" value="<%=data._id%>" readonly>
+                        <input type="text" name="language" class="form-control" placeholder="请输入NPC常用语">
+                        <center>
+                            <button  type="submit" class="btn btn-danger">添加</button>
+                        </center>
+                    </div>
+
+                </form>
+                
+            </div>
+        </div>
+
+
+
+        <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    </body>
+</html>
