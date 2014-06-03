@@ -20,8 +20,12 @@ exports.checkAdminNotLogin = function (req, res, next){
     }
 };
 exports.logout = function (req, res){
-    req.session.admin = null;
-    res.redirect('/admin');
+    req.session.destroy(function(err){
+        if(err){
+            return res.json(200,{'info':'session can not idestroy'});
+        }
+        return res.redirect('/admin');
+    });
 };
 exports.doReg = function (req, res){
     var md5 = crypto.createHash('md5');

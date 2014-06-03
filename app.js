@@ -10,6 +10,7 @@ var star = require('./routes/star');
 var item = require('./routes/item');
 var audio = require('./routes/audio');
 var admin = require('./routes/admin');
+var npc = require('./routes/npc');
 
 var http = require('http');
 var path = require('path');
@@ -24,6 +25,8 @@ var domainMiddleware = require('./lib/domain.js');
 
 var server = http.createServer();
 var app = express();
+
+
 
 app.use(domainMiddleware({
     server:server,
@@ -101,6 +104,9 @@ app.post('/putuser', user.putUser);
 app.get('/items',item.getAllItems);
 //get star info
 app.get('/stars', star.getAllStar);
+//get NPC info
+app.get('/npc', npc.getAllNPC);
+//player subscribe one star
 app.post('/subscribetostar' ,routes.checkLogin ,user.subscribeToStar);
 app.post('/unsubscribetostar' ,routes.checkLogin ,user.unsubscribeToStar);
 
@@ -148,7 +154,7 @@ app.get('/delshoptype', admin.checkAdminLogin, admin.deleteShopType);
 app.post('/addshopitem', admin.checkAdminLogin, admin.addShopItem);
 app.get('/delshopitem', admin.checkAdminLogin, admin.deleteShopItem);
 
-
+/*
 app.get('/test',function(req,res){
     var encoded_payload = JSON.stringify({'starId':'534ba1488ccd99bf7a63ad75','message':'一条未接来电','noticeType':'audio','badge':1});
                 app.e.publish('A',encoded_payload,{},function(err,message){
@@ -165,7 +171,7 @@ app.get('/domain',function(req,res){
         flerb.bark();
       });
 });
-
+*/
 
 app.get('*', function(req, res){
     res.render('error', {

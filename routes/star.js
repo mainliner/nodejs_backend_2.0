@@ -105,4 +105,7 @@ exports.getLastMessage = function(req, res){
         }
         return res.json(200,docs);
     });
-}
+};
+exports.getAllMessage = function(req, res){
+
+};

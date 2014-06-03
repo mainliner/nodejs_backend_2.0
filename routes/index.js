@@ -9,15 +9,28 @@ var nodemailer = require('nodemailer');
 var uuid = require('node-uuid');
 var settings = require('../settings');
 var wedate = require('../app.js');
+var SingleLogin = require('../models/singlelogin.js'); //只允许 用户在一台设备上登录。
 
 exports.index = function(req, res){
   res.render('index', { title: 'Let\'s date' });
 };
+
 exports.checkLogin = function(req,res, next) {
     if(!req.session.user) {
       return res.json(302,{'err':'you have not login'});
     }else{
-        next();
+        SingleLogin.checkSessionID(req.session.user._id, function(err, sessionID){
+            if(err){
+                return res.json(400,{'err':'db error'});
+            }
+            if(sessionID == req.sessionID){
+                next();
+            }else{
+                //说明该用户在另外一个新session下登录了游戏，旧session应该destroy
+                req.session.destroy(function(err){});
+                return res.json(302,{'err':'you have not login'});
+            }
+        });
     }
 };
 
@@ -43,7 +56,16 @@ exports.doLogin = function(req,res) {
             if(user.user.userInfo.password == password){
                 req.session.cookie.originalMaxAge = settings.maxAge;
                 req.session.user = user;
-                return res.json(200,user);
+                var newUserLogin = new SingleLogin ({
+                    'userID':user._id,
+                    'sessionID':req.sessionID,
+                });
+                newUserLogin.save(function(err){   //新用户登陆 更新singlelogin文档
+                    if(err){
+                        return res.json(400,{'err':'server error'});
+                    }
+                    return res.json(200,user);
+                });
             }else{
                 return res.json(402,{'err':'password does not match'});
             }
@@ -54,8 +76,12 @@ exports.doLogin = function(req,res) {
 };
 
 exports.logout = function(req,res) {
-    req.session.user = null;
-    res.json(200,{'info':'logout success'})
+    req.session.destroy(function(err){
+        if(err){
+            return res.json(400,{'info':'logout failed'});
+        }
+        return res.json(200,{'info':'logout success'});
+    });
 };
 
 exports.doReg = function(req, res){
@@ -85,7 +111,16 @@ exports.doReg = function(req, res){
             }
             req.session.cookie.originalMaxAge = settings.maxAge;
             req.session.user = user[0];
-            return res.json(200,user[0]);
+            var newUserLogin = new SingleLogin ({
+                    'userID':user._id,
+                    'sessionID':req.sessionID,
+                });
+            newUserLogin.save(function(err){   //新用户登陆 更新singlelogin文档
+                if(err){
+                    return res.json(400,{'err':'server error'});
+                }
+                    return res.json(200,user);
+            });
         });
     });
 };
@@ -142,12 +177,12 @@ exports.doReset = function(req,res){
         }
         var now = new Date();
         if(doc.outTime < now.getTime()){
-            //console.log(now.getTime());
             return res.json(400,{'err':"out time yeah"});
         }
         var md5 = crypto.createHash('sha256');
         var sid = md5.update(doc.email+'$'+doc.outTime+'@'+doc.privateKey).digest('base64');
         console.log(sid);
+        console.log(req.query.sid);
         if(req.query.sid != sid){
             return res.json(400,{'err':'invalue sid '});
         }
