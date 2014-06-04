@@ -3,7 +3,7 @@
 /*Deal with the audio file upload from ios star client
 */
 var assert = require('assert');
-var formidable = require('gridform/node_modules/formidable');
+//var formidable = require('gridform/node_modules/formidable');
 var gridfsStream = require('gridform/node_modules/gridfs-stream');
 var mongo = require('mongodb');
 var mongodbPool = require('../models/db.js');
