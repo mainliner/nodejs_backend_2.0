@@ -181,8 +181,6 @@ exports.doReset = function(req,res){
         }
         var md5 = crypto.createHash('sha256');
         var sid = md5.update(doc.email+'$'+doc.outTime+'@'+doc.privateKey).digest('base64');
-        console.log(sid);
-        console.log(req.query.sid);
         if(req.query.sid != sid){
             return res.json(400,{'err':'invalue sid '});
         }
