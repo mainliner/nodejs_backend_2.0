@@ -47,7 +47,9 @@ app.use(express.cookieParser());
 app.use(express.session({
     secret: settings.cookieSecret,
     store: new MongoStore({
-        db: settings.db
+        db: settings.db,
+        host: settings.mongodbHost,
+        port: settings.mongodbPort
     }),
     cookie: {},
 }));
@@ -55,7 +57,7 @@ app.use(app.router);
 /*
 connect to rabbitMQ, create a exchange( routKey: A--APNS  E--Email) to push message to APNS queue or Emai queue 
 */
-app.rabbitMQConnection = amqp.createConnection({host:"localhost", port:5672});;
+app.rabbitMQConnection = amqp.createConnection({host:settings.rabbitMQHost, port:settings.rabbitMQPort});;
 app.rabbitMQConnection.on('ready',function(){
         console.log('connect to the rabbitMQ successful');
         app.rabbitMQConnection.exchange('router',{type: 'direct',autoDelete: false,confirm: true},function(exchange){

@@ -5,7 +5,7 @@ var mongodb = require('mongodb');
 var pool = poolModule.Pool({
     name     : 'mongodb',
     create   : function(callback) {
-        mongodb.MongoClient.connect('mongodb://localhost:27017/wedate', {
+        mongodb.MongoClient.connect(settings.mongodbUrl, {
             server:{poolSize:1}
         }, function(err,db){
             callback(err,db);
