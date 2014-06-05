@@ -57,7 +57,10 @@ app.use(app.router);
 /*
 connect to rabbitMQ, create a exchange( routKey: A--APNS  E--Email) to push message to APNS queue or Emai queue 
 */
-app.rabbitMQConnection = amqp.createConnection({host:settings.rabbitMQHost, port:settings.rabbitMQPort});;
+app.rabbitMQConnection = amqp.createConnection({host:settings.rabbitMQHost, 
+                                                port:settings.rabbitMQPort,
+                                                login:settings.rabbitMQUser,
+                                                password:settings.rabbitMQPassword});
 app.rabbitMQConnection.on('ready',function(){
         console.log('connect to the rabbitMQ successful');
         app.rabbitMQConnection.exchange('router',{type: 'direct',autoDelete: false,confirm: true},function(exchange){

@@ -6,5 +6,7 @@ module.exports = {
     mongodbUrl: 'mongodb://localhost:27017/wedate',
     rabbitMQHost: 'localhost',
     rabbitMQPort: 5672,
+    rabbitMQUser:'guest',
+    rabbitMQPassword:'guest',
     maxAge: 2592000000,
 };
