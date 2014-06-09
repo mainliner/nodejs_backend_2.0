@@ -87,9 +87,9 @@ exports.changePassword = function(req, res){
             if(admin.password === oldpassword){
                 Admin.changePassword(admin,newpassword,function(err){
                     if(err){
-                        return res.render('dashboard');
+                        return res.render('error', {'msg': 'change password failed'});
                     }
-                    return res.render('dashboard');
+                    return res.redirect('/dashboard');
                 })
             }else{
                 res.render('error',{'msg':'old password is not match'});

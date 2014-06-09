@@ -20,31 +20,19 @@ function User(user){
             photoFrame:"None",
             status: "normal",
             audioLoadTime: new Date(),
-            messageLoadTime: new Date()
+            messageLoadTime: new Date(),
+            everdayArray:[]
         },
-        starInfo:[
-            
-        ],
+        starInfo:[],
+        dateArray:[],
         npcInfo:[
-            {name:'npc1',relationValue:0},{name:'npc2',relationValue:0},{name:'npc3',relationValue:0},{name:'npc4',relationValue:0},{name:'npc5',relationValue:0}
+            {name:'茉莉',relationValue:0},{name:'胡桃',relationValue:0},{name:'金',relationValue:0},{name:'梦魇',relationValue:0},{name:'缪斯',relationValue:0},{name:'布莱克',relationValue:0}
         ],
         items:{
-            clothes:[
-                {id:"", num:1},
-                {id:"", num:1}
-            ],
-            furniture:[
-                {id:"", num:1},
-                {id:"", num:1}
-            ],
-            CD:[
-                {id:"", num:1},
-                {id:"", num:1}
-            ],
-            Props:[
-                {id:"", num:1},
-                {id:"", num:1}
-            ],
+            clothes:[],
+            furniture:[],
+            CD:[],
+            Props:[],
         }
     };
 };
