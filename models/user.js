@@ -235,27 +235,4 @@ User.changePassword = function(newPassword,salt,email,callback){
         });
     });
 };
-//for test
-/*
-User.test = function (callback){
-    mongodbPool.acquire(function(err,db){
-        if(err){
-            return callback(err);
-        }
-        db.collection('users', function(err, collection){
-            if(err){
-                mongodbPool.release(db);
-                return callback(err);
-            }
-            collection.findOne({_id:new ObjectID("5333edfc0e5b06e51d958b81")},function(err,user){
-                mongodbPool.release(db)
-                if(err){
-                    return callback(err,null);
-                }
-                callback(err,user);
-            });
-        });
 
-    });
-};
-*/

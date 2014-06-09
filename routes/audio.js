@@ -87,15 +87,3 @@ exports.getLastAudio = function(req, res) {
         return res.json(200,docs);
     });
 };
-exports.getAllAudio = function(req, res) {
-    if(req.body.starId === undefined){
-        return res.json(400,{'err':'wrong request format'});
-    }
-    Audio.getAudioByStarId(req.body.starId, function(err,docs){
-        if(err){
-            return res.json(400, err);
-        }
-        return res.json(200,docs);
-    });
-};
-

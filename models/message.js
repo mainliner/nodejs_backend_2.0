@@ -36,7 +36,8 @@ Message.prototype.save = function(callback){
             });
         });
     });
-}
+};
+
 Message.getLastMessageByStarId = function(starArray,messageLoadTime,callback){
     mongodbPool.acquire(function(err,db){
         if(err){
@@ -48,7 +49,7 @@ Message.getLastMessageByStarId = function(starArray,messageLoadTime,callback){
                 return callback(err);
             }
             var date = new Date(messageLoadTime);
-            collection.find({'starId':{'$in':starArray},'uploadDate':{'$gt':date}}).sort({uploadDate:-1}).toArray(function(err,docs){
+            collection.find({'starId':{'$in':starArray},'uploadDate':{'$gt':date}}).sort({uploadDate:1}).toArray(function(err,docs){
                 mongodbPool.release(db);
                 if(err){
                     return callback(err);
@@ -57,4 +58,26 @@ Message.getLastMessageByStarId = function(starArray,messageLoadTime,callback){
             });
         });
     });
-}
+};
+
+Message.getMessageByStarId = function(starId, starDateTime, callback){
+    mongodbPool.acquire(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('message', function(err,collection){
+            if(err){
+                mongodbPool.release(db);
+                return callback(err);
+            }
+            var date = new Date(starDateTime);
+            collection.find({'starId':date, 'uploadDate':{'$gt':date}}).sort({uploadDate:1}).toArray(function(err,docs){
+                mongodbPool.release(db);
+                if(err){
+                    return callback(err);
+                }
+                return callback(err,docs);
+            });
+        });
+    });
+};

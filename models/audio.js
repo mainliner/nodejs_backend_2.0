@@ -47,7 +47,7 @@ Audio.getLastAudioByStarId = function (starArray, audioLoadTime, callback){
             }
             var date = new Date(audioLoadTime);
             collection.find({'starId':{'$in':starArray},'uploadDate':{'$gt':date}}).sort({uploadDate:1}).toArray(function(err,docs){
-                mongodbPool.release(db);           //need change to $gt
+                mongodbPool.release(db);          
                 if(err){
                     return callback(err);
                 }
@@ -57,7 +57,7 @@ Audio.getLastAudioByStarId = function (starArray, audioLoadTime, callback){
     });
 };
 
-Audio.getAudioByStarId = function (starId, callback){
+Audio.getAudioByStarId = function (starId, starDateTime,callback){
     mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
@@ -67,7 +67,8 @@ Audio.getAudioByStarId = function (starId, callback){
                 mongodbPool.release(db);
                 return callback(err);
             }
-            collection.find({'starId':starId}).sort({uploadDate:-1}).toArray(function(err,docs){
+            var date = new Date(starDateTime);
+            collection.find({'starId':starId, 'uploadDate':{'$gt':date}}).sort({uploadDate:1}).toArray(function(err,docs){
                 mongodbPool.release(db);
                 if(err){
                     return  callback(err);

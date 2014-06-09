@@ -4,7 +4,7 @@
 var assert = require('assert');
 var Star = require('../models/star.js');
 var Message = require('../models/message.js');
-//var formidable = require('gridform/node_modules/formidable');
+var Audio = require('../models/audio.js');
 var gridfsStream = require('gridform/node_modules/gridfs-stream');
 var mongo = require('mongodb');
 var mongodbPool = require('../models/db.js');
@@ -106,6 +106,22 @@ exports.getLastMessage = function(req, res){
         return res.json(200,docs);
     });
 };
-exports.getAllMessage = function(req, res){
-
+exports.getDiaryAudioAndMessage = function(req, res){
+    if(req.body.starId === undefined || req.body.starDateTime === undefined){
+        return res.json(400,{'err':'wrong request format'});
+    }
+    Audio.getAudioByStarId(req.body.starId, req.body.starDateTime, function(err,audioArray){
+        if(err){
+            return res.json(400, err);
+        }
+        Message.getMessageByStarId(req.body.starId, req.body.starDateTime, function(err,messageArray){
+            if(err){
+                return res.json(400,err);
+            }
+            var result = {};
+            result['audioArray'] = audioArray;
+            result['messageArray'] = messageArray;
+            return res.json(200,result);
+        });
+    });
 };

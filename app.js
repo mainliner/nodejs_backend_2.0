@@ -91,7 +91,7 @@ app.post('/reg', routes.checkNotLogin);
 app.post('/reg', routes.doReg);
 //app.post('/login', routes.checkNotLogin);//Maybe this should not be used when server for a iOS client
 app.post('/login', routes.doLogin);
-//app.post('/password', routes.checkLogin);
+app.post('/password', routes.checkLogin);
 app.post('/password', routes.password);
 app.all('/reset', routes.checkNotLogin);
 app.post('/reset', routes.reset);
@@ -114,6 +114,8 @@ app.get('/npc', npc.getAllNPC);
 //player subscribe one star
 app.post('/subscribetostar' ,routes.checkLogin ,user.subscribeToStar);
 app.post('/unsubscribetostar' ,routes.checkLogin ,user.unsubscribeToStar);
+//diary audio and message
+app.post('/getdiaryaudioandmessage' ,routes.checkLogin ,star.getDiaryAudioAndMessage);
 
 
 //some service about the star
