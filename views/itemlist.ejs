@@ -94,6 +94,69 @@
                                 </div>
                              </div>
                              <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">LP</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.LP%>" name="lp" type="username" class="form-control" id="inputPassword3" placeholder="0">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">是否为人民币商品</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="isrmb">
+                                        <option value="<%=e.item.isRMB%>">
+                                            <%if(e.item.isRMB){%>
+                                                LP商品</option>
+                                                <option value="0">游戏币商品</option>>
+                                            <%}else{%>
+                                                游戏币商品</option>
+                                                <option value="1">LP商品</option>>
+                                            <%}%>
+                                    </select>
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">物品使用者性别</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="sex">
+                                        <option value="<%e.item.sex%>">
+                                            <%if(e.item.sex == "boy"){%>
+                                                男</option>
+                                                <option value="girl">女</option>
+                                                <option value="none">无需特别指定</option>
+                                            <%}else if(e.item.sex == "girl"){%>
+                                                女</option>
+                                                <option value="boy">男</option>
+                                                <option value="none">无需特别指定</option>
+                                            <%}else{%>
+                                                无需特别指定</option>
+                                                <option value="boy">男</option>
+                                                <option value="girl">女</option>
+                                            <%}%>
+                                    </select>
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">是否可穿戴</label>
+                                <div class="col-sm-7">
+                                <select class="form-control" name="wearable">
+                                        <option value="<%=e.item.wearable%>">
+                                            <%if(e.item.wearable){%>
+                                                可穿戴物品</option>
+                                                <option value="0">不可穿戴物品</option>>
+                                            <%}else{%>
+                                                不可穿戴物品</option>
+                                                <option value="1">可穿戴物品</option>>
+                                            <%}%>
+                                    </select>
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">属性值</label>
+                                <div class="col-sm-7">
+                                <input value="<%=e.item.attribute%>" name="attribute" type="username" class="form-control" id="inputPassword3" placeholder="属性值">
+                                </div>
+                             </div>
+                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-4 control-label">level</label>
                                 <div class="col-sm-7">
                                 <input value="<%=e.item.level%>" name="level" type="username" class="form-control" id="inputPassword3" placeholder="level">
@@ -174,6 +237,46 @@
                                 <label for="inputEmail3" class="col-sm-4 control-label">价格</label>
                                 <div class="col-sm-7">
                                 <input  name="price" type="username" class="form-control" id="inputPassword3" placeholder="Price">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">LP</label>
+                                <div class="col-sm-7">
+                                <input  name="lp" type="username" class="form-control" id="inputPassword3" placeholder="0">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">是否为人民币商品</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="isrmb">
+                                        <option value="0">游戏币商品</option>>
+                                        <option value="1">LP商品</option>>
+                                    </select>
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">物品使用者性别</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="sex">
+                                                <option value="none">无需特别指定</option>
+                                                <option value="boy">男</option>
+                                                <option value="girl">女</option>
+                                    </select>
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">是否可穿戴</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="wearable">
+                                        <option value="0">不可穿戴物品</option>>
+                                        <option value="1">可穿戴物品</option>>
+                                    </select>
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">属性值</label>
+                                <div class="col-sm-7">
+                                <input name="attribute" type="username" class="form-control" id="inputPassword3" placeholder="属性值">
                                 </div>
                              </div>
                              <div class="form-group">

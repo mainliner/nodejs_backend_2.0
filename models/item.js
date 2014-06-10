@@ -7,6 +7,11 @@ function Item(item){
         englishName : item.englishName,
         title : item.title,
         price : item.price,
+        LP: item.LP,
+        isRMB: item.RMB,
+        sex: item.sex,
+        wearable: item.wearable,
+        attribute: item.attribute, 
         description : item.description,
         type : item.type,
         pictureBig : item.pictureBig,
@@ -68,7 +73,7 @@ Item.changeItemInfo = function (id, newinfo, callback){
                 mongodbPool.release(db);
                 return callback(err);
             }
-            collection.update({'_id':new ObjectID(id)},{'$set':newinfo},function(err){
+            collection.update({'_id':new ObjectID(id)},{'$set':newinfo},{upsert:true},function(err){
                 mongodbPool.release(db);
                 if(err){
                     return callback(err);
@@ -98,29 +103,3 @@ Item.deleteItem = function (id, callback){
         });
     });
 };
-/*
-Item.get = function get(itemName, callback) {
-    mongodbPool.acquire(function(err,db){
-        if(err){
-            return callback(err);
-        }
-        db.collection('item',function(err,collection){
-            if(err){
-                mongodbPool.release(db);
-                return callback(err);
-            }
-            collection.findOne({name:itemName}, function(err,doc){
-                mongodbPool.release(db);
-                if(err){
-                    return callback(err);
-                }
-                if(doc){
-                   var item = new Item(doc);
-                   callback(null,item); 
-                }else{
-                    callback(err,null);
-                }
-                });
-            });
-        });
-    };*/
