@@ -85,7 +85,7 @@ if ('development' == app.get('env')) {
 }
 
 //for normal game player
-//--------
+//-----------------
 app.get('/', routes.index);
 app.post('/reg', routes.checkNotLogin);
 app.post('/reg', routes.doReg);
@@ -162,15 +162,19 @@ app.post('/addshopitem', admin.checkAdminLogin, admin.addShopItem);
 app.get('/delshopitem', admin.checkAdminLogin, admin.deleteShopItem);
 
 /*
-app.get('/test',function(req,res){
-    var encoded_payload = JSON.stringify({'starId':'534ba1488ccd99bf7a63ad75','message':'一条未接来电','noticeType':'audio','badge':1});
-                app.e.publish('A',encoded_payload,{},function(err,message){
-                    if(err){
-                        //need to save the unpush message for resend
-                        return res.json(200,{'info':' success'});
-                    }
-                    return res.json(200,{'info':' success'});
-                });
+app.post('/test',function(req,res){
+
+    var userData = JSON.stringify(req.body.userData);
+    var checkKey = req.body.checkKey;
+    var salt = "12345678901234567890";
+    var crypto = require('crypto');
+    var md5 = crypto.createHash('md5');
+    var newStr = userData+salt;
+    var newKey = md5.update(newStr,'utf-8').digest('hex');
+    if(checkKey == newKey){
+        console.log('YES');
+    }
+    res.json(200,{'info':newKey});
 });
 app.get('/domain',function(req,res){
     setTimeout(function() {
