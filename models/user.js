@@ -21,12 +21,12 @@ function User(user){
             status: "normal",
             audioLoadTime: new Date(),
             messageLoadTime: new Date(),
-            everdayArray:[]
+            everydayArray:[]
         },
         starInfo:[],
         dateArray:[],
         npcInfo:[
-            {name:'茉莉',relationValue:0},{name:'胡桃',relationValue:0},{name:'金',relationValue:0},{name:'梦魇',relationValue:0},{name:'缪斯',relationValue:0},{name:'布莱克',relationValue:0}
+            {name:'Molly',relationValue:0},{name:'Kurumi',relationValue:0},{name:'King',relationValue:0},{name:'Nightmare',relationValue:0},{name:'Black',relationValue:0},{name:'Muse',relationValue:0}
         ],
         items:{
             clothes:[],
@@ -57,7 +57,9 @@ User.prototype.save = function save(callback){
             collection.ensureIndex('user.userInfo.email',function(err, user) {});
             collection.insert(user,{w:1}, function(err,user) {
                 mongodbPool.release(db);
-                callback(err, user);
+                if(user){
+                    callback(err, user[0]);
+                }
             });
         });
     });

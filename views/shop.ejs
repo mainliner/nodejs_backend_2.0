@@ -55,14 +55,20 @@
                         </tr>
                         <%for(var x=0, y=data.npc.shopModel.typeArray[i].item.length; x < y; x++){%>  
                         <tr>
+                            <%var flag = 0;%>
                             <%for(var n=0, m=list.length; n<m; n++){%>
                                 <%if(list[n]._id == data.npc.shopModel.typeArray[i].item[x]){%>
                                     <td><%=list[n].item.chineseName%></td>
                                     <td>
                                     <a href="/delshopitem?id=<%=data._id%>&index=<%=i%>&item=<%=list[n]._id%>">删除</a>
                                     </td>
+                                    <%flag = 1;%>
                                     <%break;%>
                                 <%}%>
+                            <%}%>
+                            <%if(flag == 0){%>
+                                <td>物品已不存在</td>
+                                <td><a href="/delshopitem?id=<%=data._id%>&index=<%=i%>&item=<%=data.npc.shopModel.typeArray[i].item[x]%>">删除</a></td>
                             <%}%>
                         </tr>
                         <%}%>

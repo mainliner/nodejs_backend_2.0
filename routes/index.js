@@ -109,6 +109,7 @@ exports.doReg = function(req, res){
             if(err){
                 return res.json(300,err);
             }
+            console.log(user);
             req.session.cookie.originalMaxAge = settings.maxAge;
             req.session.user = user[0];
             var newUserLogin = new SingleLogin ({
