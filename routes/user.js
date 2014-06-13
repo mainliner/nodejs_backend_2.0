@@ -40,7 +40,7 @@ exports.putUser = function(req, res){
             return res.json(200,{'info':'upload success'});
         });
     }else{
-        return res.json(400,{'err':"Please don't be evil"});
+        return res.json(333,{'err':"Please don't be evil"});
     }
 };
 
