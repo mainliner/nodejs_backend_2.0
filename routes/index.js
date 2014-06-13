@@ -52,7 +52,7 @@ exports.doLogin = function(req,res) {
         if(user){
             var md5 = crypto.createHash('sha256');
             var salt = user.user.userInfo.salt;
-            var password = md5.update(salt+req.body.password).digest('base64');
+            var password = md5.update(salt+req.body.password).digest('hex');
             if(user.user.userInfo.password == password){
                 req.session.cookie.originalMaxAge = settings.maxAge;
                 req.session.user = user;
@@ -90,7 +90,7 @@ exports.doReg = function(req, res){
     }
     var md5 = crypto.createHash('sha256');
     var saltOfUser = uuid.v1();
-    var password = md5.update(saltOfUser+req.body.password).digest('base64');
+    var password = md5.update(saltOfUser+req.body.password).digest('hex');
     var newUser = new User({
         salt: saltOfUser,
         phone: req.body.phone,
@@ -98,20 +98,19 @@ exports.doReg = function(req, res){
         password: password,
         UUID: req.body.UUID,
     });
-    User.get(newUser,function(err,user){
+    User.get(newUser,function(err,doc){
         if(err){
             return res.json(400,err);
         }
-        if(user){
+        if(doc){
             return res.json(401,{'err':'user has exist'});
         }
         newUser.save(function(err,user){
             if(err){
                 return res.json(300,err);
             }
-            console.log(user);
             req.session.cookie.originalMaxAge = settings.maxAge;
-            req.session.user = user[0];
+            req.session.user = user;
             var newUserLogin = new SingleLogin ({
                     'userID':user._id,
                     'sessionID':req.sessionID,
@@ -143,7 +142,7 @@ exports.reset = function(req, res){
             var outTime = date.getTime()+600000.0; //10 mins out date time
             var email = user.user.userInfo.email;
             var md5 = crypto.createHash('sha256');
-            var sid = md5.update(email+'$'+outTime+'@'+privateKey).digest('base64');
+            var sid = md5.update(email+'$'+outTime+'@'+privateKey).digest('hex');
             var RS = new resetServer({'email':email,'privateKey':privateKey,'outTime':outTime});
             RS.save(function(err){
                 if(err){
@@ -181,7 +180,7 @@ exports.doReset = function(req,res){
             return res.json(400,{'err':"out time yeah"});
         }
         var md5 = crypto.createHash('sha256');
-        var sid = md5.update(doc.email+'$'+doc.outTime+'@'+doc.privateKey).digest('base64');
+        var sid = md5.update(doc.email+'$'+doc.outTime+'@'+doc.privateKey).digest('hex');
         if(req.query.sid != sid){
             return res.json(400,{'err':'invalue sid '});
         }
@@ -191,7 +190,7 @@ exports.doReset = function(req,res){
         }
         var _md5 = crypto.createHash('sha256');
         var newSalt = uuid.v1();
-        var newPassword = _md5.update(newSalt+Num).digest('base64');
+        var newPassword = _md5.update(newSalt+Num).digest('hex');
         User.changePassword(newPassword, newSalt,doc.email, function(err){
             if(err){
                 return res.json(400,err);
@@ -214,11 +213,11 @@ exports.password = function(req,res){
         }
         if(doc){
             var md5 = crypto.createHash('sha256');
-            var oldPassword = md5.update(doc.user.userInfo.salt+req.body.oldPassword).digest('base64');
+            var oldPassword = md5.update(doc.user.userInfo.salt+req.body.oldPassword).digest('hex');
             if(oldPassword == doc.user.userInfo.password){
                 var _md5 = crypto.createHash('sha256');
                 var newSalt = uuid.v1();
-                var newPassword = _md5.update(newSalt+req.body.newPassword).digest('base64');
+                var newPassword = _md5.update(newSalt+req.body.newPassword).digest('hex');
                 User.changePassword(newPassword, newSalt, req.session.user.user.userInfo.email, function(err,password){
                     if(err){
                         return res.json(400,err);
