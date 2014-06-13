@@ -68,7 +68,6 @@ Star.getAll = function(callback){
 };
 
 Star.getByName = function(username,callback){
-    //unuse function
     mongodbPool.acquire(function(err,db){
         if(err){
             return callback(err);
@@ -78,7 +77,7 @@ Star.getByName = function(username,callback){
                 mongodbPool.release(db);
                 return callback(err);
             }
-            collection.find({'star.username':username},function(err,doc){
+            collection.findOne({'star.username':username},function(err,doc){
                 mongodbPool.release(db);
                 if(err){
                     return callback(err);
