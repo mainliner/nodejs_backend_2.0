@@ -29,10 +29,12 @@ function User(user){
             {name:'Molly',relationValue:0},{name:'Kurumi',relationValue:0},{name:'King',relationValue:0},{name:'Nightmare',relationValue:0},{name:'Black',relationValue:0},{name:'Muse',relationValue:0}
         ],
         items:{
-            clothes:[],
+            gift:[],
             furniture:[],
             CD:[],
-            Props:[],
+            props:[],
+            consumption:[]
+
         }
     };
 };

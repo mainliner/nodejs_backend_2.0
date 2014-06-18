@@ -40,7 +40,7 @@ exports.starLogin = function(req, res){
 
             if(doc.star.password == password){
                 req.session.cookie.originalMaxAge = settings.maxAge;
-                req.session.user = doc;
+                req.session.star = doc;
 
                 return res.json(200, doc);
             }else{
@@ -62,7 +62,7 @@ exports.starLogout = function(req, res){
 };
 
 exports.checkLogin = function(req, res, next) {
-    if(!req.session.user) {
+    if(!req.session.star) {
         return res.json(302, {'err': 'you have not login'});
     }else{
         next();
