@@ -95,6 +95,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-4 control-label">性别</label>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" name="gender">
+                                            <%if(e.star.gender == "man"){%>
+                                                <option value="man">男</option>
+                                                <option value="woman">女</option>
+                                            <%}else{%>
+                                                <option value="woman">女</option>
+                                                <option value="man">男</option>
+                                            <%}%>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="inputEmail3" class="col-sm-4 control-label">血型</label>
                                     <div class="col-sm-7">
                                     <input value="<%=e.star.blood%>" name="blood" type="username" class="form-control" id="inputPassword3" placeholder="Blood">
@@ -207,6 +221,15 @@
                                 <label for="inputEmail3" class="col-sm-4 control-label">出生地</label>
                                 <div class="col-sm-7">
                                 <input  name="birthplace" type="username" class="form-control" id="inputPassword3" placeholder="Birthplace">
+                                </div>
+                             </div>
+                             <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-4 control-label">性别</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control" name="gender">
+                                        <option value="man">男</option>
+                                        <option value="woman">女</option>
+                                    </select>
                                 </div>
                              </div>
                              <div class="form-group">

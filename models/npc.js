@@ -170,9 +170,10 @@ NPC.deleteLanguage = function(id, data, callback){
     });
 };
 
-NPC.addShopType = function(id, shopType, callback){
+NPC.addShopType = function(id, shopType, englishShopType,callback){
     newShopType = {
         'shopType':shopType,
+        'englishShopType':englishShopType,
         'item':[]
     }
     mongodbPool.acquire(function(err,db){

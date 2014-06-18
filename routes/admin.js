@@ -185,6 +185,7 @@ exports.addStar = function(req, res){
         EnglishName:req.param("englishname"),
         nickName:req.param("nickname"),
         birthday:starBirthday,
+        gender:req.param("gender"),
         birthplace:req.param("birthplace"),
         blood:req.param("blood"),
         constellation:req.param("constellation"),
@@ -220,6 +221,7 @@ exports.changeStarInfo = function(req, res){
             'star.nickName':req.param("nickname"),
             'star.birthday':starBirthday,
             'star.birthplace':req.param("birthplace"),
+            'star.gender':req.param('gender'),
             'star.blood':req.param("blood"),
             'star.constellation':req.param("constellation"),
             'star.stature':req.param("stature"),
@@ -435,7 +437,7 @@ exports.addShopType = function(req, res){
     if(req.param('shoptype') === ""){
         return res.render('error',{'msg':'wrong request formate'});
     }
-    NPC.addShopType(req.param('id'), req.param('shoptype'),function(err){
+    NPC.addShopType(req.param('id'), req.param('shoptype'), req.param('englishshoptype'),function(err){
         if(err){
             return res.render('error', {'msg':'add failed!'});
         }

@@ -9,6 +9,7 @@ function Star(star){
         englishName:star.EnglishName,
         nickName:star.nickName,
         birthday:star.birthday,
+        gender:star.gender,
         birthplace:star.birthplace,
         blood:star.blood,
         constellation:star.constellation,
