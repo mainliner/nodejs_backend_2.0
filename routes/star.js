@@ -9,6 +9,8 @@ var gridfsStream = require('gridform/node_modules/gridfs-stream');
 var mongo = require('mongodb');
 var mongodbPool = require('../models/db.js');
 var wedate = require('../app.js');
+var crypto = require('crypto');
+var settings = require('../settings');
 
 var Grid = require('mongodb').Grid;
 var uploadErrorLogfile = require('./audio.js').uploadErrorLogfile;
@@ -22,15 +24,87 @@ exports.getAllStar = function(req, res){
     });};
 
 exports.starLogin = function(req, res){
+    if(req.body.name === undefined || req.body.password === undefined
+        || req.body.name == "" || req.body.password == ""){
+        return res.json(400,{"err": "Please input your username and password"});
+    }
 
+    Star.getByName(req.body.name, function(err,doc){
+        if(err){
+            return res.json(400,err);
+        }
+
+        if(doc){
+            var md5 =  crypto.createHash('md5');
+            var password = md5.update(req.body.password).digest('base64');
+
+            if(doc.star.password == password){
+                req.session.cookie.originalMaxAge = settings.maxAge;
+                req.session.user = doc;
+
+                return res.json(200, doc);
+            }else{
+                return res.json(402,{'err':'password does not match'});
+            }
+        }else{
+            return res.json(401,{'err':'user does not exist'});
+        }
+    });
 };
 
 exports.starLogout = function(req, res){
-
+    req.session.destroy(function(err){
+        if(err){
+            return res.json(400,{'info':'logout failed'});
+        }
+        return res.json(200,{'info':'logout success'});
+    });
 };
 
-exports.starChangePassword = function(req, res){
+exports.checkLogin = function(req, res, next) {
+    if(!req.session.user) {
+        return res.json(302, {'err': 'you have not login'});
+    }else{
+        next();
+    }
+}
 
+exports.starChangePassword = function(req, res){
+    if(req.body.name === undefined || req.body.oldPassword === undefined || req.body.newPassword == undefined){
+        return res.json(400, {'err': 'wrong request format'});
+    }
+
+    if(req.body.name == "" || req.body.oldPassword == "" || req.body.newPassword == ""){
+        return res.json(400, {'err': 'Please input your password'});
+    }
+
+    Star.getByName(req.body.name, function(err, doc){
+        if(err) {
+            return res.json(400, err);
+        }
+
+        if(doc){
+            var md5 =  crypto.createHash('md5');
+            var oldPassword = md5.update(req.body.oldPassword).digest('base64');
+
+            if(doc.star.password == oldPassword){
+                var _md5 = crypto.createHash('md5');
+                var newPassword = _md5.update(req.body.newPassword).digest('base64');
+
+                Star.changePassword(req.body.name, newPassword, function(err) {
+                    if(err) {
+                        return res.json(400, err);
+                    }
+
+                    return res.json(200, {'info': 'change password success'});
+                });
+            }else {
+                return res.json(402, {'err': 'password does not match'});
+            }
+        }else {
+            return res.json(400, {'err': 'star does not exist'});
+        }
+    });
 };
 
 exports.starUploadMessage = function(req, res){

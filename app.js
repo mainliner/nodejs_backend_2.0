@@ -112,22 +112,31 @@ app.get('/stars', star.getAllStar);
 //get NPC info
 app.get('/npc', npc.getAllNPC);
 //player subscribe one star
-app.post('/subscribetostar' ,routes.checkLogin ,user.subscribeToStar);
-app.post('/unsubscribetostar' ,routes.checkLogin ,user.unsubscribeToStar);
-//diary audio and message
-app.post('/getdiaryaudioandmessage' ,routes.checkLogin ,star.getDiaryAudioAndMessage);
+app.post('/subscribetostar', routes.checkLogin);
+app.post('/subscribetostar', user.subscribeToStar);
 
+app.post('/unsubscribetostar', routes.checkLogin);
+app.post('/unsubscribetostar', user.unsubscribeToStar);
+//diary audio and message
+app.post('/getdiaryaudioandmessage', routes.checkLogin);
+app.post('/getdiaryaudioandmessage', star.getDiaryAudioAndMessage);
+
+app.post('/getlastaudio',routes.checkLogin);
+app.post('/getlastaudio',audio.getLastAudio);
+
+app.post('/getlastmessage',routes.checkLogin);
+app.post('/getlastmessage', star.getLastMessage);
 
 //some service about the star
 //---------------------------------------
 app.post('/upload', audio.upload);//need star login check
 app.post('/putmessage', star.starUploadMessage);//need star login check
-//app.post('/getallaudio', routes.checkLogin);
-//app.post('/getallaudio', audio.getAllAudio);
-app.post('/getlastaudio',routes.checkLogin);
-app.post('/getlastaudio',audio.getLastAudio);
-app.post('/getlastmessage',routes.checkLogin);
-app.post('/getlastmessage', star.getLastMessage);
+app.post('/starLogin', star.starLogin);
+app.post('/starLogout', star.starLogout);
+app.post('/starChangePassword', star.checkLogin);
+app.post('/starChangePassword', star.starChangePassword);
+
+
 
 
 //only for admin

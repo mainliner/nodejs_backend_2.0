@@ -108,3 +108,25 @@ Star.changeStarInfo = function(starEnName, newInfo, callback){
         });
     });
 };
+
+Star.changePassword = function(username,newPassword,callback){
+    mongodbPool.acquire(function(err,db){
+        if(err){
+            return callback(err);
+        }
+        db.collection('star',function(err,collection){
+            if(err){
+                mongodbPool.release(db);
+                return callback(err);
+            }
+            collection.update({'star.username':username},{'$set':{'star.password':newPassword}},function(err){
+                mongodbPool.release(db);
+                if(err){
+                    callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
