@@ -199,12 +199,53 @@ GET:
 ##Unsubcribe a star
 ...
 
+##Star Login
+...
+POST /starLogin
+...
+######JSON Format:
+...
+request:
+{'name':'xxxxx','password':'xxxxxx'}
+response: 200, {star object}
+          400, {err:'Please input your username and password'}
+          401, {err:'user does not exist'}
+          402, {err:'password does not match'}
+...
+
+#####NOTE:
 
 
+##Star Logout
+...
+POST /starLogout
+...
+######JSON Format:
+...
+request:
+{}
+response: 200, {star object}
+          400, {err}
+...
+
+#####NOTE:
 
 
+##Star ChangePassword
+...
+POST /starChangePassword
+...
+######JSON Format:
+...
+request:
+{'name':'xxxxx','oldPassword':'xxxxx','newPassword':'xxxxxx'}
+response: 200, {info:'change password success'}
+          400, {err:'Please input your password'}
+          401, {err:'star does not exist'}
+          402, {err:'password does not match'}
+...
 
-
+#####NOTE:
 
 =====
 #*Appendix*

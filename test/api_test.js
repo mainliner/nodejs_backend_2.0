@@ -126,14 +126,6 @@ exports.starChangePwd_fail_noName_1 = function(test) {
 	test.expect(2);
 
 	request.post(
-		{ url: h + "/starLogin",
-		  json: { name: "liminhao",
-				  password: "liminhao521"}},
-		function (err, resp, body) {
-			
-		}
-	);
-	request.post(
 		{ url: h + "/starChangePassword",
 		  json: { oldPassword: "liminhao521",
 				  newPassword: "liminhao521"}},
@@ -147,15 +139,6 @@ exports.starChangePwd_fail_noName_1 = function(test) {
 
 exports.starChangePwd_fail_noName_2 = function(test) {
 	test.expect(2);
-
-	request.post(
-		{ url: h + "/starLogin",
-		  json: { name: "liminhao",
-				  password: "liminhao521"}},
-		function (err, resp, body) {
-			
-		}
-	);
 
 	request.post(
 		{ url: h + "/starChangePassword",
@@ -241,7 +224,7 @@ exports.starChangePwd_fail_wrongName = function(test) {
 				  oldPassword: "liminhao521",
 				  newPassword: "liminhao521"}},
 		function (err, resp, body) {
-			test.equal(resp.statusCode, 400);
+			test.equal(resp.statusCode, 401);
 			test.equal(resp.body.err, "star does not exist");
 			test.done();
 		}
