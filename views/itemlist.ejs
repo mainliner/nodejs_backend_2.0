@@ -103,10 +103,14 @@
                                 <label for="inputEmail3" class="col-sm-4 control-label">是否为人民币商品</label>
                                 <div class="col-sm-7">
                                     <select class="form-control" name="isrmb">
-                                            <%if(e.item.isRMB){%>
+                                            <%if(e.item.isRMB == 1){%>
                                                 <option value="1">LP商品</option>
                                                 <option value="0">游戏币商品</option>>
+                                            <%}if(e.item.isRMB == 0){%>
+                                                <option value="0">游戏币商品</option>
+                                                <option value="1">LP商品</option>>
                                             <%}else{%>
+                                                <option value="none">需要选择</option>>
                                                 <option value="0">游戏币商品</option>
                                                 <option value="1">LP商品</option>>
                                             <%}%>
