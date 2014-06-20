@@ -22,7 +22,7 @@ exports.checkAdminNotLogin = function (req, res, next){
 exports.logout = function (req, res){
     req.session.destroy(function(err){
         if(err){
-            return res.json(200,{'info':'session can not idestroy'});
+            return res.json(400,err);
         }
         return res.redirect('/admin');
     });

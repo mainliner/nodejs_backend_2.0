@@ -102,7 +102,7 @@ exports.starChangePassword = function(req, res){
                 return res.json(402, {'err': 'password does not match'});
             }
         }else {
-            return res.json(400, {'err': 'star does not exist'});
+            return res.json(401, {'err': 'star does not exist'});
         }
     });
 };

@@ -2,236 +2,161 @@
 /*
  * GET home page.
  */
-var crypto = require('crypto');
-var User = require('../models/user.js');
-var resetServer = require('../models/passwordReset');
-var nodemailer = require('nodemailer');
-var uuid = require('node-uuid');
-var settings = require('../settings');
-var wedate = require('../app.js');
-var SingleLogin = require('../models/singlelogin.js'); //只允许 用户在一台设备上登录。
+var user = require('./user');
+var star = require('./star');
+var item = require('./item');
+var npc = require('./npc');
+var audio = require('./audio');
+var admin = require('./admin');
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Let\'s date' });
-};
+module.exports = function(app) {
+    app.get("/index", function (req, res) {
+        res.render('index', { title: 'Let\'s date' });
+    });
 
-exports.checkLogin = function(req,res, next) {
-    if(!req.session.user) {
-      return res.json(302,{'err':'you have not login'});
-    }else{
-        SingleLogin.checkSessionID(req.session.user._id, function(err, sessionID){
-            if(err){
-                return res.json(400,{'err':'db error'});
-            }
-            if(sessionID == req.sessionID){
-                next();
-            }else{
-                //说明该用户在另外一个新session下登录了游戏，旧session应该destroy
-                req.session.destroy(function(err){});
-                return res.json(302,{'err':'you have not login'});
-            }
+    app.post('/reg', user.checkNotLogin);
+    app.post('/reg', user.doReg);
+
+    app.post('/login', user.doLogin);
+
+    app.post('/password', user.checkLogin);
+    app.post('/password', user.password);
+
+    app.all('/reset', user.checkNotLogin);
+    app.post('/reset', user.reset);
+    app.get('/reset', user.doReset);
+
+    app.get('/logout', user.checkLogin);
+    app.get('/logout', user.logout);
+
+    //get and updata user info
+    app.post('/check_user_version',user.checkLogin);
+    app.post('/check_user_version', user.checkUserVersion);
+
+    app.get('/getuser', user.checkLogin);
+    app.get('/getuser', user.getUser);
+
+    app.post('/putuser', user.checkLogin);
+    app.post('/putuser', user.putUser);
+
+    //get item info
+    app.get('/items',item.getAllItems);
+    //get star info
+    app.get('/stars', star.getAllStar);
+    //get NPC info
+    app.get('/npc', npc.getAllNPC);
+
+    //player subscribe one star
+    app.post('/subscribetostar', user.checkLogin);
+    app.post('/subscribetostar', user.subscribeToStar);
+
+    app.post('/unsubscribetostar', user.checkLogin);
+    app.post('/unsubscribetostar', user.unsubscribeToStar);
+    //diary audio and message
+    app.post('/getdiaryaudioandmessage', user.checkLogin);
+    app.post('/getdiaryaudioandmessage', star.getDiaryAudioAndMessage);
+
+    app.post('/getlastaudio',user.checkLogin);
+    app.post('/getlastaudio',audio.getLastAudio);
+
+    app.post('/getlastmessage',user.checkLogin);
+    app.post('/getlastmessage', star.getLastMessage);
+
+    //some service about the star
+    //---------------------------------------
+    app.post('/upload', audio.upload);//need star login check
+    app.post('/putmessage', star.starUploadMessage);//need star login check
+
+    app.post('/starLogin', star.starLogin);
+    app.post('/starLogout', star.starLogout);
+    app.post('/starChangePassword', star.checkLogin);
+    app.post('/starChangePassword', star.starChangePassword);
+
+    //only for admin
+    //----------------------------------------- 
+    app.all('/admin', admin.checkAdminNotLogin);
+    app.get('/admin', admin.login);
+    app.post('/admin', admin.doLogin);
+
+    app.get('/dashboard', admin.checkAdminLogin, admin.dashboard);
+
+    app.get('/adminlogout', admin.checkAdminLogin, admin.logout);
+
+    app.get('/showadmin', admin.checkAdminLogin, admin.showAdmin);
+
+    app.post('/addadmin', admin.checkAdminLogin, admin.addAdmin);
+
+    app.get('/deladmin', admin.checkAdminLogin, admin.delAdmin);
+
+    app.post('/adminchangepwd', admin.checkAdminLogin, admin.changePassword);
+
+    app.get('/showstar', admin.checkAdminLogin, admin.showStar);
+
+    app.post('/changestarinfo', admin.checkAdminLogin, admin.changeStarInfo);
+
+    app.post('/addstar', admin.checkAdminLogin, admin.addStar);
+
+    app.get('/showitem', admin.checkAdminLogin, admin.showItem);
+
+    app.post('/changeiteminfo', admin.checkAdminLogin, admin.changeItemInfo);
+
+    app.post('/additem', admin.checkAdminLogin, admin.addItem);
+
+    app.get('/delitem', admin.checkAdminLogin, admin.deleteItem);
+
+    app.get('/shownpc', admin.checkAdminLogin, admin.showNPC);
+
+    app.post('/addnpc', admin.checkAdminLogin, admin.addNPC);
+
+    app.post('/changenpcinfo', admin.checkAdminLogin, admin.changeNPCInfo);
+
+    app.get('/delnpc', admin.checkAdminLogin, admin.deleteNPC);
+
+    app.get('/language', admin.checkAdminLogin, admin.languageNPC);
+
+    app.post('/addlanguage', admin.checkAdminLogin, admin.addLanguageNPC);
+
+    app.get('/dellanguage', admin.checkAdminLogin, admin.deleteLanguageNPC);
+
+    app.get('/shop', admin.checkAdminLogin, admin.shopNPC);
+
+    app.post('/addshoptype', admin.checkAdminLogin, admin.addShopType);
+
+    app.get('/delshoptype', admin.checkAdminLogin, admin.deleteShopType);
+
+    app.post('/addshopitem', admin.checkAdminLogin, admin.addShopItem);
+    
+    app.get('/delshopitem', admin.checkAdminLogin, admin.deleteShopItem);
+
+    /*
+    app.post('/test',function(req,res){
+
+        var userData = JSON.stringify(req.body.userData);
+        var checkKey = req.body.checkKey;
+        var salt = "12345678901234567890";
+        var crypto = require('crypto');
+        var md5 = crypto.createHash('md5');
+        var newStr = userData+salt;
+        var newKey = md5.update(newStr,'utf-8').digest('hex');
+        if(checkKey == newKey){
+            console.log('YES');
+        }
+        res.json(200,{'info':newKey});
+    });
+    app.get('/domain',function(req,res){
+        setTimeout(function() {
+            // Whoops!
+            flerb.bark();
+          });
+    });
+    */
+
+    app.get('*', function(req, res){
+        res.render('error', {
+            'msg': 'No Found'
         });
-    }
-};
-
-exports.checkNotLogin = function(req, res, next) {
-    if(req.session.user) {
-        return res.json(302,{'err':'you have login'});
-    }
-    next();
-};
-
-exports.doLogin = function(req,res) {
-    if(req.body.phone === undefined || req.body.email === undefined){
-        return res.json(400,{'err':'Please input your username and password'});
-    }
-    User.getByLogin(req.body, function(err,user){
-        if(err){
-            return res.json(400,err);
-        }
-        if(user){
-            var md5 = crypto.createHash('sha256');
-            var salt = user.user.userInfo.salt;
-            var password = md5.update(salt+req.body.password).digest('hex');
-            if(user.user.userInfo.password == password){
-                req.session.cookie.originalMaxAge = settings.maxAge;
-                req.session.user = user;
-                var newUserLogin = new SingleLogin ({
-                    'userID':user._id,
-                    'sessionID':req.sessionID,
-                });
-                newUserLogin.save(function(err){   //新用户登陆 更新singlelogin文档
-                    if(err){
-                        return res.json(400,{'err':'server error'});
-                    }
-                    return res.json(200,user);
-                });
-            }else{
-                return res.json(402,{'err':'password does not match'});
-            }
-        }else{
-            return res.json(401,{'err':'user does not exist'});
-        }
     });
-};
-
-exports.logout = function(req,res) {
-    req.session.destroy(function(err){
-        if(err){
-            return res.json(400,{'info':'logout failed'});
-        }
-        return res.json(200,{'info':'logout success'});
-    });
-};
-
-exports.doReg = function(req, res){
-    if(req.body.phone === undefined || req.body.email === undefined || req.body.password === undefined || req.body.UUID === undefined){
-        return res.json(400,{'err':'wrong request format'})
-    }
-    var md5 = crypto.createHash('sha256');
-    var saltOfUser = uuid.v1();
-    var password = md5.update(saltOfUser+req.body.password).digest('hex');
-    var newUser = new User({
-        salt: saltOfUser,
-        phone: req.body.phone,
-        email: req.body.email,
-        password: password,
-        UUID: req.body.UUID,
-    });
-    User.get(newUser,function(err,doc){
-        if(err){
-            return res.json(400,err);
-        }
-        if(doc){
-            return res.json(401,{'err':'user has exist'});
-        }
-        newUser.save(function(err,user){
-            if(err){
-                return res.json(300,err);
-            }
-            req.session.cookie.originalMaxAge = settings.maxAge;
-            req.session.user = user;
-            var newUserLogin = new SingleLogin ({
-                    'userID':user._id,
-                    'sessionID':req.sessionID,
-                });
-            newUserLogin.save(function(err){   //新用户登陆 更新singlelogin文档
-                if(err){
-                    return res.json(400,{'err':'server error'});
-                }
-                    return res.json(200,user);
-            });
-        });
-    });
-};
-
-
-exports.reset = function(req, res){
-    if(req.body.email === undefined || req.body.name === undefined){
-        return res.json(400,{'err':'bad request format'});
-    }
-    User.getByEmailAndName(req.body,function(err,user){
-        if(err){
-            return res.json(400,err);
-        }
-        if(user){
-            //生成过期时间 密钥 与用户名组成sid 并存储。
-            //构建url地址，发送邮件
-            var privateKey = uuid.v1();
-            var date = new Date();
-            var outTime = date.getTime()+600000.0; //10 mins out date time
-            var email = user.user.userInfo.email;
-            var md5 = crypto.createHash('sha256');
-            var sid = md5.update(email+'$'+outTime+'@'+privateKey).digest('hex');
-            var RS = new resetServer({'email':email,'privateKey':privateKey,'outTime':outTime});
-            RS.save(function(err){
-                if(err){
-                    return res.json(400,err);
-                }
-                var encoded_payload = JSON.stringify({'email':email,'sid':sid});
-                wedate.app.e.publish('E',encoded_payload,{},function(err,message){
-                    if(err){
-                        //need to save the unpush message for later use here
-                        return res.json(200,{'info':'send email success'});
-                    }
-                    return res.json(200,{'info':'send email success'});
-                });
-            });  
-        }else{
-            return res.json(402,{'err':'information not match'});
-        }
-    });
-};
-
-exports.doReset = function(req,res){
-    //veritify the url key and username
-    if(req.query.sid ===undefined || req.query.email === undefined){
-        return res.json(302,{'err':'not enough params'})
-    }
-    resetServer.getByEmail(req.query.email,function(err,doc){
-        if(err){
-            return res.json(400,err);
-        }
-        if(!doc){
-            return res.json(400,{err:'no this user for password reset'});
-        }
-        var now = new Date();
-        if(doc.outTime < now.getTime()){
-            return res.json(400,{'err':"out time yeah"});
-        }
-        var md5 = crypto.createHash('sha256');
-        var sid = md5.update(doc.email+'$'+doc.outTime+'@'+doc.privateKey).digest('hex');
-        if(req.query.sid != sid){
-            return res.json(400,{'err':'invalue sid '});
-        }
-        var Num = "";
-        for(var i=0;i<8;i++) { 
-            Num+=Math.floor(Math.random()*10); 
-        }
-        var _md5 = crypto.createHash('sha256');
-        var newSalt = uuid.v1();
-        var newPassword = _md5.update(newSalt+Num).digest('hex');
-        User.changePassword(newPassword, newSalt,doc.email, function(err){
-            if(err){
-                return res.json(400,err);
-            }
-            return res.json(200,{'password':Num});
-        }) 
-
-    });
-};
-exports.password = function(req,res){
-    if(req.body.oldPassword === undefined || req.body.newPassword === undefined){
-        return res.json(400,{'err':'wrong request format'});
-    }
-    if(req.session.user.user.userInfo.email === undefined || req.session.user.user.userInfo.phone === undefined){
-        return res.json(400, {'err':'wrong request format'});
-    }
-    User.get(req.session.user, function(err,doc){
-        if(err){
-            return res.json(400,err);
-        }
-        if(doc){
-            var md5 = crypto.createHash('sha256');
-            var oldPassword = md5.update(doc.user.userInfo.salt+req.body.oldPassword).digest('hex');
-            if(oldPassword == doc.user.userInfo.password){
-                var _md5 = crypto.createHash('sha256');
-                var newSalt = uuid.v1();
-                var newPassword = _md5.update(newSalt+req.body.newPassword).digest('hex');
-                User.changePassword(newPassword, newSalt, req.session.user.user.userInfo.email, function(err,password){
-                    if(err){
-                        return res.json(400,err);
-                    }
-                        return res.json(200,{'info':'change password success'});
-                });
-            }else{
-                return res.json(402,{'err':'password does not match'});
-            }
-        }else{
-            return res.json(400,{'err':'user not exist'});
-        }
-    });
-};
+}
 
 /*
 exports.test = function(req, res){
