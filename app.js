@@ -15,7 +15,7 @@ var npc = require('./routes/npc');
 var http = require('http');
 var path = require('path');
 var settings = require('./settings');
-var MongoStore = require('connect-mongo')(express);
+var MongoStore = require('connect-mongostore')(express);
 var fs = require('fs');
 var accessLogfile = fs.createWriteStream('access.log',{flags:'a'});
 var errorLogfile = fs.createWriteStream('error.log', {flags:'a'});
@@ -46,11 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.cookieParser());
 app.use(express.session({
     secret: settings.cookieSecret,
-    store: new MongoStore({
-        db: settings.db,
-        host: settings.mongodbHost,
-        port: settings.mongodbPort
-    }),
+    store: new MongoStore(settings.singleServer), //settings.singleServer for localhost
     cookie: {},
 }));
 app.use(app.router);

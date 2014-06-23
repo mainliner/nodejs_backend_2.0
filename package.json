@@ -9,7 +9,6 @@
     "express": "3.4.8",
     "ejs": "*",
     "mongodb": ">= 0.9.9",
-    "connect-mongo": ">= 0.1.7",
     "node-uuid": ">= 1.4.1",
     "formidable": "*",
     "gridform":"*",
@@ -17,6 +16,7 @@
     "generic-pool":"*",
     "amqp":"*",
     "nodeunit": "0.7.x",
-    "request": "2.x"
+    "request": "2.x",
+    "connect-mongostore":"*"
   }
 }
