@@ -256,14 +256,12 @@ exports.putUser = function(req, res){
     var salt = "ce23dc8d7a345337836211f829f0c05d";
     var md5 = crypto.createHash('md5');
     var newStr = userData+salt;
-    console.log(newStr);
     var newKey = md5.update(newStr,'utf-8').digest('hex');
     if(checkKey == newKey){
         User.update(req.body.userData,function(err){
             if(err){
                 return res.json(400,err);
             }
-
             Subscriber.changeSubscriberValidStatus(req.body.userData.user.starInfo.starId, req.body.userData.user.userInfo.userId, req.body.userData.user.starInfo.dieFlag, function(err){
                 if(err){
                     return res.json(400,err);

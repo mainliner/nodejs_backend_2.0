@@ -51,10 +51,10 @@ module.exports = function(app) {
     app.post('/subscribetostar', user.checkLogin);
     app.post('/subscribetostar', user.subscribeToStar);
 
-    
+    app.post('/unsubscribetostar', user.checkLogin);
     app.post('/unsubscribetostar', user.unsubscribeToStar);
 
-    
+    app.post('/relive',user.checkLogin);
     app.post('/relive', user.reLive);
 
     //diary audio and message
