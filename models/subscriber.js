@@ -43,6 +43,29 @@ Subscriber.prototype.save = function(callback){
     });
 };
 
+Subscriber.changeSubscriberValidStatus = function(starId, userId, status, callback){
+    mongodbPool.acquire(function(err, db){
+        if(err){
+            return callback(err);
+        }
+
+        db.collection('subscriber', function(err, collection) {
+            if(err){
+                mongodbPool.release(db);
+                return callback(err);
+            }
+
+            collection.update({'starId':starId,'userId':userId},{'$set':{'valid':status}},{w:1},function(err){
+                mongodbPool.release(db);
+                if(err){
+                    return callback(err);
+                }
+                callback(null);
+            });
+        });
+    });
+};
+
 Subscriber.removeSubscriber = function(starId, userId, callback){
     mongodbPool.acquire(function(err,db){
         if(err){

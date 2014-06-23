@@ -256,13 +256,20 @@ exports.putUser = function(req, res){
     var salt = "ce23dc8d7a345337836211f829f0c05d";
     var md5 = crypto.createHash('md5');
     var newStr = userData+salt;
+    console.log(newStr);
     var newKey = md5.update(newStr,'utf-8').digest('hex');
     if(checkKey == newKey){
         User.update(req.body.userData,function(err){
             if(err){
                 return res.json(400,err);
             }
-            return res.json(200,{'info':'upload success'});
+
+            Subscriber.changeSubscriberValidStatus(req.body.userData.user.starInfo.starId, req.body.userData.user.userInfo.userId, req.body.userData.user.starInfo.dieFlag, function(err){
+                if(err){
+                    return res.json(400,err);
+                }
+                return res.json(200,{'info':'upload success'});
+            });
         });
     }else{
         return res.json(333,{'err':"Please don't be evil"});
@@ -319,13 +326,31 @@ exports.subscribeToStar = function(req, res){
 
 exports.unsubscribeToStar = function(req, res){
     var query = req.body;
-    if(query.starId === undefined || query.userId ===undefined){
+    var status = false; // 不活跃
+    if(query.starId === undefined || query.userId ===undefined
+        || query.starId == "" || query.userId == ""){
         return res.json(400,{'err':'wrong request format'});
     }
-    Subscriber.removeSubscriber(query.starId, query.userId, function(err){
+    Subscriber.changeSubscriberValidStatus(query.starId, query.userId, status, function(err){
         if(err){
-            return(400,err);
+            return res.json(400,err);
         }
         return res.json(200,{'info':'unscriber success'});
+    });
+};
+
+exports.reLive = function(req, res){
+    var query = req.body;
+    var status = true; // 活跃
+    if(query.starId === undefined || query.userId === undefined
+        || query.starId == "" || query.userId == ""){
+        return res.json(400, {'err':'wrong request format'})
+    }
+
+    Subscriber.changeSubscriberValidStatus(query.starId, query.userId, status, function(err){
+        if(err){
+            return res.json(400, err);
+        }
+        return res.json(200, {'info': 'relive success'})
     });
 };

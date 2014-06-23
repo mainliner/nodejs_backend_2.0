@@ -106,20 +106,6 @@ exports.starLogin_success = function(test) {
 	);
 };
 
-// 明星登出
-exports.starLogout = function(test) {
-	test.expect(2);
-
-	request.post(
-		{ url: h + "/starLogout",
-		  json:{}},
-		function (err, resp, body){
-			test.equal(resp.statusCode, 200);
-			test.equal(resp.body.info, "logout success");
-			test.done();
-		}
-	);
-};
 
 // 明星修改密码
 exports.starChangePwd_fail_noName_1 = function(test) {
@@ -263,4 +249,17 @@ exports.starChangePwd_success = function(test) {
 	);
 };
 
+// 明星登出
+exports.starLogout = function(test) {
+	test.expect(2);
 
+	request.post(
+		{ url: h + "/starLogout",
+		  json:{}},
+		function (err, resp, body){
+			test.equal(resp.statusCode, 200);
+			test.equal(resp.body.info, "logout success");
+			test.done();
+		}
+	);
+};

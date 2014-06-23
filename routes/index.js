@@ -36,8 +36,9 @@ module.exports = function(app) {
     app.get('/getuser', user.checkLogin);
     app.get('/getuser', user.getUser);
 
-    app.post('/putuser', user.checkLogin);
+
     app.post('/putuser', user.putUser);
+
 
     //get item info
     app.get('/items',item.getAllItems);
@@ -50,8 +51,12 @@ module.exports = function(app) {
     app.post('/subscribetostar', user.checkLogin);
     app.post('/subscribetostar', user.subscribeToStar);
 
-    app.post('/unsubscribetostar', user.checkLogin);
+    
     app.post('/unsubscribetostar', user.unsubscribeToStar);
+
+    
+    app.post('/relive', user.reLive);
+
     //diary audio and message
     app.post('/getdiaryaudioandmessage', user.checkLogin);
     app.post('/getdiaryaudioandmessage', star.getDiaryAudioAndMessage);
